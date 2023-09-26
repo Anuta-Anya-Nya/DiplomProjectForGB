@@ -1,32 +1,42 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view/>
+    <HeaderBlock />
+
+    <main>
+      <router-view />
+    </main>
+    <FooterBlock />
   </div>
 </template>
 
+<script>
+import HeaderBlock from "@/blocks/HeaderBlock.vue";
+import FooterBlock from "@/blocks/FooterBlock.vue";
+export default {
+  name: "App",
+  components: {
+    HeaderBlock,
+    FooterBlock,
+  },
+};
+</script>
+
 <style lang="scss">
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  font-family: $font-main, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  color: $color-text;
+  background-color: $color-main;
 }
 
-nav {
-  padding: 30px;
+* {
+  margin: 0;
+  padding: 0;
+}
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+.container {
+  max-width: $width-site;
+  margin: 0 auto;
 }
 </style>
