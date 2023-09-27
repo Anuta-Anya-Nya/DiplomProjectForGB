@@ -7,7 +7,9 @@
       <router-link to="/main" class="menu-link menu-border"
         >Главная</router-link
       >
-      <a href="masters.html" class="menu-link menu-border">Мастера</a>
+      <router-link to="/masters" class="menu-link menu-border"
+        >Мастера</router-link
+      >
       <a href="price.html" class="menu-link menu-border">Стоимость</a>
       <a href="index.html" class="menu-link"
         ><i class="fa-solid fa-signature head-icon"></i
@@ -40,7 +42,7 @@ export default {
 <style lang="scss" scoped>
 .background-image {
   min-height: 100vh;
-  background: url(@/img/header-bg.jpg) no-repeat center center;
+  background: url(@/assets/img/header-bg.jpg) no-repeat center center;
   background-size: cover;
 }
 

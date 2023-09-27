@@ -1,7 +1,7 @@
 <template>
   <section class="quote">
     <div class="container quote__box">
-      <img src="@/img/quote.png" alt="quote" />
+      <img src="../assets/img/quote.png" alt="quote" />
       <blockquote class="quote__text">
         <p>
           {{ GET_RANDOM_QUOT.text }}
