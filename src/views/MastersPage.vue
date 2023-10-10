@@ -23,7 +23,9 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
+import axios from "axios";
+
 export default {
   name: "MastersPage",
 
@@ -32,6 +34,26 @@ export default {
   },
   computed: {
     ...mapGetters(["GET_MASTERS"]),
+  },
+  methods: {
+    ...mapMutations(["SET_MASTERS"]),
+  },
+  mounted() {
+    axios.get("http://localhost:8080/api/masters").then((res) => {
+      const data = [];
+      res.data._embedded.masters.forEach((element) => {
+        data.push({
+          id: element.id,
+          name: element.masterName,
+          position: element.position,
+          photo: element.photo,
+          aboutText: element.aboutText,
+          serviceId: element.groupServiceId,
+        });
+      });
+      console.log(data);
+      this.SET_MASTERS(data);
+    });
   },
 };
 </script>

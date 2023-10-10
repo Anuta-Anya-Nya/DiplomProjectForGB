@@ -4,7 +4,8 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {
+  state: {    
+    backendUrl: "http://localhost:8080/api",
     quotes: [
       { author: 'Софи Лорен', text: 'Прическа влияет на то, как складывается день, а в итоге и жизнь.' },
       { author: 'Янина Ипохорская', text: 'Даже самую лучшую прическу нужно иногда менять' },
@@ -31,16 +32,12 @@ export default new Vuex.Store({
       { id: 8, img: 'work-8.jpg', tagID: 3 },
       { id: 9, img: 'work-9.jpg', tagID: 3 }
     ],
-    masters: [
-      { id: 1, name: 'Елена Васильева', position: 'Визажист', photo: 'master1.jpg', aboutText: 'Очень любит свою работу. Обучалась у лучших мастеров города, края и России. Имеет большой опыт в своей сфере. Любит делать людей счастливыми', serviceID: 6 },
-      { id: 2, name: 'Ирина Иванова', position: 'Парикмахер', photo: 'master2.jpg', aboutText: 'Очень любит свою работу. Обучалась у лучших мастеров города, края и России. Имеет большой опыт в своей сфере. Любит делать людей счастливыми', serviceID: 1 },
-      { id: 3, name: 'Мария Петрова', position: 'Массажист', photo: 'master3.jpg', aboutText: 'Очень любит свою работу. Обучалась у лучших мастеров города, края и России. Имеет большой опыт в своей сфере. Любит делать людей счастливыми', serviceID: 5 },
-      { id: 4, name: 'Виктория Попова', position: 'Мастер маникюра', photo: 'master4.jpg', aboutText: 'Очень любит свою работу. Обучалась у лучших мастеров города, края и России. Имеет большой опыт в своей сфере. Любит делать людей счастливыми', serviceID: 2 },
-      { id: 5, name: 'Елена Васильева', position: 'Парикмахер', photo: 'master1.jpg', aboutText: 'Очень любит свою работу. Обучалась у лучших мастеров города, края и России. Имеет большой опыт в своей сфере. Любит делать людей счастливыми', serviceID: 1 },
-      { id: 6, name: 'Ирина Сергеева', position: 'Косметолог', photo: 'master5.jpg', aboutText: 'Очень любит свою работу. Обучалась у лучших мастеров города, края и России. Имеет большой опыт в своей сфере. Любит делать людей счастливыми', serviceID: 4 },
-    ]
+    masters: []      
   },
   getters: {
+    getServerUrl: state => {
+      return state.backendUrl
+    },
     GET_RANDOM_QUOT(state) {
       const index = Math.floor(Math.random() * state.quotes.length);
       return state.quotes[index];
@@ -58,6 +55,9 @@ export default new Vuex.Store({
 
   },
   mutations: {
+    SET_MASTERS(state, mastersList){
+      state.masters = mastersList;
+    }
   },
   actions: {
   },
