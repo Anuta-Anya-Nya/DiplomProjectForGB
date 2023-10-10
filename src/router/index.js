@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 import MainPage from '../views/MainPage.vue'
 import MastersPage from '../views/MastersPage.vue'
 import AboutMaster from '../views/AboutMaster.vue'
+import NotFoundPage from '../views/NotFoundPage.vue'
+import PricePage from '../views/PricePage.vue'
 
 Vue.use(VueRouter)
 
@@ -22,6 +24,14 @@ const routes = [
   {
     path: '/masters/:masterID',
     component: AboutMaster
+  },
+  {
+    path: '/price',
+    component: PricePage
+  },
+  {
+    path: '*',
+    component: NotFoundPage
   }
 
 ]

@@ -28,9 +28,7 @@ export default {
   name: "MastersPage",
 
   data() {
-    return {
-      
-    };
+    return {};
   },
   computed: {
     ...mapGetters(["GET_MASTERS"]),
@@ -55,6 +53,8 @@ export default {
 .master__item {
   margin-bottom: 40px;
   position: relative;
+  color: $color-text;
+  text-decoration: none;
 }
 
 .master__item:hover .master__name {

@@ -1,5 +1,5 @@
 <template>
-  <header class="header background-image">
+  <header class="header" :class="isShow ? 'background-image' : ''">
     <nav class="header-menu container">
       <a href="#" class="menu-link"
         ><i class="fa-brands fa-instagram soc-icon head-icon"></i>
@@ -10,10 +10,12 @@
       <router-link to="/masters" class="menu-link menu-border"
         >Мастера</router-link
       >
-      <a href="price.html" class="menu-link menu-border">Стоимость</a>
-      <a href="index.html" class="menu-link"
+      <router-link to="/price" class="menu-link menu-border"
+        >Стоимость</router-link
+      >
+      <router-link to="/main" class="menu-link"
         ><i class="fa-solid fa-signature head-icon"></i
-      ></a>
+      ></router-link>
       <a href="actions.html" class="menu-link menu-border">Акции</a>
       <a href="log-acc.html" class="menu-link menu-border">Записаться</a>
       <a href="contacts.html" class="menu-link menu-border">Контакты</a>
@@ -21,14 +23,16 @@
         ><i class="fa-solid fa-user head-icon"></i
       ></a>
     </nav>
-    <h1 class="header__title">Салон красоты "Штаб бессовестно красивых"</h1>
+    <h1 v-show="isShow" class="header__title">
+      Салон красоты "Штаб бессовестно красивых"
+    </h1>
   </header>
 </template>
 
 <script>
 export default {
   name: "HeaderBlock",
-
+  props: ["isShow"],
   data() {
     return {};
   },
@@ -59,7 +63,7 @@ export default {
   text-decoration: none;
   color: $color-text;
   font-weight: 600;
-  font-size: 18px;
+  font-size: 22px;
   line-height: 23px;
   border: 1px solid transparent;
   transition: all 0.3s;

@@ -1,6 +1,6 @@
 <template>
   <footer class="footer">
-    <div class="container footer-box">
+    <div v-show="isShow" class="container footer-box" >
       <a class="footer-logo" href="index.html"
         ><i class="fa-solid fa-signature foot-logo"></i
       ></a>
@@ -52,7 +52,7 @@
 <script>
 export default {
   name: "WorkspaceJsonFooterBlock",
-
+  props:['isShow'],
   data() {
     return {};
   },
