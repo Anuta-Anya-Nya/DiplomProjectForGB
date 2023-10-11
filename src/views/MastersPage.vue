@@ -33,13 +33,13 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters(["GET_MASTERS"]),
+    ...mapGetters(["GET_MASTERS", "getServerUrl"]),
   },
   methods: {
     ...mapMutations(["SET_MASTERS"]),
   },
   mounted() {
-    axios.get("http://localhost:8080/api/masters").then((res) => {
+    axios.get(`${this.getServerUrl}/masters`).then((res) => {
       const data = [];
       res.data._embedded.masters.forEach((element) => {
         data.push({
@@ -51,7 +51,6 @@ export default {
           serviceId: element.groupServiceId,
         });
       });
-      console.log(data);
       this.SET_MASTERS(data);
     });
   },

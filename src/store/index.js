@@ -13,7 +13,7 @@ export default new Vuex.Store({
       { author: 'Эвелина Хромченко', text: 'Макияж - это одежда для лица. Не грешите, выходя на улицу голыми' },
       { author: 'Кэльвин Кляйн', text: 'Самое главное в макияже - выглядеть совершенно естественно; но для этого нужно очень много косметики' },
     ],
-    services: [
+    groupServices: [
       { id: 1, title: 'Парикмахерские услуги', image: 'serv1.jpg', link: '/main' },
       { id: 2, title: 'Маникюр', image: 'serv2.jpg', link: '/main' },
       { id: 3, title: 'Педикюр', image: 'serv3.jpg', link: '/main' },
@@ -32,7 +32,9 @@ export default new Vuex.Store({
       { id: 8, img: 'work-8.jpg', tagID: 3 },
       { id: 9, img: 'work-9.jpg', tagID: 3 }
     ],
-    masters: []      
+    masters: [],
+    services: []
+
   },
   getters: {
     getServerUrl: state => {
@@ -42,8 +44,8 @@ export default new Vuex.Store({
       const index = Math.floor(Math.random() * state.quotes.length);
       return state.quotes[index];
     },
-    GET_SERVICES(state) {
-      return state.services;
+    GET_GROUP_SERVICES(state) {
+      return state.groupServices;
     },
     GET_WORKSIMAGE(state) {
       return state.worksImage;
@@ -52,11 +54,16 @@ export default new Vuex.Store({
       return state.masters;
     },
     GET_MASTER_FOR_ID: state => id => state.masters.find(el => el.id === +id),
-
+    GET_SERVICES(state){
+      return state.services;
+    }
   },
   mutations: {
     SET_MASTERS(state, mastersList){
       state.masters = mastersList;
+    },
+    SET_SERVICES(state, servicesList){
+      state.services = servicesList;
     }
   },
   actions: {
