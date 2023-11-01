@@ -30,6 +30,7 @@ export default {
       const masterID = +this.$route.params.masterID;
       //   return store.getters.GET_MASTER_FOR_ID(masterID);
       return this.GET_MASTER_FOR_ID(masterID);
+      
     },
   },
 };

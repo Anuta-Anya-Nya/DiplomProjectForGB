@@ -4,7 +4,8 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {
+  state: {    
+    backendUrl: "http://localhost:8080/api",
     quotes: [
       { author: 'Софи Лорен', text: 'Прическа влияет на то, как складывается день, а в итоге и жизнь.' },
       { author: 'Янина Ипохорская', text: 'Даже самую лучшую прическу нужно иногда менять' },
@@ -12,7 +13,11 @@ export default new Vuex.Store({
       { author: 'Эвелина Хромченко', text: 'Макияж - это одежда для лица. Не грешите, выходя на улицу голыми' },
       { author: 'Кэльвин Кляйн', text: 'Самое главное в макияже - выглядеть совершенно естественно; но для этого нужно очень много косметики' },
     ],
-    services: [
+    actions: [
+      { id: 1, text: "Первое посещение - скидка 20%", image: "actions1.jpg" },
+      { id: 2, text: "Каждая пятая стрижка бесплатно", image: "actions2.jpg" },
+    ],
+    groupServices: [
       { id: 1, title: 'Парикмахерские услуги', image: 'serv1.jpg', link: '/main' },
       { id: 2, title: 'Маникюр', image: 'serv2.jpg', link: '/main' },
       { id: 3, title: 'Педикюр', image: 'serv3.jpg', link: '/main' },
@@ -31,33 +36,42 @@ export default new Vuex.Store({
       { id: 8, img: 'work-8.jpg', tagID: 3 },
       { id: 9, img: 'work-9.jpg', tagID: 3 }
     ],
-    masters: [
-      { id: 1, name: 'Елена Васильева', position: 'Визажист', photo: 'master1.jpg', aboutText: 'Очень любит свою работу. Обучалась у лучших мастеров города, края и России. Имеет большой опыт в своей сфере. Любит делать людей счастливыми', serviceID: 6 },
-      { id: 2, name: 'Ирина Иванова', position: 'Парикмахер', photo: 'master2.jpg', aboutText: 'Очень любит свою работу. Обучалась у лучших мастеров города, края и России. Имеет большой опыт в своей сфере. Любит делать людей счастливыми', serviceID: 1 },
-      { id: 3, name: 'Мария Петрова', position: 'Массажист', photo: 'master3.jpg', aboutText: 'Очень любит свою работу. Обучалась у лучших мастеров города, края и России. Имеет большой опыт в своей сфере. Любит делать людей счастливыми', serviceID: 5 },
-      { id: 4, name: 'Виктория Попова', position: 'Мастер маникюра', photo: 'master4.jpg', aboutText: 'Очень любит свою работу. Обучалась у лучших мастеров города, края и России. Имеет большой опыт в своей сфере. Любит делать людей счастливыми', serviceID: 2 },
-      { id: 5, name: 'Елена Васильева', position: 'Парикмахер', photo: 'master1.jpg', aboutText: 'Очень любит свою работу. Обучалась у лучших мастеров города, края и России. Имеет большой опыт в своей сфере. Любит делать людей счастливыми', serviceID: 1 },
-      { id: 6, name: 'Ирина Сергеева', position: 'Косметолог', photo: 'master5.jpg', aboutText: 'Очень любит свою работу. Обучалась у лучших мастеров города, края и России. Имеет большой опыт в своей сфере. Любит делать людей счастливыми', serviceID: 4 },
-    ]
+    masters: [],
+    services: []
+
   },
   getters: {
+    getServerUrl: state => {
+      return state.backendUrl
+    },
     GET_RANDOM_QUOT(state) {
       const index = Math.floor(Math.random() * state.quotes.length);
       return state.quotes[index];
     },
-    GET_SERVICES(state) {
-      return state.services;
+    GET_GROUP_SERVICES(state) {
+      return state.groupServices;
     },
     GET_WORKSIMAGE(state) {
       return state.worksImage;
+    },
+    GET_ACTIONS(state) {
+      return state.actions;
     },
     GET_MASTERS(state) {
       return state.masters;
     },
     GET_MASTER_FOR_ID: state => id => state.masters.find(el => el.id === +id),
-
+    GET_SERVICES(state){
+      return state.services;
+    }
   },
   mutations: {
+    SET_MASTERS(state, mastersList){
+      state.masters = mastersList;
+    },
+    SET_SERVICES(state, servicesList){
+      state.services = servicesList;
+    }
   },
   actions: {
   },

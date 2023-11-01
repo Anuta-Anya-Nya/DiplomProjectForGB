@@ -5,6 +5,7 @@ import MastersPage from '../views/MastersPage.vue'
 import AboutMaster from '../views/AboutMaster.vue'
 import NotFoundPage from '../views/NotFoundPage.vue'
 import PricePage from '../views/PricePage.vue'
+import PromotionsPage from '../views/PromotionsPage.vue'
 
 Vue.use(VueRouter)
 
@@ -28,6 +29,10 @@ const routes = [
   {
     path: '/price',
     component: PricePage
+  },
+  {
+    path: '/promo',
+    component: PromotionsPage
   },
   {
     path: '*',
