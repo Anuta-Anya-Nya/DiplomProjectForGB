@@ -24,7 +24,6 @@ export default {
   computed: {
     ...mapGetters(["GET_RANDOM_QUOT"]),
   },
-
   methods: {},
 };
 </script>

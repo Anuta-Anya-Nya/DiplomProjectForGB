@@ -13,6 +13,10 @@ export default new Vuex.Store({
       { author: 'Эвелина Хромченко', text: 'Макияж - это одежда для лица. Не грешите, выходя на улицу голыми' },
       { author: 'Кэльвин Кляйн', text: 'Самое главное в макияже - выглядеть совершенно естественно; но для этого нужно очень много косметики' },
     ],
+    actions: [
+      { id: 1, text: "Первое посещение - скидка 20%", image: "actions1.jpg" },
+      { id: 2, text: "Каждая пятая стрижка бесплатно", image: "actions2.jpg" },
+    ],
     groupServices: [
       { id: 1, title: 'Парикмахерские услуги', image: 'serv1.jpg', link: '/main' },
       { id: 2, title: 'Маникюр', image: 'serv2.jpg', link: '/main' },
@@ -49,6 +53,9 @@ export default new Vuex.Store({
     },
     GET_WORKSIMAGE(state) {
       return state.worksImage;
+    },
+    GET_ACTIONS(state) {
+      return state.actions;
     },
     GET_MASTERS(state) {
       return state.masters;
