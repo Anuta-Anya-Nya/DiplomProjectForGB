@@ -9,7 +9,11 @@
       <p class="aboutMaster__text">
         {{ getMaster.aboutText }}
       </p>
-      <button class="subscribeBtn">Записаться к мастеру</button>
+      <router-link
+        :to="`/appointment/master/${getMaster.id}`"
+        class="subscribeBtn"
+        >Записаться к мастеру</router-link
+      >
     </div>
   </section>
 </template>
@@ -30,7 +34,6 @@ export default {
       const masterID = +this.$route.params.masterID;
       //   return store.getters.GET_MASTER_FOR_ID(masterID);
       return this.GET_MASTER_FOR_ID(masterID);
-      
     },
   },
 };
@@ -73,8 +76,8 @@ export default {
   font-weight: 700;
   line-height: normal;
   box-sizing: border-box;
-  padding-left: 30px;
-  padding-right: 30px;
+  text-decoration: none;
+  padding: 10px 30px;
   transition: all 0.3s;
 
   &:hover {
