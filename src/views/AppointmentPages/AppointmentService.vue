@@ -1,20 +1,22 @@
 <template>
   <div>
     Выберите услугу:
-    <details>
-      <summary>Группа услуг 1</summary>
-      <router-link to="/appointment/service/1">Услугa1</router-link>
-      <router-link to="/appointment/service/2">Услуга2</router-link>
-    </details>
-    <details>
-      <summary>Группа услуг 2</summary>
-      <router-link to="/appointment/service/3">Услуга3</router-link>
-      <router-link to="/appointment/service/4">Услуга4</router-link>
+    <details v-for="groupService in GET_GROUP_SERVICES" :key="groupService.id">
+      <summary>{{ groupService.title }}</summary>
+      <router-link
+        to="/appointment/service/1"
+        v-for="service in GET_SERVICES.filter(
+          (el) => el.groupServiceId === groupService.id
+        )"
+        :key="service.id"
+        >{{ service.title }}</router-link
+      >
     </details>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "AppointmenService",
 
@@ -24,7 +26,9 @@ export default {
 
   mounted() {},
 
-  methods: {},
+  computed: {
+    ...mapGetters(["GET_SERVICES", "GET_GROUP_SERVICES"]),
+  },
 };
 </script>
 
