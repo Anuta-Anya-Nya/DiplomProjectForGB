@@ -4,7 +4,7 @@
     <details v-for="groupService in GET_GROUP_SERVICES" :key="groupService.id">
       <summary>{{ groupService.title }}</summary>
       <router-link
-        to="/appointment/service/1"
+        :to="`/appointment/service/${service.id}`"
         v-for="service in GET_SERVICES.filter(
           (el) => el.groupServiceId === groupService.id
         )"
