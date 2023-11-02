@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <div :class="!showFooter?'background-image background-flex':''">
+    <div
+      :class="!showFooter ? 'background-image background-flex' : ''"
+      class="wrapper"
+    >
       <HeaderBlock :isShow="showBanner" />
       <main>
         <router-view />
@@ -44,6 +47,10 @@ export default {
 </script>
 
 <style lang="scss">
+html,
+body {
+  height: 100%;
+}
 #app {
   font-family: $font-main, sans-serif;
   font-style: normal;
@@ -72,5 +79,13 @@ export default {
   min-height: 100vh;
   background: url(../src/assets/img/header-bg.jpg) no-repeat center center;
   background-size: cover;
+}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+main {
+  flex: 1 0 auto;
 }
 </style>
