@@ -21,12 +21,12 @@ public class Appointment {
     @Column(name = "time_appointment")
     private LocalTime timeAppointment;
 
-    @Column(name = "userId")
+    @Column(name = "user_id")
     private int userId;
 
-    @Column(name = "masterId")
+    @Column(name = "master_id")
     private int masterId;
 
-    @Column(name = "serviceId")
+    @Column(name = "service_id")
     private int serviceId;
 }

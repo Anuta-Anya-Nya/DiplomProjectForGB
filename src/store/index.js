@@ -4,7 +4,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {    
+  state: {
     backendUrl: "http://localhost:8080/api",
     quotes: [
       { author: 'Софи Лорен', text: 'Прическа влияет на то, как складывается день, а в итоге и жизнь.' },
@@ -37,7 +37,12 @@ export default new Vuex.Store({
       { id: 9, img: 'work-9.jpg', tagID: 3 }
     ],
     masters: [],
-    services: []
+    services: [],
+    shedule: [
+      { id: 1, date_time_appointment: new Date('2023-01-01 10:00:00'), userId: 1, masterId: 1, serviceId: 20 },
+      { id: 2, date_appointment: '2023-01-01', time_appointment: '11:00:00', userId: 2, masterId: 2, serviceId: 1 },
+      { id: 1, date_appointment: '2023-11-30', time_appointment: '10:00:00', userId: 1, masterId: 1, serviceId: 20 }
+    ]
 
   },
   getters: {
@@ -60,16 +65,19 @@ export default new Vuex.Store({
     GET_MASTERS(state) {
       return state.masters;
     },
-    GET_MASTER_FOR_ID: state => id => state.masters.find(el => el.id === +id),
-    GET_SERVICES(state){
+    
+    GET_SERVICES(state) {
       return state.services;
-    }
+    },
+    GET_SHEDULE(state) {
+      return state.shedule;
+    },
   },
   mutations: {
-    SET_MASTERS(state, mastersList){
+    SET_MASTERS(state, mastersList) {
       state.masters = mastersList;
     },
-    SET_SERVICES(state, servicesList){
+    SET_SERVICES(state, servicesList) {
       state.services = servicesList;
     }
   },

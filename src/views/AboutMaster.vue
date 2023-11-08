@@ -1,37 +1,56 @@
 <template>
-  <section class="aboutMaster container">
-    <div class="photo">
-      <img :src="require(`@/assets/img/${getMaster.photo}`)" alt="our_master" />
-    </div>
-    <div class="aboutMaster__content">
-      <p class="aboutMaster__text">{{ getMaster.name }}</p>
-      <p class="aboutMaster__text">{{ getMaster.position }}</p>
-      <p class="aboutMaster__text">
-        {{ getMaster.aboutText }}
-      </p>
-      <button class="subscribeBtn">Записаться к мастеру</button>
+  <section class="container">
+    <div v-if="loading">loading</div>
+    <div v-if="getMaster" class="aboutMaster">
+      <div class="photo">
+        <img
+          :src="require(`@/assets/img/${getMaster.photo}`)"
+          alt="our_master"
+        />
+      </div>
+      <div class="aboutMaster__content">
+        <p class="aboutMaster__text">{{ getMaster.masterName }}</p>
+        <p class="aboutMaster__text">{{ getMaster.position }}</p>
+        <p class="aboutMaster__text">
+          {{ getMaster.aboutText }}
+        </p>
+        <router-link
+          :to="`/appointment/master/${getMaster.id}`"
+          class="subscribeBtn"
+          >Записаться к мастеру</router-link
+        >
+      </div>
     </div>
   </section>
 </template>
 
 <script>
+import axios from "axios";
 import { mapGetters } from "vuex";
 // import store from "@/store";
 export default {
   name: "AboutMaster",
 
   data() {
-    return {};
+    return {
+      masterID: +this.$route.params.masterID,
+      loading: true,
+      getMaster: null,
+    };
   },
 
   computed: {
-    ...mapGetters(["GET_MASTER_FOR_ID"]),
-    getMaster() {
-      const masterID = +this.$route.params.masterID;
-      //   return store.getters.GET_MASTER_FOR_ID(masterID);
-      return this.GET_MASTER_FOR_ID(masterID);
-      
-    },
+    ...mapGetters(["getServerUrl"]),
+  },
+  created() {
+    axios
+      .get(
+        `${this.getServerUrl}/masters/search/getMasterById?id=${this.masterID}`
+      )
+      .then((res) => {
+        this.getMaster = res.data;
+        this.loading = false;
+      });
   },
 };
 </script>
@@ -73,8 +92,8 @@ export default {
   font-weight: 700;
   line-height: normal;
   box-sizing: border-box;
-  padding-left: 30px;
-  padding-right: 30px;
+  text-decoration: none;
+  padding: 10px 30px;
   transition: all 0.3s;
 
   &:hover {

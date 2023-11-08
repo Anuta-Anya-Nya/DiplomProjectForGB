@@ -17,7 +17,9 @@
         ><i class="fa-solid fa-signature head-icon"></i
       ></router-link>
       <router-link to="/promo" class="menu-link menu-border">Акции</router-link>
-      <a href="log-acc.html" class="menu-link menu-border">Записаться</a>
+      <router-link to="/appointment" class="menu-link menu-border"
+        >Записаться</router-link
+      >
       <a href="contacts.html" class="menu-link menu-border">Контакты</a>
       <a href="account.html" class="menu-link"
         ><i class="fa-solid fa-user head-icon"></i
