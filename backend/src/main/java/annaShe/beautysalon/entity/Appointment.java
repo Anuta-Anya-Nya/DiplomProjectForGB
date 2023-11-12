@@ -1,7 +1,9 @@
 package annaShe.beautysalon.entity;
 
 import jakarta.persistence.*;
+import java.sql.Timestamp;
 import lombok.Data;
+
 
 import java.time.LocalTime;
 import java.util.Date;
@@ -16,10 +18,10 @@ public class Appointment {
     private int id;
 
     @Column(name = "date_appointment")
-    private Date dateAppointment;
+    private String dateAppointment;
 
     @Column(name = "time_appointment")
-    private LocalTime timeAppointment;
+    private String timeAppointment;
 
     @Column(name = "user_id")
     private int userId;

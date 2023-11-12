@@ -10,8 +10,10 @@ import java.sql.Date;
 import java.util.List;
 
 public interface AppointmentRepository extends JpaRepository<Appointment, Integer> {
-    @Query("SELECT u FROM Appointment u WHERE u.dateAppointment = :date")
-    List<Appointment> findAppointmentByDate(@Param("date_appointment") Date date);
+//    @Query("SELECT ap FROM Appointment ap WHERE ap.dateAppointment = :date")
+//    List<Appointment> getAppointmentByDateAppointment(@Param("date_appointment") String date);
 
-//    List<Appointment> findByDateAppointment(Date date);
+
+
+    List<Appointment> getAppointmentsByDateAppointmentAndAndMasterId(String DateAppointment, Integer MasterId);
     }

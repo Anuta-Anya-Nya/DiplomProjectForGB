@@ -39,9 +39,7 @@ export default new Vuex.Store({
     masters: [],
     services: [],
     shedule: [
-      { id: 1, date_time_appointment: new Date('2023-01-01 10:00:00'), userId: 1, masterId: 1, serviceId: 20 },
-      { id: 2, date_appointment: '2023-01-01', time_appointment: '11:00:00', userId: 2, masterId: 2, serviceId: 1 },
-      { id: 1, date_appointment: '2023-11-30', time_appointment: '10:00:00', userId: 1, masterId: 1, serviceId: 20 }
+      // { id: 1, dateAppointment: '2023-11-01', timeAppointment: '10:00:00', userId: 1, masterId: 1, serviceId: 20 },      
     ]
 
   },
@@ -65,13 +63,16 @@ export default new Vuex.Store({
     GET_MASTERS(state) {
       return state.masters;
     },
-    
+
     GET_SERVICES(state) {
       return state.services;
     },
     GET_SHEDULE(state) {
       return state.shedule;
     },
+    GET_FREE_SHEDULE_OF_MASTER: state => (date, id) => state.shedule.filter(el => el.dateAppointment === date && el.masterId === id),
+    GET_SERVICE_FOR_MASTERID: state => (id) => state.services.find(el => el.masterId === id),
+    GET_SERVICE_FOR_ID: state => (id) => state.services.find(el => el.id === id),
   },
   mutations: {
     SET_MASTERS(state, mastersList) {
@@ -79,6 +80,12 @@ export default new Vuex.Store({
     },
     SET_SERVICES(state, servicesList) {
       state.services = servicesList;
+    },
+    SET_SHEDULE(state, sheduleList) {
+      state.shedule = sheduleList;
+    },
+    ADD_NEW_SHEDULE(state, newShedule) {
+      state.shedule.push(newShedule);
     }
   },
   actions: {

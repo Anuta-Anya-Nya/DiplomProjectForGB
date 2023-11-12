@@ -31,10 +31,9 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 docker run --name diplom-project-db -p 9000:3306 -e MYSQL_ROOT_PASSWORD=12345678 -d mysql
 
 К БД подключаюсь по 9000 порту:
-    datasource.url=jdbc:mysql://localhost:9000/appointment_beauty_salon
+datasource.url=jdbc:mysql://localhost:9000/appointment_beauty_salon
 Бэк запускается на 8080 порту
 Фронт на 8081
-
 
 npm install axios
 
@@ -53,8 +52,8 @@ PRIMARY KEY (id)
 
 CREATE TABLE appointments (
 id int NOT NULL AUTO_INCREMENT,
-date_appointment date NOT NULL,
-time_appointment time NOT NULL,
+date_appointment varchar(25) NOT NULL,
+time_appointment varchar(25) NOT NULL,
 user_id int NOT NULL,
 master_id int NOT NULL,
 service_id int NOT NULL,
@@ -64,11 +63,10 @@ FOREIGN KEY (service_id) REFERENCES services(id),
 PRIMARY KEY (id)
 ) engine=InnoDB auto_increment=1 default charset=utf8mb3;
 
-INSERT INTO `appointment_beauty_salon`.`appointments` (`id`, `date_appointment`, `time_appointment`, `user_id`, `master_id`, `service_id`) VALUES ('1', '2023-12-31', '10:00:00', '1', '1', '20');
-INSERT INTO `appointment_beauty_salon`.`appointments` (`id`, `date_appointment`, `time_appointment`, `user_id`, `master_id`, `service_id`) VALUES ('2', '2023-12-01', '11:00:00', '2', '1', '20');
+INSERT INTO `appointment_beauty_salon`.`appointments` (`id`, `date_appointment`, 'time_appointment', `user_id`, `master_id`, `service_id`) VALUES ('1', '2023-11-01', '10:00:00', '1', '1', '20');
+INSERT INTO `appointment_beauty_salon`.`appointments` (`id`, `date_appointment`, 'time_appointment', `user_id`, `master_id`, `service_id`) VALUES ('2', '2023-11-30', '11:00:00', '2', '1', '20');
 
-SELECT * FROM appointment_beauty_salon.appointments WHERE date_appointment = "2023-12-31" AND master_id = "1";
-
+SELECT \* FROM appointment_beauty_salon.appointments WHERE date_appointment = "2023-12-31" AND master_id = "1";
 
 CREATE TABLE worksImg (
 id int NOT NULL AUTO_INCREMENT,
