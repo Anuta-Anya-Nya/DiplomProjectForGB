@@ -13,6 +13,8 @@ import AppointmentMasterServ from '../views/AppointmentPages/AppointmentMasterSe
 import MakeAppointment from '../views/AppointmentPages/MakeAppointment.vue';
 import SuccessfulAppointment from '../views/AppointmentPages/SuccessfulAppointment.vue';
 import ContactsPage from '../views/ContactsPage.vue'
+import AccountPage from '../views/AccountPages/AccountPage.vue';
+import LoginPage from '../views/AccountPages/LoginPage.vue';
 
 Vue.use(VueRouter)
 
@@ -73,7 +75,14 @@ const routes = [
     path: '/contacts',
     component: ContactsPage
   },
-
+  {
+    path: '/logging',
+    component: LoginPage
+  },
+  {
+    path: '/secure/account',
+    component: AccountPage
+  },
   {
     path: '*',
     component: NotFoundPage
