@@ -4,17 +4,34 @@
     <p>{{ getSelectService.title }}</p>
     <p>Длительность: {{ getSelectService.duration }} мин.</p>
     <p>Цена: {{ getSelectService.price }} руб.</p>
-    <p>Выберите дату:</p>
-    <input type="date" id="dateAppointment" v-model.lazy="selectedDate" />
+    <div v-if="showSelectMaster">
+      <p>Выберите мастера:</p>
+      <p
+        @click="masterId = master.id"
+        v-for="master in getAvailableMasters"
+        :key="master.id"
+      >
+        {{ master.name }}
+      </p>
+    </div>
+    <div v-if="masterId">
+      <p>Выберите дату:</p>
+      <input type="date" id="dateAppointment" v-model.lazy="selectedDate" />
+    </div>
+
     <p v-if="selectedDate">Выберите время для записи:</p>
-    <p
-      v-for="time in getFreeTime"
-      :key="time.index"
-      @click="selectedTime = time"
-    >
-      {{ time.getHours() }} : {{ time.getMinutes() < 10 ? 0 : ""
-      }}{{ time.getMinutes() }}
-    </p>
+
+    <div v-if="masterId">
+      <p
+        v-for="time in getFreeTime"
+        :key="time.index"
+        @click="selectedTime = time"
+      >
+        {{ time.getHours() }} : {{ time.getMinutes() < 10 ? 0 : ""
+        }}{{ time.getMinutes() }}
+      </p>
+    </div>
+
     <p v-if="selectedTime">
       Выбранная дата: {{ selectedDate }} Выбранное время:
       {{ selectedTime.getHours() }} :
@@ -35,11 +52,12 @@ export default {
 
   data() {
     return {
-      masterId: +this.$route.params.idMaster,
+      masterId: +this.$route.params.idMaster, //NaN если перейти с вкладки услуги
       serviceId: +this.$route.params.idService,
       selectedDate: null,
       selectedTime: null,
       userId: 1,
+      showSelectMaster: !this.masterId,
     };
   },
 
@@ -51,6 +69,7 @@ export default {
       "GET_SHEDULE",
       "GET_FREE_SHEDULE_OF_MASTER",
       "GET_SERVICE_FOR_ID",
+      "GET_MASTERS_FOR_GROUPServ",
     ]),
 
     getFreeTime() {
@@ -67,26 +86,31 @@ export default {
 
       // Время начала и окончания работы мастеров
       let startTime = new Date(`${this.selectedDate} 10:00`);
-      let finishTime = new Date(`${this.selectedDate} 20:00`);      
-      
-      const selectServiceDuration = this.getSelectService.duration / 30 - 1;  
+      let finishTime = new Date(`${this.selectedDate} 20:00`);
+
+      const selectServiceDuration = this.getSelectService.duration / 30 - 1;
       // Формирование списка занятого времени у мастера, с учетом длительности услуг
       sheduleMasterOfSelectDay.forEach((el) => {
         let offTime = new Date(`${el.dateAppointment} ${el.timeAppointment}`);
         const findOffTimeForService =
-          this.GET_SERVICE_FOR_ID(el.serviceId).duration / 30; 
+          this.GET_SERVICE_FOR_ID(el.serviceId).duration / 30;
         for (let i = 0; i < findOffTimeForService; i++) {
           offTimeList.push(offTime.getTime());
           offTime.setMinutes(offTime.getMinutes() + 30);
         }
-        // необходимо вычеркнуть длительность выбранной для записи услуги перед занятым временем мастера, чтобы не пересекалась новая и старая запись 
-        let offTimeForSelectServiceDuration = new Date(`${el.dateAppointment} ${el.timeAppointment}`);
-        offTimeForSelectServiceDuration.setMinutes(offTimeForSelectServiceDuration.getMinutes() - 30);
-        for (let i = 0; i < selectServiceDuration; i++) {        
-        offTimeList.push(offTimeForSelectServiceDuration.getTime());
-        offTimeForSelectServiceDuration.setMinutes(offTimeForSelectServiceDuration.getMinutes() - 30);
-      }
-
+        // необходимо вычеркнуть длительность выбранной для записи услуги перед занятым временем мастера, чтобы не пересекалась новая и старая запись
+        let offTimeForSelectServiceDuration = new Date(
+          `${el.dateAppointment} ${el.timeAppointment}`
+        );
+        offTimeForSelectServiceDuration.setMinutes(
+          offTimeForSelectServiceDuration.getMinutes() - 30
+        );
+        for (let i = 0; i < selectServiceDuration; i++) {
+          offTimeList.push(offTimeForSelectServiceDuration.getTime());
+          offTimeForSelectServiceDuration.setMinutes(
+            offTimeForSelectServiceDuration.getMinutes() - 30
+          );
+        }
       });
 
       // Формирование списка времени для возможной записи
@@ -95,13 +119,13 @@ export default {
         startTime.setMinutes(startTime.getMinutes() + 30);
       }
 
-      // Выбранная заказчиком услуга не должна заканчиваться после времени окончания работы салона      
+      // Выбранная заказчиком услуга не должна заканчиваться после времени окончания работы салона
       finishTime.setMinutes(finishTime.getMinutes() - 30);
-      for (let i = 0; i < selectServiceDuration; i++) {        
+      for (let i = 0; i < selectServiceDuration; i++) {
         offTimeList.push(finishTime.getTime());
         finishTime.setMinutes(finishTime.getMinutes() - 30);
       }
-      
+
       return freeTimeList.filter((el) => !offTimeList.includes(el.getTime()));
     },
 
@@ -114,6 +138,11 @@ export default {
     },
     getSelectService() {
       return this.GET_SERVICES.find((el) => el.id === this.serviceId);
+    },
+    getAvailableMasters() {
+      return this.GET_MASTERS_FOR_GROUPServ(
+        this.getSelectService.groupServiceId
+      );
     },
   },
   methods: {
@@ -136,6 +165,10 @@ export default {
         .post(`${this.getServerUrl}/appointments`, newShedule)
         .then((e) => console.log(e.data));
       // this.ADD_NEW_SHEDULE(newShedule);
+    },
+    selectMaster(master) {
+      this.masterId = master.id;
+      this.showSelectMaster = true;
     },
   },
   mounted() {
