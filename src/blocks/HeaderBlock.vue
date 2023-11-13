@@ -20,7 +20,8 @@
       <router-link to="/appointment" class="menu-link menu-border"
         >Записаться</router-link
       >
-      <a href="contacts.html" class="menu-link menu-border">Контакты</a>
+      <router-link to="/contacts" class="menu-link menu-border">Контакты</router-link>
+      
       <a href="account.html" class="menu-link"
         ><i class="fa-solid fa-user head-icon"></i
       ></a>

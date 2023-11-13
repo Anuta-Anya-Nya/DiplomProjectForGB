@@ -12,6 +12,7 @@ import AppointmentService from '../views/AppointmentPages/AppointmentService.vue
 import AppointmentMasterServ from '../views/AppointmentPages/AppointmentMasterServ.vue';
 import MakeAppointment from '../views/AppointmentPages/MakeAppointment.vue';
 import SuccessfulAppointment from '../views/AppointmentPages/SuccessfulAppointment.vue';
+import ContactsPage from '../views/ContactsPage.vue'
 
 Vue.use(VueRouter)
 
@@ -63,11 +64,16 @@ const routes = [
   {
     path: '/appointment/service/:idService',
     component: MakeAppointment
-  },  
+  },
   {
     path: '/appointment/master/:idMaster/:idService/:recDate',
     component: SuccessfulAppointment
   },
+  {
+    path: '/contacts',
+    component: ContactsPage
+  },
+
   {
     path: '*',
     component: NotFoundPage
