@@ -2,8 +2,8 @@
   <div>
     <div>
       <h3>Спасибо за запись!</h3>
-      <p>мастер {{getSelectMasterName}} ждет Вас в нашем салоне</p>
-      <p> {{ selectedTime }}</p>
+      <p>Наш мастер {{ getSelectMasterName }} ждет Вас в нашем салоне</p>
+      <p>{{ selectedTime.slice(0, 10) }} в {{ selectedTime.slice(11, 16) }}</p>
     </div>
     <router-link to="/main" class="subscribeBtn"
       >Вернуться на главную</router-link
@@ -17,7 +17,7 @@ export default {
   name: "SuccessfulAppointment",
   data() {
     return {
-      masterId: +this.$route.params.idMaster, 
+      masterId: +this.$route.params.idMaster,
       selectedTime: this.$route.params.recDate, //Thu Nov 16 2023 15:00:00 GMT+0300 (Москва, стандартное время)
     };
   },
@@ -32,9 +32,9 @@ export default {
       "GET_SERVICE_FOR_ID",
       "GET_MASTERS_FOR_GROUPServ",
     ]),
-    getSelectMasterName() {      
-        return this.GET_MASTERS.find((el) => el.id === this.masterId).name;
-      },
+    getSelectMasterName() {
+      return this.GET_MASTERS.find((el) => el.id === this.masterId).name;
+    },
   },
 };
 </script>
