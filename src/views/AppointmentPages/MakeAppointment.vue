@@ -13,6 +13,13 @@
       >
         {{ master.name }}
       </p>
+      <div v-if="getAvailableMasters.length === 0">
+        <p>Извините, запись на выбранную услугу в данный момент невозможна</p>
+        <router-link to="/main" class="subscribeBtn"
+      >Вернуться на главную</router-link
+    >
+      </div>
+      
     </div>
     <div v-if="masterId">
       <p>Выберите дату:</p>
@@ -30,6 +37,7 @@
         {{ time.getHours() }} : {{ time.getMinutes() < 10 ? 0 : ""
         }}{{ time.getMinutes() }}
       </p>
+      <p v-if="getFreeTime?.length === 0">Извините, к данному мастеру {{ selectedDate }} запись невозможна. Попробуйте выбрать другой день</p>
     </div>
 
     <p v-if="selectedTime">
@@ -62,6 +70,7 @@ export default {
       selectedDate: null,
       selectedTime: null,
       userId: 1,
+      isFreeTime: true
     };
   },
 
@@ -129,7 +138,7 @@ export default {
         offTimeList.push(finishTime.getTime());
         finishTime.setMinutes(finishTime.getMinutes() - 30);
       }
-
+      
       return freeTimeList.filter((el) => !offTimeList.includes(el.getTime()));
     },
 
@@ -195,4 +204,28 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.subscribeBtn {
+  height: 60px;
+  background-color: #cdaa7d;
+  border-radius: 10px;
+  color: #0a1111;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-family: "Cormorant Garamond";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 60px;
+  box-sizing: border-box;
+  text-decoration: none;
+  padding-left: 30px;
+  padding-right: 30px;
+  transition: all 0.3s;
+
+  &:hover {
+    background-color: white;
+    border: 1px solid #cdaa7d;
+  }
+}
+</style>
