@@ -38,9 +38,14 @@
       {{ selectedTime.getMinutes() < 10 ? 0 : ""
       }}{{ selectedTime.getMinutes() }}
     </p>
-    <button v-if="selectedDate && selectedTime" @click="addNewShedule()">
-      Записаться
-    </button>
+    <router-link
+      :to="`/appointment/master/${masterId}/${serviceId}/${selectedDate}_${selectedTime.getHours()}:${
+        selectedTime.getMinutes() < 10 ? 0 : ''
+      }${selectedTime.getMinutes()}`"
+      v-if="selectedDate && selectedTime"
+      @click="addNewShedule()"
+      >Записаться</router-link
+    >
   </div>
 </template>
 
@@ -57,7 +62,6 @@ export default {
       selectedDate: null,
       selectedTime: null,
       userId: 1,
-      showSelectMaster: !this.masterId,
     };
   },
 
@@ -144,6 +148,10 @@ export default {
         this.getSelectService.groupServiceId
       );
     },
+    showSelectMaster() {
+      const templatePath = `/appointment/service/${this.serviceId}`;
+      return this.$route.path === templatePath;
+    },
   },
   methods: {
     ...mapMutations(["SET_MASTERS", "ADD_NEW_SHEDULE", "SET_SHEDULE"]),
@@ -166,11 +174,8 @@ export default {
         .then((e) => console.log(e.data));
       // this.ADD_NEW_SHEDULE(newShedule);
     },
-    selectMaster(master) {
-      this.masterId = master.id;
-      this.showSelectMaster = true;
-    },
   },
+
   mounted() {
     axios.get(`${this.getServerUrl}/appointments`).then((res) => {
       const data = [];

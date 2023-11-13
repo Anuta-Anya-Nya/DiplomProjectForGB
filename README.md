@@ -74,3 +74,7 @@ img varchar(35) NOT NULL,
 tagID int NOT NULL,
 PRIMARY KEY (id)
 ) engine=InnoDB auto_increment=1 default charset=utf8mb3;
+
+если нет свободного времени или мастера, надо написать, извините, запись на данную дату невозможна
+
+у группы сервиса 3 нет мастера, надо выводить что запись в данный момент нелдоступна??
