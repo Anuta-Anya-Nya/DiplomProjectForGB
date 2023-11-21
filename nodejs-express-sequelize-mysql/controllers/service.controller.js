@@ -18,7 +18,7 @@ exports.create = (req, res) => {
         duration: req.body.duration,
         price: req.body.price
     };
-    
+
     Service.create(service)
         .then(data => {
             res.send(data);
@@ -36,6 +36,21 @@ exports.findAll = (req, res) => {
     var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
     Service.findAll({ where: condition })
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving Service."
+            });
+        });
+};
+
+exports.findServiceByGroup = (req, res) => {
+    const group_service_id = req.query.group_service_id;
+
+    Service.findAll({ where: { group_service_id: group_service_id, }, })
         .then(data => {
             res.send(data);
         })

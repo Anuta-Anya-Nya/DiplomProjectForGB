@@ -10,7 +10,9 @@ module.exports = app => {
     router.get("/", services.findAll);
 
     //Retrieve a single service with id
-    router.get("/:id", services.findOne);
+    router.get("/servicesById/:id", services.findOne);
+
+    router.get("/byGroupService", services.findServiceByGroup);
 
     app.use('/api/services', router);
 };

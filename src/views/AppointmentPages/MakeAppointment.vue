@@ -16,10 +16,9 @@
       <div v-if="getAvailableMasters.length === 0">
         <p>Извините, запись на выбранную услугу в данный момент невозможна</p>
         <router-link to="/main" class="subscribeBtn"
-      >Вернуться на главную</router-link
-    >
+          >Вернуться на главную</router-link
+        >
       </div>
-      
     </div>
     <div v-if="masterId">
       <p>Выберите дату:</p>
@@ -37,7 +36,10 @@
         {{ time.getHours() }} : {{ time.getMinutes() < 10 ? 0 : ""
         }}{{ time.getMinutes() }}
       </p>
-      <p v-if="getFreeTime?.length === 0">Извините, к данному мастеру {{ selectedDate }} запись невозможна. Попробуйте выбрать другой день</p>
+      <p v-if="getFreeTime?.length === 0">
+        Извините, к данному мастеру {{ selectedDate }} запись невозможна.
+        Попробуйте выбрать другой день
+      </p>
     </div>
 
     <p v-if="selectedTime">
@@ -70,7 +72,7 @@ export default {
       selectedDate: null,
       selectedTime: null,
       userId: 1,
-      isFreeTime: true
+      isFreeTime: true,
     };
   },
 
@@ -138,7 +140,7 @@ export default {
         offTimeList.push(finishTime.getTime());
         finishTime.setMinutes(finishTime.getMinutes() - 30);
       }
-      
+
       return freeTimeList.filter((el) => !offTimeList.includes(el.getTime()));
     },
 
@@ -165,37 +167,39 @@ export default {
   methods: {
     ...mapMutations(["SET_MASTERS", "ADD_NEW_SHEDULE", "SET_SHEDULE"]),
     addNewShedule() {
+      console.log("add new shedule");
       const newShedule = {
-        dateAppointment: `${this.selectedTime.getFullYear()}-${
+        date: `${this.selectedTime.getFullYear()}-${
           this.selectedTime.getMonth() + 1
         }-${
           this.selectedTime.getDate() < 10 ? 0 : ""
         }${this.selectedTime.getDate()}`,
-        timeAppointment: `${this.selectedTime.getHours()}:${
+        time: `${this.selectedTime.getHours()}:${
           this.selectedTime.getMinutes() < 10 ? 0 : ""
         }${this.selectedTime.getMinutes()}:00`,
-        userId: this.userId,
-        masterId: this.masterId,
-        serviceId: this.serviceId,
+        user_id: this.userId,
+        master_id: this.masterId,
+        service_id: this.serviceId,
       };
+      console.log(newShedule);
       axios
-        .post(`${this.getServerUrl}/appointments`, newShedule)
+        .post(`${this.getServerUrl}/shedule`, newShedule)
         .then((e) => console.log(e.data));
       // this.ADD_NEW_SHEDULE(newShedule);
     },
   },
 
   mounted() {
-    axios.get(`${this.getServerUrl}/appointments`).then((res) => {
+    axios.get(`${this.getServerUrl}/shedule`).then((res) => {
       const data = [];
-      res.data._embedded.appointments.forEach((element) => {
+      res.data.forEach((element) => {
         data.push({
           id: element.id,
-          dateAppointment: element.dateAppointment,
-          timeAppointment: element.timeAppointment,
-          userId: element.userId,
-          masterId: element.masterId,
-          serviceId: element.serviceId,
+          dateAppointment: element.date,
+          timeAppointment: element.time,
+          userId: element.user_id,
+          masterId: element.master_id,
+          serviceId: element.service_id,
         });
       });
       this.SET_SHEDULE(data);

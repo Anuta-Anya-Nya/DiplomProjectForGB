@@ -20,14 +20,14 @@ export default {
   mounted() {
     axios.get(`${this.getServerUrl}/masters`).then((res) => {
       const data = [];
-      res.data._embedded.masters.forEach((element) => {
+      res.data.forEach((element) => {
         data.push({
           id: element.id,
-          name: element.masterName,
+          name: element.master_name,
           position: element.position,
           photo: element.photo,
           aboutText: element.aboutText,
-          serviceId: element.groupServiceId,
+          serviceId: element.group_service_id,
         });
       });
       this.SET_MASTERS(data);

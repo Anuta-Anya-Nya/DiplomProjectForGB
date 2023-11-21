@@ -9,10 +9,10 @@
         />
       </div>
       <div class="aboutMaster__content">
-        <p class="aboutMaster__text">{{ getMaster.masterName }}</p>
+        <p class="aboutMaster__text">{{ getMaster.master_name }}</p>
         <p class="aboutMaster__text">{{ getMaster.position }}</p>
         <p class="aboutMaster__text">
-          {{ getMaster.aboutText }}
+          {{ getMaster.about_text }}
         </p>
         <router-link
           :to="`/appointment/master/${getMaster.id}`"
@@ -43,14 +43,10 @@ export default {
     ...mapGetters(["getServerUrl"]),
   },
   created() {
-    axios
-      .get(
-        `${this.getServerUrl}/masters/search/getMasterById?id=${this.masterID}`
-      )
-      .then((res) => {
-        this.getMaster = res.data;
-        this.loading = false;
-      });
+    axios.get(`${this.getServerUrl}/masters/${this.masterID}`).then((res) => {
+      this.getMaster = res.data;
+      this.loading = false;
+    });
   },
 };
 </script>

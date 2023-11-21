@@ -54,13 +54,13 @@ export default {
     ...mapMutations(["SET_SERVICES"]),
   },
   mounted() {
-    axios.get(`${this.getServerUrl}/services?page=0&size=25`).then((res) => {
+    axios.get(`${this.getServerUrl}/services`).then((res) => {
       const data = [];
-      res.data._embedded.services.forEach((element) => {
+      res.data.forEach((element) => {
         data.push({
           id: element.id,
           title: element.title,
-          groupServiceId: element.groupServiceId,
+          groupServiceId: element.group_service_id,
           duration: element.duration,
           price: element.price,
         });
