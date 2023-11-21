@@ -2,7 +2,7 @@ const db = require("../models");
 const Service = db.services;
 const Op = db.Sequelize.Op;
 
-// Create Master
+
 exports.create = (req, res) => {
     // Validate request
     if (!req.body.title) {
@@ -18,8 +18,7 @@ exports.create = (req, res) => {
         duration: req.body.duration,
         price: req.body.price
     };
-
-    // Save master in the database
+    
     Service.create(service)
         .then(data => {
             res.send(data);
@@ -27,7 +26,7 @@ exports.create = (req, res) => {
         .catch(err => {
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred while creating the Master."
+                    err.message || "Some error occurred while creating the Service."
             });
         });
 };
@@ -43,7 +42,7 @@ exports.findAll = (req, res) => {
         .catch(err => {
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred while retrieving masters."
+                    err.message || "Some error occurred while retrieving Service."
             });
         });
 };
@@ -57,13 +56,13 @@ exports.findOne = (req, res) => {
                 res.send(data);
             } else {
                 res.status(404).send({
-                    message: `Cannot find Tutorial with id=${id}.`
+                    message: `Cannot find Service with id=${id}.`
                 });
             }
         })
         .catch(err => {
             res.status(500).send({
-                message: "Error retrieving Tutorial with id=" + id
+                message: "Error retrieving Service with id=" + id
             });
         });
 };

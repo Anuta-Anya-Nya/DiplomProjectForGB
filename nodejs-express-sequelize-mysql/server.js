@@ -51,6 +51,9 @@ app.get("/", (req, res) => {
 
 require("../nodejs-express-sequelize-mysql/routes/master.routes")(app);
 require("../nodejs-express-sequelize-mysql/routes/service.routes")(app);
+require("../nodejs-express-sequelize-mysql/routes/group.routes")(app);
+require("../nodejs-express-sequelize-mysql/routes/shedule.routes")(app);
+
 require('../nodejs-express-sequelize-mysql/routes/auth.routes')(app);
 require('../nodejs-express-sequelize-mysql/routes/user.routes')(app);
 

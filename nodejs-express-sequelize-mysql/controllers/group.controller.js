@@ -1,74 +1,67 @@
 const db = require("../models");
-const Master = db.masters;
+const Group = db.group_services;
 const Op = db.Sequelize.Op;
 
-// Create Master
+// Create GroupService
 exports.create = (req, res) => {
     // Validate request
-    if (!req.body.master_name) {
+    if (!req.body.title) {
         res.status(400).send({
             message: "Content can not be empty!"
         });
         return;
     }
 
-    // Create master
-    const master = {
-        master_name: req.body.master_name,
-        birthdate: req.body.birthdate,
-        phone: req.body.phone,
-        position: req.body.position,
-        photo: req.body.photo,
-        about_text: req.body.about_text,
-        group_service_id: req.body.group_service_id
+    const groupService = {
+        title: req.body.title
     };
 
     // Save master in the database
-    Master.create(master)
+    Group.create(groupService)
         .then(data => {
             res.send(data);
         })
         .catch(err => {
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred while creating the Master."
+                    err.message || "Some error occurred while creating the GroupService."
             });
         });
 };
 
-// Retrieve all Masters from the database.
+
 exports.findAll = (req, res) => {
-    const master_name = req.query.master_name;
-    var condition = master_name ? { master_name: { [Op.like]: `%${master_name}%` } } : null;
+    const title = req.query.title;
+    var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
-    Master.findAll({ where: condition })
+    Group.findAll({ where: condition })
         .then(data => {
             res.send(data);
         })
         .catch(err => {
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred while retrieving masters."
+                    err.message || "Some error occurred while retrieving GroupService."
             });
         });
 };
-// Find a single Master with an id
+
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    Master.findByPk(id)
+    Group.findByPk(id)
         .then(data => {
             if (data) {
                 res.send(data);
             } else {
                 res.status(404).send({
-                    message: `Cannot find Master with id=${id}.`
+                    message: `Cannot find GroupService with id=${id}.`
                 });
             }
         })
         .catch(err => {
             res.status(500).send({
-                message: "Error retrieving Master with id=" + id
+                message: "Error retrieving GroupService with id=" + id
             });
         });
 };
