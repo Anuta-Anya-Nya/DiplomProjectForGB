@@ -20,10 +20,13 @@
       <router-link to="/appointment" class="menu-link menu-border"
         >Записаться</router-link
       >
-      <a href="contacts.html" class="menu-link menu-border">Контакты</a>
-      <a href="account.html" class="menu-link"
+      <router-link to="/contacts" class="menu-link menu-border"
+        >Контакты</router-link
+      >
+
+      <router-link to="/logging" class="menu-link"
         ><i class="fa-solid fa-user head-icon"></i
-      ></a>
+      ></router-link>
     </nav>
     <h1 v-show="isShow" class="header__title">
       Салон красоты "Штаб бессовестно красивых"

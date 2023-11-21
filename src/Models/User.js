@@ -1,23 +1,10 @@
-class User {
-    id;
-    userName;
-    userSurname
-    birthdate;
-    phone;
-    userRole;
-    login;
-    password;
-    
-    constructor(id, masterName, birthdate, phone, position, photo, aboutText, groupServiceId) {
-        this.id = id;
-        this.masterName = masterName;
-        this.birthdate = birthdate;
-        this.phone = phone;
-        this.position = position;
-        this.photo = photo;
-        this.aboutText = aboutText;
-        this.groupServiceId = groupServiceId;
-    }    
-}
-
-export default User;
+export default class User {
+    constructor(username, email, password, name, phone, birthdate) {
+      this.username = username;
+      this.email = email;
+      this.password = password;
+      this.name = name;
+      this.phone = phone;
+      this.birthdate = birthdate;
+    }
+  }

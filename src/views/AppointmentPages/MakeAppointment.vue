@@ -13,6 +13,12 @@
       >
         {{ master.name }}
       </p>
+      <div v-if="getAvailableMasters.length === 0">
+        <p>Извините, запись на выбранную услугу в данный момент невозможна</p>
+        <router-link to="/main" class="subscribeBtn"
+          >Вернуться на главную</router-link
+        >
+      </div>
     </div>
     <div v-if="masterId">
       <p>Выберите дату:</p>
@@ -30,6 +36,10 @@
         {{ time.getHours() }} : {{ time.getMinutes() < 10 ? 0 : ""
         }}{{ time.getMinutes() }}
       </p>
+      <p v-if="getFreeTime?.length === 0">
+        Извините, к данному мастеру {{ selectedDate }} запись невозможна.
+        Попробуйте выбрать другой день
+      </p>
     </div>
 
     <p v-if="selectedTime">
@@ -38,9 +48,14 @@
       {{ selectedTime.getMinutes() < 10 ? 0 : ""
       }}{{ selectedTime.getMinutes() }}
     </p>
-    <button v-if="selectedDate && selectedTime" @click="addNewShedule()">
-      Записаться
-    </button>
+    <router-link
+      :to="`/appointment/master/${masterId}/${serviceId}/${selectedDate}_${selectedTime.getHours()}:${
+        selectedTime.getMinutes() < 10 ? 0 : ''
+      }${selectedTime.getMinutes()}`"
+      v-if="selectedDate && selectedTime"
+    >
+      <span @click="addNewShedule()">Записаться</span>
+    </router-link>
   </div>
 </template>
 
@@ -57,7 +72,7 @@ export default {
       selectedDate: null,
       selectedTime: null,
       userId: 1,
-      showSelectMaster: !this.masterId,
+      isFreeTime: true,
     };
   },
 
@@ -144,44 +159,47 @@ export default {
         this.getSelectService.groupServiceId
       );
     },
+    showSelectMaster() {
+      const templatePath = `/appointment/service/${this.serviceId}`;
+      return this.$route.path === templatePath;
+    },
   },
   methods: {
     ...mapMutations(["SET_MASTERS", "ADD_NEW_SHEDULE", "SET_SHEDULE"]),
     addNewShedule() {
+      console.log("add new shedule");
       const newShedule = {
-        dateAppointment: `${this.selectedTime.getFullYear()}-${
+        date: `${this.selectedTime.getFullYear()}-${
           this.selectedTime.getMonth() + 1
         }-${
           this.selectedTime.getDate() < 10 ? 0 : ""
         }${this.selectedTime.getDate()}`,
-        timeAppointment: `${this.selectedTime.getHours()}:${
+        time: `${this.selectedTime.getHours()}:${
           this.selectedTime.getMinutes() < 10 ? 0 : ""
         }${this.selectedTime.getMinutes()}:00`,
-        userId: this.userId,
-        masterId: this.masterId,
-        serviceId: this.serviceId,
+        user_id: this.userId,
+        master_id: this.masterId,
+        service_id: this.serviceId,
       };
+      console.log(newShedule);
       axios
-        .post(`${this.getServerUrl}/appointments`, newShedule)
+        .post(`${this.getServerUrl}/shedule`, newShedule)
         .then((e) => console.log(e.data));
       // this.ADD_NEW_SHEDULE(newShedule);
     },
-    selectMaster(master) {
-      this.masterId = master.id;
-      this.showSelectMaster = true;
-    },
   },
+
   mounted() {
-    axios.get(`${this.getServerUrl}/appointments`).then((res) => {
+    axios.get(`${this.getServerUrl}/shedule`).then((res) => {
       const data = [];
-      res.data._embedded.appointments.forEach((element) => {
+      res.data.forEach((element) => {
         data.push({
           id: element.id,
-          dateAppointment: element.dateAppointment,
-          timeAppointment: element.timeAppointment,
-          userId: element.userId,
-          masterId: element.masterId,
-          serviceId: element.serviceId,
+          dateAppointment: element.date,
+          timeAppointment: element.time,
+          userId: element.user_id,
+          masterId: element.master_id,
+          serviceId: element.service_id,
         });
       });
       this.SET_SHEDULE(data);
@@ -190,4 +208,28 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.subscribeBtn {
+  height: 60px;
+  background-color: #cdaa7d;
+  border-radius: 10px;
+  color: #0a1111;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-family: "Cormorant Garamond";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 60px;
+  box-sizing: border-box;
+  text-decoration: none;
+  padding-left: 30px;
+  padding-right: 30px;
+  transition: all 0.3s;
+
+  &:hover {
+    background-color: white;
+    border: 1px solid #cdaa7d;
+  }
+}
+</style>

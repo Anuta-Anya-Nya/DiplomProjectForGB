@@ -24,13 +24,13 @@ export default {
   },
 
   mounted() {
-    axios.get(`${this.getServerUrl}/services?page=0&size=25`).then((res) => {
+    axios.get(`${this.getServerUrl}/services`).then((res) => {
       const data = [];
-      res.data._embedded.services.forEach((element) => {
+      res.data.forEach((element) => {
         data.push({
           id: element.id,
           title: element.title,
-          groupServiceId: element.groupServiceId,
+          groupServiceId: element.group_service_id,
           duration: element.duration,
           price: element.price,
         });
@@ -48,6 +48,19 @@ export default {
     ]),
 
     servicesOfMaster() {
+      //   axios.get(`${this.getServerUrl}/services/byGroupService?group_service_id=${this.getServerUrl}`).then((res) => {
+      //   const data = [];
+      //   res.data.forEach((element) => {
+      //     data.push({
+      //       id: element.id,
+      //       title: element.title,
+      //       group_service_id: element.group_service_id,
+      //       duration: element.duration,
+      //       price: element.price,
+      //     });
+      //   });
+      //   this.SET_SERVICES(data);
+      // });
       const selectMasterId = this.GET_MASTERS.find(
         (item) => item.id === this.masterId
       );
