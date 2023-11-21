@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import { auth } from './auth.module';
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -77,7 +79,7 @@ export default new Vuex.Store({
     GET_SERVICE_FOR_MASTERID: state => (id) => state.services.find(el => el.masterId === id),
     GET_SERVICE_FOR_ID: state => (id) => state.services.find(el => el.id === id),
     GET_MASTERS_FOR_GROUPServ: state => (groupServID) => state.masters.filter(master => master.serviceId === groupServID),
-  }, 
+  },
   mutations: {
     SET_MASTERS(state, mastersList) {
       state.masters = mastersList;
@@ -95,5 +97,6 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
+    auth
   }
 })

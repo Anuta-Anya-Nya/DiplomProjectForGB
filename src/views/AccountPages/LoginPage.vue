@@ -30,9 +30,7 @@
             href="registration.html"
             >Зарегистрироваться</a
           >
-          <a class="button-simple log-acc__buttons_link" href="forgetPas.html"
-            >Забыли пароль</a
-          >
+          
         </div>
       </form>
     </div>

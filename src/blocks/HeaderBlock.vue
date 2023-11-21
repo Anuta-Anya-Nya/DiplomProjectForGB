@@ -23,6 +23,7 @@
       <router-link to="/contacts" class="menu-link menu-border"
         >Контакты</router-link
       >
+
       <router-link to="/logging" class="menu-link"
         ><i class="fa-solid fa-user head-icon"></i
       ></router-link>

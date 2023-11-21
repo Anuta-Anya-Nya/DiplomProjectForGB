@@ -53,9 +53,9 @@
         selectedTime.getMinutes() < 10 ? 0 : ''
       }${selectedTime.getMinutes()}`"
       v-if="selectedDate && selectedTime"
-      @click="addNewShedule()"
-      >Записаться</router-link
     >
+      <span @click="addNewShedule()">Записаться</span>
+    </router-link>
   </div>
 </template>
 
