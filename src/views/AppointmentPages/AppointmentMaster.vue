@@ -1,21 +1,31 @@
 <template>
   <div>
-    Выберите мастера:
+    <div v-if="currentUser">
+      Выберите мастера:
 
-    <router-link
-      :to="`/appointment/master/${master.id}`"
-      v-for="master in GET_MASTERS"
-      :key="master.id"
-      >{{ master.name }}</router-link
-    >
+      <router-link
+        :to="`/appointment/master/${master.id}`"
+        v-for="master in GET_MASTERS"
+        :key="master.id"
+        >{{ master.name }}</router-link
+      >
+    </div>
+    <div v-if="!currentUser">
+      <LoginMessage />
+    </div>
   </div>
 </template>
 
 <script>
+import LoginMessage from "@/components/LoginMessage.vue";
 import { mapGetters, mapMutations } from "vuex";
 import axios from "axios";
+
 export default {
   name: "AppointmentMaster",
+  components: {
+    LoginMessage,
+  },
 
   mounted() {
     axios.get(`${this.getServerUrl}/masters`).then((res) => {
@@ -35,6 +45,9 @@ export default {
   },
   computed: {
     ...mapGetters(["GET_MASTERS", "getServerUrl"]),
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
   },
   methods: { ...mapMutations(["SET_MASTERS"]) },
 };

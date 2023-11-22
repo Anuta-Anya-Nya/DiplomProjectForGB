@@ -23,10 +23,15 @@
       <router-link to="/contacts" class="menu-link menu-border"
         >Контакты</router-link
       >
-
-      <router-link to="/logging" class="menu-link"
+      <div v-if="currentUser">
+        <router-link to="/profile"> в профайл </router-link>
+      </div>
+      <div v-if="!currentUser">
+        <router-link to="/login"> Login </router-link>
+      </div>
+      <!-- <router-link to="/logging" class="menu-link"
         ><i class="fa-solid fa-user head-icon"></i
-      ></router-link>
+      ></router-link> -->
     </nav>
     <h1 v-show="isShow" class="header__title">
       Салон красоты "Штаб бессовестно красивых"
@@ -44,7 +49,11 @@ export default {
 
   mounted() {},
 
-  methods: {},
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+  },
 };
 </script>
 

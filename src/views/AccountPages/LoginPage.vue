@@ -1,53 +1,110 @@
 <template>
   <main class="log-acc">
     <div class="container">
-      <form class="form-box" action="#">
+      <form class="form-box" name="form" @submit.prevent="handleLogin">
         <div class="input-box">
           <i class="fa-solid fa-envelope input-box__icon"></i>
           <input
+            v-model="user.username"
             class="input-field"
-            type="email"
-            name="email"
-            id="email"
-            placeholder="Адрес почты"
+            type="text"
+            name="username"
+            placeholder="Логин"
           />
+          <!-- <div
+            v-if="errors.has('username')"
+            class="alert alert-danger"
+            role="alert"
+          >
+            Требуется имя пользователя!
+          </div> -->
         </div>
         <div class="input-box">
           <i class="fa-solid fa-unlock input-box__icon"></i>
           <input
+            v-model="user.password"
+            
             class="input-field"
             type="password"
-            name="pass"
-            id="pass"
+            name="password"
             placeholder="Пароль"
           />
+          <!-- <div
+            v-if="errors.has('password')"
+            class="alert alert-danger"
+            role="alert"
+          >
+            Требуется пароль!
+          </div> -->
         </div>
 
-        <button class="button-simple" type="submit">Войти</button>
-        <div class="log-acc__buttons">
-          <a
-            class="button-simple log-acc__buttons_link"
-            href="registration.html"
-            >Зарегистрироваться</a
-          >
-          
+        <button class="button-simple" :disabled="loading">
+          <span
+            v-show="loading"
+            class="spinner-border spinner-border-sm"
+          ></span>
+          <span>Login</span>
+        </button>
+        <div>
+          <div v-if="message" class="alert alert-danger" role="alert">
+            {{ message }}
+          </div>
         </div>
       </form>
+      <div class="log-acc__buttons">
+        <router-link to="/register" class="button-simple log-acc__buttons_link">
+          Зарегистрироваться
+        </router-link>
+      </div>
     </div>
   </main>
 </template>
 
 <script>
+import User from "../../models/User";
 export default {
   name: "LoginPage",
 
   data() {
-    return {};
+    return {
+      user: new User("", ""),
+      loading: false,
+      message: "",
+    };
   },
+  computed: {
+    loggedIn() {
+      return this.$store.state.auth.status.loggedIn;
+    },
+  },
+  created() {
+    if (this.loggedIn) {
+      this.$router.push("/profile");
+    }
+  },
+  
+  methods: {
+    handleLogin() {
+      this.loading = true;
+      
 
-  mounted() {},
-
-  methods: {},
+        if (this.user.username && this.user.password) {
+          this.$store.dispatch("auth/login", this.user).then(
+            () => {
+              this.$router.push("/profile");
+            },
+            (error) => {
+              this.loading = false;
+              this.message =
+                (error.response && error.response.data) ||
+                error.message ||
+                error.toString();
+            }
+          );
+        }
+      
+    },
+  },
 };
 </script>
 

@@ -6,6 +6,34 @@
         <a href="#" class="account__link button-simple">Мой профиль</a>
         <a href="#" class="account__link button-simple">Мои записи</a>
         <a href="#" class="account__link button-simple">Записаться</a>
+
+        <div class="container">
+      <header class="jumbotron">
+        <h3>
+          <strong>{{currentUser.username}}</strong> Profile
+        </h3>
+      </header>
+      <p>
+        <strong>Token:</strong>
+        {{currentUser.accessToken.substring(0, 20)}} ... {{currentUser.accessToken.substr(currentUser.accessToken.length - 20)}}
+      </p>
+      <p>
+        <strong>Id:</strong>
+        {{currentUser.id}}
+      </p>
+      <p>
+        <strong>Email:</strong>
+        {{currentUser.email}}
+      </p>
+      <strong>Authorities:</strong>
+      <ul>
+        <li v-for="(role,index) in currentUser.roles" :key="index">{{role}}</li>
+      </ul>
+    </div>
+
+        <a class="nav-link" href="#">
+          <span @click="logOut()">LogOut</span>
+        </a>
       </div>
     </div>
   </div>
@@ -18,10 +46,23 @@ export default {
   data() {
     return {};
   },
+  computed: {
+      currentUser() {
+        return this.$store.state.auth.user;
+      }
+    },
+  mounted() {
+    if (!this.currentUser) {
+        this.$router.push('/login');
+      }
+  },
 
-  mounted() {},
-
-  methods: {},
+  methods: {
+    logOut() {
+      this.$store.dispatch('auth/logout');
+      this.$router.push('/login');
+    }
+  },
 };
 </script>
 

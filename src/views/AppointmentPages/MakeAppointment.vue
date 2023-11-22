@@ -1,6 +1,7 @@
 <template>
   <div>
-    <p>{{ getSelectMasterName }}</p>
+    <div v-if="currentUser">
+      <p>{{ getSelectMasterName }}</p>
     <p>{{ getSelectService.title }}</p>
     <p>Длительность: {{ getSelectService.duration }} мин.</p>
     <p>Цена: {{ getSelectService.price }} руб.</p>
@@ -57,21 +58,31 @@
       <span @click="addNewShedule()">Записаться</span>
     </router-link>
   </div>
+  <div v-if="!currentUser">
+      <LoginMessage />
+    </div>
+</div>
+    
 </template>
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
 import axios from "axios";
+import LoginMessage from "@/components/LoginMessage.vue";
+
 export default {
   name: "MakeAppointment",
+  components: {
+    LoginMessage,
+  },
 
   data() {
     return {
-      masterId: +this.$route.params.idMaster, //NaN если перейти с вкладки услуги
+      masterId: +this.$route.params.idMaster, 
       serviceId: +this.$route.params.idService,
       selectedDate: null,
       selectedTime: null,
-      userId: 1,
+      userId: this.$store.state.auth.user.id,
       isFreeTime: true,
     };
   },
@@ -86,6 +97,9 @@ export default {
       "GET_SERVICE_FOR_ID",
       "GET_MASTERS_FOR_GROUPServ",
     ]),
+    currentUser() {
+        return this.$store.state.auth.user;
+      },
 
     getFreeTime() {
       if (!this.selectedDate) {
