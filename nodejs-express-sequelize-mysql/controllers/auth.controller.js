@@ -26,7 +26,7 @@ exports.signup = (req, res) => {
         password: bcrypt.hashSync(req.body.password, 8),
         name: req.body.name,
         phone: req.body.phone,
-        birthdate: req.body.birthdate        
+        birthdate: req.body.birthdate
     })
         .then(user => {
             if (req.body.roles) {
@@ -61,7 +61,7 @@ exports.signin = (req, res) => {
     })
         .then(user => {
             if (!user) {
-                return res.status(404).send({ message: "User Not found." });
+                return res.status(404).send({ message: "Пользователь с таким логином не найден!" });
             }
 
             var passwordIsValid = bcrypt.compareSync(
@@ -72,7 +72,7 @@ exports.signin = (req, res) => {
             if (!passwordIsValid) {
                 return res.status(401).send({
                     accessToken: null,
-                    message: "Invalid Password!"
+                    message: "Неверный пароль!"
                 });
             }
 
@@ -92,7 +92,9 @@ exports.signin = (req, res) => {
                 res.status(200).send({
                     id: user.id,
                     username: user.username,
-                    email: user.email,                    
+                    email: user.email,
+                    name: user.name,
+                    phone: user.phone,                    
                     roles: authorities,
                     accessToken: token
                 });

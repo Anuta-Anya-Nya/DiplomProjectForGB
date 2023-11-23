@@ -4,31 +4,58 @@
       <a href="#" class="menu-link"
         ><i class="fa-brands fa-instagram soc-icon head-icon"></i>
       </a>
-      <router-link to="/main" class="menu-link menu-border"
-        >Главная</router-link
-      >
-      <router-link to="/masters" class="menu-link menu-border"
-        >Мастера</router-link
-      >
-      <router-link to="/price" class="menu-link menu-border"
-        >Стоимость</router-link
-      >
-      <router-link to="/main" class="menu-link"
-        ><i class="fa-solid fa-signature head-icon"></i
-      ></router-link>
-      <router-link to="/promo" class="menu-link menu-border">Акции</router-link>
-      <router-link to="/appointment" class="menu-link menu-border"
-        >Записаться</router-link
-      >
-      <router-link to="/contacts" class="menu-link menu-border"
-        >Контакты</router-link
-      >
-      <div v-if="currentUser">
-        <router-link to="/profile"> в профайл </router-link>
-      </div>
-      <div v-if="!currentUser">
-        <router-link to="/login"> Login </router-link>
-      </div>
+      <li class="menu-item">
+        <router-link to="/main" class="menu-link menu-border"
+          >Главная</router-link
+        >
+      </li>
+      <li class="menu-item">
+        <router-link to="/masters" class="menu-link menu-border"
+          >Мастера</router-link
+        >
+      </li>
+      <li class="menu-item">
+        <router-link to="/price" class="menu-link menu-border"
+          >Стоимость</router-link
+        >
+      </li>
+      <li class="menu-item">
+        <router-link to="/main" class="menu-link"
+          ><i class="fa-solid fa-signature head-icon"></i
+        ></router-link>
+      </li>
+      <li class="menu-item">
+        <router-link to="/promo" class="menu-link menu-border"
+          >Акции</router-link
+        >
+      </li>
+      <li class="menu-item">
+        <router-link to="/appointment" class="menu-link menu-border"
+          >Записаться</router-link
+        >
+      </li>
+
+      <li v-if="showAdminBoard" class="menu-item">
+        <router-link to="/admin" class="menu-link menu-border"
+          >Администратор</router-link
+        >
+      </li>
+      <li v-if="!showAdminBoard" class="menu-item">
+        <router-link to="/contacts" class="menu-link menu-border"
+          >Контакты</router-link
+        >
+      </li>
+      <li v-if="currentUser" class="menu-item">
+        <router-link to="/profile" class="menu-link">
+          <i class="fa-solid fa-user head-icon"></i>
+        </router-link>
+      </li>
+      <li v-if="!currentUser" class="menu-item">
+        <router-link to="/login" class="menu-link">
+          <i class="fa-solid fa-user-plus head-icon"></i>
+        </router-link>
+      </li>
+
       <!-- <router-link to="/logging" class="menu-link"
         ><i class="fa-solid fa-user head-icon"></i
       ></router-link> -->
@@ -53,6 +80,13 @@ export default {
     currentUser() {
       return this.$store.state.auth.user;
     },
+    showAdminBoard() {
+      if (this.currentUser && this.currentUser.roles) {
+        return this.currentUser.roles.includes("ROLE_ADMIN");
+      }
+
+      return false;
+    },
   },
 };
 </script>
@@ -72,7 +106,9 @@ export default {
   padding: 30px;
   box-sizing: border-box;
 }
-
+.menu-item {
+  list-style-type: none;
+}
 .menu-link {
   text-decoration: none;
   color: $color-text;

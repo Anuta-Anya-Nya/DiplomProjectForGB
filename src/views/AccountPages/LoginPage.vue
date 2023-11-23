@@ -3,56 +3,39 @@
     <div class="container">
       <form class="form-box" name="form" @submit.prevent="handleLogin">
         <div class="input-box">
-          <i class="fa-solid fa-envelope input-box__icon"></i>
+          <i class="fa-solid fa-user input-box__icon"></i>
           <input
             v-model="user.username"
             class="input-field"
             type="text"
             name="username"
             placeholder="Логин"
+            required
           />
-          <!-- <div
-            v-if="errors.has('username')"
-            class="alert alert-danger"
-            role="alert"
-          >
-            Требуется имя пользователя!
-          </div> -->
         </div>
         <div class="input-box">
           <i class="fa-solid fa-unlock input-box__icon"></i>
           <input
             v-model="user.password"
-            
             class="input-field"
             type="password"
             name="password"
             placeholder="Пароль"
+            required
           />
-          <!-- <div
-            v-if="errors.has('password')"
-            class="alert alert-danger"
-            role="alert"
-          >
-            Требуется пароль!
-          </div> -->
         </div>
 
-        <button class="button-simple" :disabled="loading">
-          <span
-            v-show="loading"
-            class="spinner-border spinner-border-sm"
-          ></span>
-          <span>Login</span>
-        </button>
-        <div>
-          <div v-if="message" class="alert alert-danger" role="alert">
-            {{ message }}
+        <button class="button-simple">Войти</button>
+
+        <div class="error-message">
+          <div v-if="message" role="alert">
+            {{ message.message }}
           </div>
         </div>
       </form>
-      <div class="log-acc__buttons">
-        <router-link to="/register" class="button-simple log-acc__buttons_link">
+
+      <div class="button-simple button-reg">
+        <router-link to="/register" class="button-reg__link">
           Зарегистрироваться
         </router-link>
       </div>
@@ -82,27 +65,25 @@ export default {
       this.$router.push("/profile");
     }
   },
-  
+
   methods: {
     handleLogin() {
       this.loading = true;
-      
 
-        if (this.user.username && this.user.password) {
-          this.$store.dispatch("auth/login", this.user).then(
-            () => {
-              this.$router.push("/profile");
-            },
-            (error) => {
-              this.loading = false;
-              this.message =
-                (error.response && error.response.data) ||
-                error.message ||
-                error.toString();
-            }
-          );
-        }
-      
+      if (this.user.username && this.user.password) {
+        this.$store.dispatch("auth/login", this.user).then(
+          () => {
+            this.$router.push("/profile");
+          },
+          (error) => {
+            this.loading = false;
+            this.message =
+              (error.response && error.response.data) ||
+              error.message ||
+              error.toString();
+          }
+        );
+      }
     },
   },
 };
@@ -121,6 +102,7 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  margin-top: 30px;
 }
 
 .input-field {
@@ -159,6 +141,17 @@ export default {
     border: 1px solid $color-text;
   }
 }
+.button-reg {
+  width: 50%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &__link {
+    color: $color-main;
+    text-decoration: none;
+  }
+}
 
 .input-box {
   position: relative;
@@ -171,32 +164,16 @@ export default {
   }
 }
 
-.log-acc {
-  margin-top: 40px;
-  &__buttons {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-
-    &_link {
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s;
-
-      &:hover {
-        background-color: $color-hover;
-        // color: $color-text;
-        border: 1px solid $color-text;
-      }
-    }
-  }
-}
-
-.forgetPas__title {
-  margin-bottom: 32px;
-  text-align: center;
-  font-size: 32px;
+.error-message {
+  margin: 0 auto;
+  height: $button-height;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  font-family: "Cormorant Garamond";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
 }
 </style>

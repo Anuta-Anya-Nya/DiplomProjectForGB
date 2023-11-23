@@ -17,14 +17,14 @@
       <div class="contacts__info">
         <h3 class="contacts__title">Контакты</h3>
         <ul class="contacts__content">
-          <li>+7 (812) 123-45-67</li>
-          <li>+7 (911) 123-45-67</li>
-          <li>Новоостровский проспект, дом 36</li>
+          <li class="contacts__item">+7 (812) 123-45-67</li>
+          <li class="contacts__item">+7 (911) 123-45-67</li>
+          <li class="contacts__item">Новоостровский проспект, дом 36</li>
         </ul>
         <h3 class="contacts__title">Режим работы</h3>
         <ul class="contacts__content">
-          <li>C 10:00 до 21:00 (Пн-Пт)</li>
-          <li>С 11:00 до 20:00 (Сб-Вс)</li>
+          <li class="contacts__item">C 10:00 до 21:00 (Пн-Пт)</li>
+          <li class="contacts__item">С 11:00 до 20:00 (Сб-Вс)</li>
         </ul>
       </div>
     </div>
@@ -77,6 +77,9 @@ export default {
     font-size: 24px;
     line-height: 130%;
   }
+  &__item{
+    margin-bottom: 15px;
+  }
 }
 
 .pages__title {
@@ -84,7 +87,7 @@ export default {
   font-size: 48px;
   line-height: 120%;
   text-align: center;
-  margin-top: 40px;
-  margin-bottom: 80px;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 </style>

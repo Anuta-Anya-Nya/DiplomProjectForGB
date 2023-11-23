@@ -16,6 +16,8 @@ import ContactsPage from '../views/ContactsPage.vue'
 import AccountPage from '../views/AccountPages/AccountPage.vue';
 import LoginPage from '../views/AccountPages/LoginPage.vue';
 import RegisterPage from '../views/AccountPages/RegisterPage.vue';
+import AdminBoard from '../views/AdminBoard/AdminBoard.vue';
+import SheduleUser from '../views/AccountPages/SheduleUser.vue';
 
 Vue.use(VueRouter)
 
@@ -55,7 +57,7 @@ const routes = [
   {
     path: '/appointment/master/:idMaster',
     component: AppointmentMasterServ,
-    
+
   },
   {
     path: '/appointment/master/:idMaster/:idService',
@@ -88,6 +90,14 @@ const routes = [
   {
     path: '/profile',
     component: AccountPage
+  },
+  {
+    path: '/admin',
+    component: AdminBoard
+  },
+  {
+    path: '/userShedule',
+    component: SheduleUser
   },
   {
     path: '*',

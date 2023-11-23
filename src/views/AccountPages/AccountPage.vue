@@ -1,40 +1,25 @@
 <template>
   <div class="account">
     <div class="container acc-box">
-      <h3 class="acc-title">Личный кабинет</h3>
-      <div class="account__buttons">
-        <a href="#" class="account__link button-simple">Мой профиль</a>
-        <a href="#" class="account__link button-simple">Мои записи</a>
-        <a href="#" class="account__link button-simple">Записаться</a>
-
-        <div class="container">
-      <header class="jumbotron">
-        <h3>
-          <strong>{{currentUser.username}}</strong> Profile
-        </h3>
-      </header>
-      <p>
-        <strong>Token:</strong>
-        {{currentUser.accessToken.substring(0, 20)}} ... {{currentUser.accessToken.substr(currentUser.accessToken.length - 20)}}
-      </p>
-      <p>
-        <strong>Id:</strong>
-        {{currentUser.id}}
-      </p>
-      <p>
-        <strong>Email:</strong>
-        {{currentUser.email}}
-      </p>
-      <strong>Authorities:</strong>
-      <ul>
-        <li v-for="(role,index) in currentUser.roles" :key="index">{{role}}</li>
+      <h3 class="acc-title">
+        Здравствуйте, {{ currentUser.name || currentUser.username }}!
+      </h3>
+      <ul class="account__profile">
+        <li class="account__list">Номер телефона: {{ currentUser.phone }}</li>
+        <li class="account__list">Email: {{ currentUser.email }}</li>
       </ul>
-    </div>
 
-        <a class="nav-link" href="#">
-          <span @click="logOut()">LogOut</span>
-        </a>
+      <div class="account__buttons">
+        <router-link to="/userShedule" class="account__link button-simple"
+          >Мои записи</router-link
+        >
+        <router-link to="/appointment" class="account__link button-simple"
+          >Записаться</router-link
+        >
       </div>
+      <a class="account__link button-simple" href="#">
+        <span @click="logOut()">Выйти</span>
+      </a>
     </div>
   </div>
 </template>
@@ -47,21 +32,21 @@ export default {
     return {};
   },
   computed: {
-      currentUser() {
-        return this.$store.state.auth.user;
-      }
+    currentUser() {
+      return this.$store.state.auth.user;
     },
+  },
   mounted() {
     if (!this.currentUser) {
-        this.$router.push('/login');
-      }
+      this.$router.push("/login");
+    }
   },
 
   methods: {
     logOut() {
-      this.$store.dispatch('auth/logout');
-      this.$router.push('/login');
-    }
+      this.$store.dispatch("auth/logout");
+      this.$router.push("/login");
+    },
   },
 };
 </script>
@@ -80,10 +65,20 @@ export default {
 }
 
 .account {
+  &__profile {
+    list-style-type: none;
+    font-family: "Cormorant Garamond";
+    font-size: 24px;
+    font-style: normal;
+  }
+  &__list {
+    margin-bottom: 15px;
+  }
   &__buttons {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 15px;
+    margin-bottom: 15px;
   }
 
   &__link {
