@@ -5,7 +5,7 @@
       <div class="masters__box">
         <router-link
           :to="`/masters/${master.id}`"
-          v-for="master in GET_MASTERS"
+          v-for="master in MASTERS"
           :key="master.id"
           class="master__item"
         >
@@ -23,8 +23,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
-import axios from "axios";
+import { mapGetters } from "vuex";
 
 export default {
   name: "MastersPage",
@@ -33,26 +32,12 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters(["GET_MASTERS", "getServerUrl"]),
+    ...mapGetters(["MASTERS"]),
   },
-  methods: {
-    ...mapMutations(["SET_MASTERS"]),
+  methods: {    
   },
   mounted() {
-    axios.get(`${this.getServerUrl}/masters`).then((res) => {
-      const data = [];
-      res.data.forEach((element) => {
-        data.push({
-          id: element.id,
-          name: element.master_name,
-          position: element.position,
-          photo: element.photo,
-          aboutText: element.about_text,
-          serviceId: element.group_service_id,
-        });
-      });
-      this.SET_MASTERS(data);
-    });
+    this.$store.dispatch('GET_MASTERS');
   },
 };
 </script>

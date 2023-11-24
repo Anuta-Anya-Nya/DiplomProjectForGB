@@ -115,7 +115,10 @@ const routes = [
   },
   {
     path: '/admin',
-    component: AdminBoard
+    component: AdminBoard,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/userShedule',
