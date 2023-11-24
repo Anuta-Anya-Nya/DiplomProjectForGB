@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '../store/index.js'
 import MainPage from '../views/MainPage.vue'
 import MastersPage from '../views/MastersPage.vue'
 import AboutMaster from '../views/AboutMaster.vue'
@@ -48,32 +49,53 @@ const routes = [
   },
   {
     path: '/appointment',
-    component: AppointmentPage
+    component: AppointmentPage,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
-    path: '/appointment/master',
-    component: AppointmentMaster
+    path: '/shedule/master',
+    component: AppointmentMaster,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
-    path: '/appointment/master/:idMaster',
+    path: '/shedule/master/:idMaster',
     component: AppointmentMasterServ,
+    meta: {
+      requiresAuth: true
+    }
 
   },
   {
-    path: '/appointment/master/:idMaster/:idService',
-    component: MakeAppointment
+    path: '/shedule/master/:idMaster/:idService',
+    component: MakeAppointment,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
-    path: '/appointment/service',
-    component: AppointmentService
+    path: '/shedule/service',
+    component: AppointmentService,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/appointment/service/:idService',
-    component: MakeAppointment
+    component: MakeAppointment,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
-    path: '/appointment/master/:idMaster/:idService/:recDate',
-    component: SuccessfulAppointment
+    path: '/shedule/master/:idMaster/:idService/:recDate',
+    component: SuccessfulAppointment,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/contacts',
@@ -110,6 +132,19 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    
+    if (store.state.auth.user) {
+      next()
+      return
+    }
+    next('/login')
+  } else {
+    next()
+  }
 })
 
 export default router
