@@ -1,37 +1,37 @@
 <template>
-  <div>
-    <div v-if="currentUser">
-      Выберите услугу:
+  <div class="container shedule">
+    
+      <h3> Выберите услугу: </h3>
       <details
         v-for="groupService in GET_GROUP_SERVICES"
         :key="groupService.id"
       >
-        <summary>{{ groupService.title }}</summary>
-        <router-link
-          :to="`/appointment/service/${service.id}`"
+        <summary class="summary">{{ groupService.title }}</summary>
+        <div class="buttons-time-box details">
+<router-link
+          :to="`/shedule/service/${service.id}`"
           v-for="service in GET_SERVICES.filter(
             (el) => el.groupServiceId === groupService.id
           )"
           :key="service.id"
+          class="button-simple button-shedule button-link-services"
           >{{ service.title }}</router-link
         >
+        </div>
+        
       </details>
-    </div>
-    <div v-if="!currentUser">
-      <LoginMessage />
-    </div>
+    
+    
   </div>
 </template>
 
 <script>
-import LoginMessage from "@/components/LoginMessage.vue";
+
 import { mapGetters } from "vuex";
 
 export default {
   name: "AppointmenService",
-  components: {
-    LoginMessage,
-  },
+  
 
   data() {
     return {};
@@ -48,4 +48,13 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@import "../../styles/shedule";
+.summary{
+  text-align: center;
+  
+}
+.details{
+  margin-top: 15px;
+}
+</style>

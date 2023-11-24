@@ -1,84 +1,111 @@
 <template>
-  <div>
-    <div v-if="currentUser">
-      <p>{{ getSelectMasterName }}</p>
-    <p>{{ getSelectService.title }}</p>
-    <p>Длительность: {{ getSelectService.duration }} мин.</p>
-    <p>Цена: {{ getSelectService.price }} руб.</p>
-    <div v-if="showSelectMaster">
-      <p>Выберите мастера:</p>
-      <p
-        @click="masterId = master.id"
-        v-for="master in getAvailableMasters"
-        :key="master.id"
-      >
-        {{ master.name }}
-      </p>
-      <div v-if="getAvailableMasters.length === 0">
-        <p>Извините, запись на выбранную услугу в данный момент невозможна</p>
-        <router-link to="/main" class="subscribeBtn"
-          >Вернуться на главную</router-link
+  <div class="container shedule">
+    
+      <div>
+        <span class="shedule__title">Мастер: </span
+        ><span class="shedule__value">{{ getSelectMasterName }}</span>
+      </div>
+      <div>
+        <span class="shedule__title">Услуга: </span
+        ><span class="shedule__value">{{ getSelectService.title }}</span>
+      </div>
+      <div>
+        <span class="shedule__title">Длительность: </span
+        ><span class="shedule__value">{{ getSelectService.duration }} мин</span>
+      </div>
+      <div>
+        <span class="shedule__title">Цена: </span
+        ><span class="shedule__value">{{ getSelectService.price }} руб.</span>
+      </div>
+
+      <div v-if="showSelectMaster" class="shedule__select">
+        <div class="shedule__title">Выберите мастера:</div>
+        <button
+          @click="masterId = master.id"
+          v-for="master in getAvailableMasters"
+          :key="master.id"
+          class="button-simple button-shedule"
+          :class="masterId === master.id ? 'active' : ''"
+        >
+          {{ master.name }}
+        </button>
+      </div>
+
+      <div v-if="getAvailableMasters.length === 0" class="shedule__box">
+        <p class="shedule__message">Извините, запись на выбранную услугу в данный момент невозможна</p>
+        <router-link to="/main" class="button-simple button-link"
+          >На главную</router-link
         >
       </div>
-    </div>
-    <div v-if="masterId">
-      <p>Выберите дату:</p>
-      <input type="date" id="dateAppointment" v-model.lazy="selectedDate" />
-    </div>
 
-    <p v-if="selectedDate">Выберите время для записи:</p>
+      <div v-if="masterId">
+        <label for="dateAppointment" class="shedule__title"
+          >Выберите дату:
+        </label>
+        <input type="date" id="dateAppointment" v-model.lazy="selectedDate" />
+      </div>
 
-    <div v-if="masterId">
-      <p
-        v-for="time in getFreeTime"
-        :key="time.index"
-        @click="selectedTime = time"
-      >
-        {{ time.getHours() }} : {{ time.getMinutes() < 10 ? 0 : ""
-        }}{{ time.getMinutes() }}
-      </p>
-      <p v-if="getFreeTime?.length === 0">
-        Извините, к данному мастеру {{ selectedDate }} запись невозможна.
-        Попробуйте выбрать другой день
-      </p>
-    </div>
+      <div v-if="selectedDate" class="shedule__select">
+        <div class="shedule__title">Выберите время для записи:</div>
+        <div v-if="masterId" class="buttons-time-box">
+          <button
+            v-for="time in getFreeTime"
+            :key="time.index"
+            @click="selectedTime = time"
+            class="button-simple button-shedule button-time"
+            :class="selectedTime === time ? 'active' : ''"
+          >
+            {{ time.getHours() }} : {{ time.getMinutes() < 10 ? 0 : ""
+            }}{{ time.getMinutes() }}
+          </button>
+        </div>
+      </div>
 
-    <p v-if="selectedTime">
-      Выбранная дата: {{ selectedDate }} Выбранное время:
-      {{ selectedTime.getHours() }} :
-      {{ selectedTime.getMinutes() < 10 ? 0 : ""
-      }}{{ selectedTime.getMinutes() }}
-    </p>
-    <router-link
-      :to="`/appointment/master/${masterId}/${serviceId}/${selectedDate}_${selectedTime.getHours()}:${
-        selectedTime.getMinutes() < 10 ? 0 : ''
-      }${selectedTime.getMinutes()}`"
+      <div>
+        <p v-if="getFreeTime?.length === 0" class="shedule__message">
+          Извините, к выбранному мастеру {{ selectedDate }} запись невозможна.
+          Попробуйте выбрать другой день
+        </p>
+      </div>
+
+      
+        <div v-if="selectedTime">
+        <span class="shedule__title">Выбранная дата: </span
+        ><span class="shedule__value">{{ selectedDate }} </span>
+        <span class="shedule__title">Выбранное время: </span
+        ><span class="shedule__value">{{ selectedTime.getHours() }} :
+        {{ selectedTime.getMinutes() < 10 ? 0 : ""
+        }}{{ selectedTime.getMinutes() }}</span>
+      </div>
+         
+         
+      
+      <router-link
       v-if="selectedDate && selectedTime"
-    >
-      <span @click="addNewShedule()">Записаться</span>
-    </router-link>
-  </div>
-  <div v-if="!currentUser">
-      <LoginMessage />
-    </div>
-</div>
+        :to="`/shedule/master/${masterId}/${serviceId}/${selectedDate}_${selectedTime.getHours()}:${
+          selectedTime.getMinutes() < 10 ? 0 : ''
+        }${selectedTime.getMinutes()}`" 
+        class="button-simple button-link"       
+      >
+        <span @click="addNewShedule()">Записаться</span>
+      </router-link>
+
     
+  </div>
 </template>
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
 import axios from "axios";
-import LoginMessage from "@/components/LoginMessage.vue";
+
 
 export default {
   name: "MakeAppointment",
-  components: {
-    LoginMessage,
-  },
+  
 
   data() {
     return {
-      masterId: +this.$route.params.idMaster, 
+      masterId: +this.$route.params.idMaster,
       serviceId: +this.$route.params.idService,
       selectedDate: null,
       selectedTime: null,
@@ -98,8 +125,8 @@ export default {
       "GET_MASTERS_FOR_GROUPServ",
     ]),
     currentUser() {
-        return this.$store.state.auth.user;
-      },
+      return this.$store.state.auth.user;
+    },
 
     getFreeTime() {
       if (!this.selectedDate) {
@@ -174,7 +201,7 @@ export default {
       );
     },
     showSelectMaster() {
-      const templatePath = `/appointment/service/${this.serviceId}`;
+      const templatePath = `/shedule/service/${this.serviceId}`;
       return this.$route.path === templatePath;
     },
   },
@@ -223,6 +250,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../styles/shedule";
+#dateAppointment {
+  font-size: 22px;
+  font-family: "Cormorant Garamond";
+}
 .subscribeBtn {
   height: 60px;
   background-color: #cdaa7d;
@@ -242,8 +274,26 @@ export default {
   transition: all 0.3s;
 
   &:hover {
-    background-color: white;
+    background-color: $color-hover;
     border: 1px solid #cdaa7d;
   }
+}
+.shedule__message{
+  margin-bottom: 30px;
+  color: $color-hover;
+}
+.button-shedule {
+  height: 40px;
+  font-size: 22px;
+  padding: 0 15px 0 15px;
+}
+.buttons-time-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+.button-time {
+  width: 90px;
 }
 </style>

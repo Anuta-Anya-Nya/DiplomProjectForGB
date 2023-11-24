@@ -1,70 +1,74 @@
 <template>
-  <div>
-    <form name="form" @submit.prevent="handleRegister">
-      <div v-if="!successful">
-        <div>          
+  <div class="container">
+    <form  name="form" @submit.prevent="handleRegister">
+      <div v-if="!successful" class="form-box">
+        <div class="input-box">
+          <i class="fa-solid fa-user input-box__icon"></i>          
           <input
-            v-model="user.username"
-            
+            v-model="user.username"            
             type="text"
+            class="input-field"
             name="username"
             placeholder="Логин"
-          />
-          <!-- <div v-if="submitted && errors.has('username')">
-            {{ errors.first("username") }}
-          </div> -->
+            required
+          />          
         </div>
-        <div>          
+
+        <div class="input-box">    
+          <i class="fa fa-envelope input-box__icon" aria-hidden="true"></i>      
           <input
             v-model="user.email"
-            
+            class="input-field"
+            required
             type="email"
             name="email"
             placeholder="Email"
-          />
-          <!-- <div v-if="submitted && errors.has('email')">
-            {{ errors.first("email") }}
-          </div> -->
+          />          
         </div>
-        <div>
+        <div class="input-box">
+          <i class="fa-solid fa-unlock input-box__icon"></i>
           <input
             v-model="user.password"
-            
+            class="input-field"
+            required
             type="password"
             name="password"
             placeholder="Пароль"
           />
-          <!-- <div v-if="submitted && errors.has('password')">
-            {{ errors.first("password") }}
-          </div> -->
         </div>
-        <div>
+        <div class="input-box">
+          <i class="fa-solid fa-user input-box__icon"></i>
           <input
-            v-model="user.name"            
+            v-model="user.name"   
+            class="input-field"         
             type="text"
             name="username"
             placeholder="Ваше имя"
           />          
         </div>
-        <div>
+        <div class="input-box">
+          <i class="fa fa-phone input-box__icon" aria-hidden="true"></i>
           <input
-            v-model="user.phone"            
+            v-model="user.phone"  
+            class="input-field"          
             type="text"
             name="phone"
             placeholder="Телефон"
           />          
         </div>
-        <div>
+        <div class="input-box">
+          <i class="fa fa-birthday-cake input-box__icon" aria-hidden="true"></i>
           <input
-            v-model="user.birthdate"            
-            type="text"
+            v-model="user.birthdate"   
+            class="input-field"         
+            type="date"
             name="birthdate"
             placeholder="Дата рождения"
           />          
         </div>
-        <div>
-          <button>Sign Up</button>
-        </div>
+        
+          <button class="button-simple">Зарегистрироваться</button>
+        
       </div>
     </form>
 
@@ -123,4 +127,59 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.form-box {
+  width: 50%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 30px;
+}
+.input-field {
+  height: $button-height;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 15px 20px 15px 60px;
+  box-sizing: border-box;
+  border: none;
+  color: $color-hover;
+  font-family: $font-main;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+}
+.input-box {
+  position: relative;
+  &__icon {
+    position: absolute;
+    font-size: 24px;
+    top: calc(($button-height - 24px) / 2);
+    left: 20px;
+  }  
+}
+.button-simple {
+  height: $button-height;
+  background-color: $color-text;
+  border-radius: 10px;
+  color: $color-main;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-family: $font-main;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  box-sizing: border-box;
+  transition: all 0.3s;
+  margin-bottom: 15px;
+
+  &:hover {
+    background-color: $color-hover;
+    // color: $color-text;
+    border: 1px solid $color-text;
+  }
+}
+
+</style>

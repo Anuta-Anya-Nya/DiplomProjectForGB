@@ -84,7 +84,7 @@ const routes = [
     }
   },
   {
-    path: '/appointment/service/:idService',
+    path: '/shedule/service/:idService',
     component: MakeAppointment,
     meta: {
       requiresAuth: true

@@ -1,13 +1,14 @@
 <template>
-  <div>
-    <div>
+  <div class="container shedule">
+    
       <h3>Спасибо за запись!</h3>
-      <p>Наш мастер {{ getSelectMasterName }} ждет Вас в нашем салоне</p>
-      <p>{{ selectedTime.slice(0, 10) }} в {{ selectedTime.slice(11, 16) }}</p>
-    </div>
-    <router-link to="/main" class="subscribeBtn"
+      <p>Наш мастер <span class="shedule__value">{{ getSelectMasterName }}</span> ждет Вас в нашем салоне</p>
+      <p class="shedule__value shedule__title">{{ selectedTime.slice(0, 10) }} в {{ selectedTime.slice(11, 16) }}</p>
+      <router-link to="/main" class="subscribeBtn button-margin"
       >Вернуться на главную</router-link
     >
+    
+    
   </div>
 </template>
 
@@ -40,6 +41,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../styles/shedule";
 .subscribeBtn {
   height: 60px;
   background-color: #cdaa7d;
@@ -62,5 +64,8 @@ export default {
     background-color: white;
     border: 1px solid #cdaa7d;
   }
+}
+.button-margin{
+  margin-top: 30px;
 }
 </style>

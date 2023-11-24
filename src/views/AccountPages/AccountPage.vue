@@ -17,8 +17,8 @@
           >Записаться</router-link
         >
       </div>
-      <a class="account__link button-simple" href="#">
-        <span @click="logOut()">Выйти</span>
+      <a @click="logOut" class="account__link button-simple" href="#">
+        <span>Выйти</span>
       </a>
     </div>
   </div>

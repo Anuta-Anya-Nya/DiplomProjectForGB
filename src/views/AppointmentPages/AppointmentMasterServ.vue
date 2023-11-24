@@ -1,30 +1,27 @@
 <template>
-  <div>
-    <div v-if="currentUser">
-      Выберите услугу:
+  <div class="container shedule">
+    
+      <h3>Выберите услугу:</h3>
 
       <router-link
-        :to="`/appointment/master/${masterId}/${service.id}`"
+        :to="`/shedule/master/${masterId}/${service.id}`"
         v-for="service in servicesOfMaster"
         :key="service.id"
+        class="button-simple button-link"
         >{{ service.title }}</router-link
       >
-    </div>
-    <div v-if="!currentUser">
-      <LoginMessage />
-    </div>
+    
+    
   </div>
 </template>
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
 import axios from "axios";
-import LoginMessage from "@/components/LoginMessage.vue";
+
 export default {
   name: "AppointmentMasterServ",
-  components: {
-    LoginMessage,
-  },
+  
 
   data() {
     return {
@@ -88,4 +85,6 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@import "../../styles/shedule";
+</style>

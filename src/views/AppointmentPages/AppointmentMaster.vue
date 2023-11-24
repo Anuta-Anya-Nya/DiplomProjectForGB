@@ -1,31 +1,23 @@
 <template>
-  <div class="container">
-    <div v-if="currentUser">
-      Выберите мастера:
+  <div class="container shedule">
+    <h3>Выберите мастера:</h3>
 
-      <router-link
-        :to="`/appointment/master/${master.id}`"
-        v-for="master in GET_MASTERS"
-        :key="master.id"
-        >{{ master.name }}</router-link
-      >
-    </div>
-    <div v-if="!currentUser">
-      <LoginMessage />
-    </div>
+    <router-link
+      :to="`/shedule/master/${master.id}`"
+      v-for="master in GET_MASTERS"
+      :key="master.id"
+      class="button-simple button-link"
+      >{{ master.name }}</router-link
+    >
   </div>
 </template>
 
 <script>
-import LoginMessage from "@/components/LoginMessage.vue";
 import { mapGetters, mapMutations } from "vuex";
 import axios from "axios";
 
 export default {
   name: "AppointmentMaster",
-  components: {
-    LoginMessage,
-  },
 
   mounted() {
     axios.get(`${this.getServerUrl}/masters`).then((res) => {
@@ -53,4 +45,9 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@import "../../styles/shedule";
+
+
+
+</style>

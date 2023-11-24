@@ -1,12 +1,13 @@
 <template>
-  <div>
-    Прежде чем записаться на услугу, авторизуйтесь, пожалуйста!
-    <router-link to="/login" class="subscribeBtn">Авторизация</router-link>
+  <div class="shedule__box">
+    <p>Запись на процедуры доступна только зарегистрированным пользователям.</p>
+    <router-link to="/login" class="button-simple button-link"
+      >Регистрация / Авторизация</router-link
+    >
   </div>
 </template>
 
 <script>
-
 export default {
   name: "LoginMessage",
 
@@ -20,4 +21,39 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.shedule {
+  
+  &__box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+}
+.button-simple {
+  height: 60px;
+  background-color: #cdaa7d;
+  border-radius: 10px;
+  color: #0a1111;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-family: "Cormorant Garamond";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  box-sizing: border-box;
+  transition: all 0.3s;
+}
+.button-simple:hover {
+  background-color: #ffffff;
+  border: 1px solid #cdaa7d;
+}
+.button-link {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30%;
+}</style>

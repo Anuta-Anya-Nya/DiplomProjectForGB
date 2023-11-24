@@ -1,0 +1,74 @@
+.shedule {
+    padding: 30px;
+    font-size: 22px;
+    font-family: "Cormorant Garamond";    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  
+
+    &__select{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      .active{
+        background-color: $color-border;
+      border: 1px solid $color-border;
+      }
+    }
+  
+  &__title{
+    font-weight: 700;
+  }
+  &__value{
+    color: $color-hover;
+  }
+  }
+  
+  .button-simple {
+    height: 60px;
+    background-color: $color-text;
+    border-radius: 10px;
+    color: #0a1111;
+    border: 1px solid transparent;
+    cursor: pointer;
+    font-family: "Cormorant Garamond";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    box-sizing: border-box;
+    transition: all 0.3s;
+  }
+  .button-simple:hover {
+    background-color: #ffffff;
+    border: 1px solid #cdaa7d;
+  }
+  .button-link {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30%;
+  }
+  .buttons-time-box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+  .button-shedule {
+    height: 40px;
+    font-size: 22px;
+    padding: 0 15px 0 15px;
+  }
+  .button-link-services {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+  }

@@ -147,6 +147,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 15px;
   &__link {
     color: $color-main;
     text-decoration: none;
