@@ -24,7 +24,6 @@ export const masterStore = {
                 const data = [];
                 res.data.forEach((element) => {
                     data.push(new Master(element.id, element.master_name, element.position, element.photo, element.about_text, element.group_service_id));
-
                 });
                 context.commit('SET_MASTERS', data);
             })

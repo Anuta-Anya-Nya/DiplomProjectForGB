@@ -2,7 +2,7 @@
   <section class="services">
     <div class="container services__box">
       <router-link
-        v-for="item in GET_GROUP_SERVICES"
+        v-for="item in GROUP_SERVICES"
         :key="item.id"
         :to="`${item.link}`"
         class="services__item"
@@ -26,7 +26,7 @@ export default {
   name: "ServicesBlock",
 
   computed: {
-    ...mapGetters(["GET_GROUP_SERVICES"]),
+    ...mapGetters(["GROUP_SERVICES"]),
   },
 };
 </script>

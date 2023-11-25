@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 import { auth } from './auth.module';
 import { masterStore } from './master.module';
+import { servicesStore } from './services.module';
 
 Vue.use(Vuex)
 
@@ -42,9 +43,9 @@ export default new Vuex.Store({
     // masters: [
     //   // { id: 1, name: 'Елена Васильева', position: 'Визажист', photo: 'master1.jpg', aboutText: 'aaaa',  serviceId: '6'}
     // ],
-    services: [
-      // {id: 1, title: 'Стрижка', groupServiceId: '1', duration: '60', price: '1000'}
-    ],
+    // services: [
+    //   // {id: 1, title: 'Стрижка', groupServiceId: '1', duration: '60', price: '1000'}
+    // ],
     shedule: [
       // { id: 1, dateAppointment: '2023-11-01', timeAppointment: '10:00:00', userId: 1, masterId: 1, serviceId: 20 },      
     ]
@@ -58,7 +59,7 @@ export default new Vuex.Store({
       const index = Math.floor(Math.random() * state.quotes.length);
       return state.quotes[index];
     },
-    GET_GROUP_SERVICES(state) {
+    GROUP_SERVICES(state) {
       return state.groupServices;
     },
     GET_WORKSIMAGE(state) {
@@ -70,9 +71,9 @@ export default new Vuex.Store({
     // GET_MASTERS(state) {
     //   return state.masters;
     // },
-    GET_SERVICES(state) {
-      return state.services;
-    },
+    // GET_SERVICES(state) {
+    //   return state.services;
+    // },
     GET_SHEDULE(state) {
       return state.shedule;
     },
@@ -85,9 +86,9 @@ export default new Vuex.Store({
     // SET_MASTERS(state, mastersList) {
     //   state.masters = mastersList;
     // },
-    SET_SERVICES(state, servicesList) {
-      state.services = servicesList;
-    },
+    // SET_SERVICES(state, servicesList) {
+    //   state.services = servicesList;
+    // },
     SET_SHEDULE(state, sheduleList) {
       state.shedule = sheduleList;
     },
@@ -99,6 +100,7 @@ export default new Vuex.Store({
   },
   modules: {
     auth,
-    masterStore
+    masterStore,
+    servicesStore
   }
 })

@@ -1,6 +1,7 @@
 class Service {
         
-    constructor(title, groupServiceId, duration, price) {
+    constructor(id, title, groupServiceId, duration, price) {
+        this.id = id;
         this.title = title;
         this.groupServiceId = groupServiceId;
         this.duration = duration;

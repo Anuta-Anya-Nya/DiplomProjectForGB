@@ -3,27 +3,25 @@
     <div class="container">
       <h2 class="pages__title">Цены на услуги</h2>
       <div class="price__box">
-        <div class="price__item" v-for="elem in idOfGroupServices" :key="elem">
+        <div class="price__item" v-for="idGroupService in idOfGroupServices" :key="idGroupService">
           <img
             class="price__img"
-            :src="require(`@/assets/img/price${elem}.jpg`)"
+            :src="require(`@/assets/img/price${idGroupService}.jpg`)"
             alt="foto"
           />
           <table class="price-table">
             <div
-              v-for="item in GET_SERVICES.filter(
-                (el) => el.groupServiceId === elem
-              )"
-              :key="item.id"
+              v-for="service in servicesByGroupService(idGroupService)"              
+              :key="service.id"
               class="price__row"
             >
               <tr class="price__row-first">
-                <td class="bigger-row">{{ item.title }}</td>
-                <td class="price__value">{{ item.price }} руб</td>
+                <td class="bigger-row">{{ service.title }}</td>
+                <td class="price__value">{{ service.price }} руб</td>
               </tr>
               <tr>
                 <td colspan="2" class="smaller-row">
-                  {{ GET_GROUP_SERVICES.find((el) => el.id === elem).title }}
+                  {{ titleOfGroupService(idGroupService) }}
                 </td>
               </tr>
             </div>
@@ -35,38 +33,36 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
-import axios from "axios";
+import { mapGetters } from "vuex";
+
+
 export default {
   name: "PricePage",
 
   computed: {
-    ...mapGetters(["GET_SERVICES", "getServerUrl", "GET_GROUP_SERVICES"]),
+    ...mapGetters(["SERVICES", "GROUP_SERVICES"]),
+
+    // для группировки услуг в прайсе по группам
     idOfGroupServices() {
       const result = [];
-      this.GET_SERVICES.forEach((element) => {
+      this.SERVICES.forEach((element) => {
         result.push(element.groupServiceId);
       });
       return [...new Set(result)];
     },
   },
   methods: {
-    ...mapMutations(["SET_SERVICES"]),
+    servicesByGroupService(groupServiceId){
+      return this.SERVICES.filter(
+                (service) => service.groupServiceId === groupServiceId
+              )
+    },
+    titleOfGroupService(idGroupService){
+      return this.GROUP_SERVICES.find((el) => el.id === idGroupService).title
+    }
   },
   mounted() {
-    axios.get(`${this.getServerUrl}/services`).then((res) => {
-      const data = [];
-      res.data.forEach((element) => {
-        data.push({
-          id: element.id,
-          title: element.title,
-          groupServiceId: element.group_service_id,
-          duration: element.duration,
-          price: element.price,
-        });
-      });
-      this.SET_SERVICES(data);
-    });
+    this.$store.dispatch('GET_SERVICES');    
   },
 };
 </script>
