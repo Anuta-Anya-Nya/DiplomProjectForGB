@@ -1,21 +1,20 @@
 <template>
   <section class="container">
-    <div v-if="loading">loading</div>
-    <div v-if="getMaster" class="aboutMaster">
+    <div class="aboutMaster">
       <div class="photo">
         <img
-          :src="require(`@/assets/img/${getMaster.photo}`)"
+          :src="require(`@/assets/img/${CURRENT_MASTER.photo}`)"
           alt="our_master"
         />
       </div>
       <div class="aboutMaster__content">
-        <p class="aboutMaster__text">{{ getMaster.master_name }}</p>
-        <p class="aboutMaster__text">{{ getMaster.position }}</p>
+        <p class="aboutMaster__text">{{ CURRENT_MASTER.name }}</p>
+        <p class="aboutMaster__text">{{ CURRENT_MASTER.position }}</p>
         <p class="aboutMaster__text">
-          {{ getMaster.about_text }}
+          {{ CURRENT_MASTER.aboutText }}
         </p>
         <router-link
-          :to="`/appointment/master/${getMaster.id}`"
+          :to="`/shedule/master/${CURRENT_MASTER.id}`"
           class="subscribeBtn"
           >Записаться к мастеру</router-link
         >
@@ -25,28 +24,24 @@
 </template>
 
 <script>
-import axios from "axios";
 import { mapGetters } from "vuex";
-// import store from "@/store";
+
 export default {
   name: "AboutMaster",
 
   data() {
-    return {
-      masterID: +this.$route.params.masterID,
-      loading: true,
-      getMaster: null,
-    };
+    return {};
   },
 
   computed: {
-    ...mapGetters(["getServerUrl"]),
+    ...mapGetters(["CURRENT_MASTER"]),
+
+    masterID() {
+      return +this.$route.params.masterID;
+    },
   },
   created() {
-    axios.get(`${this.getServerUrl}/masters/${this.masterID}`).then((res) => {
-      this.getMaster = res.data;
-      this.loading = false;
-    });
+    this.$store.dispatch("GET_MASTER_BY_ID", this.masterID);
   },
 };
 </script>

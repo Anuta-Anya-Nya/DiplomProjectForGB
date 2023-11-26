@@ -38,8 +38,8 @@ exports.create = (req, res) => {
 
 // Retrieve all Masters from the database.
 exports.findAll = (req, res) => {
-    const master_name = req.query.master_name;
-    var condition = master_name ? { master_name: { [Op.like]: `%${master_name}%` } } : null;
+    const group_service_id = req.query.group_service_id;
+    var condition = group_service_id ? { group_service_id: { [Op.eq]: group_service_id } } : null;
 
     Master.findAll({ where: condition })
         .then(data => {

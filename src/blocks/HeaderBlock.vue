@@ -30,7 +30,7 @@
         >
       </li>
       <li class="menu-item">
-        <router-link to="/appointment" class="menu-link menu-border"
+        <router-link to="/shedule" class="menu-link menu-border"
           >Записаться</router-link
         >
       </li>
@@ -54,11 +54,7 @@
         <router-link to="/login" class="menu-link">
           <i class="fa-solid fa-user-plus head-icon"></i>
         </router-link>
-      </li>
-
-      <!-- <router-link to="/logging" class="menu-link"
-        ><i class="fa-solid fa-user head-icon"></i
-      ></router-link> -->
+      </li>      
     </nav>
     <h1 v-show="isShow" class="header__title">
       Салон красоты "Штаб бессовестно красивых"
@@ -84,7 +80,6 @@ export default {
       if (this.currentUser && this.currentUser.roles) {
         return this.currentUser.roles.includes("ROLE_ADMIN");
       }
-
       return false;
     },
   },

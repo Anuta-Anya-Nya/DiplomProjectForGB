@@ -1,40 +1,53 @@
 <template>
   <div class="container shedule">
-    
-      <h3>Спасибо за запись!</h3>
-      <p>Наш мастер <span class="shedule__value">{{ getSelectMasterName }}</span> ждет Вас в нашем салоне</p>
-      <p class="shedule__value shedule__title">{{ selectedTime.slice(0, 10) }} в {{ selectedTime.slice(11, 16) }}</p>
-      <router-link to="/main" class="subscribeBtn button-margin"
-      >Вернуться на главную</router-link
-    >
-    
-    
+    <h3>Спасибо за запись!</h3>
+    <p>
+      Наш мастер
+      <span class="shedule__value">{{ CURRENT_MASTER.name }}</span> ждет Вас в
+      нашем салоне
+    </p>
+    <p class="shedule__value shedule__title">
+      {{ selectedDate }} в {{ selectedTime }}
+    </p>
+    <button @click="cleanCurrentValue()" class="subscribeBtn button-margin">
+      Вернуться на главную
+    </button>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 export default {
   name: "SuccessfulAppointment",
   data() {
-    return {
-      masterId: +this.$route.params.idMaster,
-      selectedTime: this.$route.params.recDate, //Thu Nov 16 2023 15:00:00 GMT+0300 (Москва, стандартное время)
-    };
+    return {};
   },
 
   computed: {
     ...mapGetters([
-      "GET_MASTERS",
-      "getServerUrl",
-      "GET_SERVICES",
-      "GET_SHEDULE",
-      "GET_FREE_SHEDULE_OF_MASTER",
-      "GET_SERVICE_FOR_ID",
-      "GET_MASTERS_FOR_GROUPServ",
+      "CURRENT_MASTER",
+    ]),    
+
+    selectedDate() {
+      return this.$route.params.recDate.slice(0, 10);
+    },
+    
+    selectedTime() {
+      return this.$route.params.recDate.slice(11, 16);
+    },
+  },
+  methods: {
+    ...mapMutations([
+      "SET_CURRENT_SERVICE",
+      "SET_CURRENT_MASTER",
+      "SET_SHEDULE",
     ]),
-    getSelectMasterName() {
-      return this.GET_MASTERS.find((el) => el.id === this.masterId).name;
+
+    cleanCurrentValue() {
+      this.SET_CURRENT_MASTER(null);
+      this.SET_CURRENT_SERVICE(null);
+      this.SET_SHEDULE(null);
+      this.$router.push({ path: `/main` });
     },
   },
 };
@@ -65,7 +78,7 @@ export default {
     border: 1px solid #cdaa7d;
   }
 }
-.button-margin{
+.button-margin {
   margin-top: 30px;
 }
 </style>

@@ -4,20 +4,36 @@ import servicesService from "../services/services.service"
 export const servicesStore = {
     state: {
         services: [],
+        currentService: null,
+        serviceById: null,
     },
     getters: {
         SERVICES(state) {
             return state.services;
         },
+        CURRENT_SERVICE(state) {
+            return state.currentService;
+        },
+        SERVICE_BY_ID(state) {
+            return state.serviceById;
+        },
+        GET_SERVICE_FOR_ID: state => (id) => state.services.find(el => el.id === id),
+        
     },
     mutations: {
         SET_SERVICES(state, servicesList) {
             state.services = servicesList;
         },
-        ADD_SET_SERVICES: (state, service) => {
+        ADD_SERVICES: (state, service) => {
             state.services.push(service);
         },
+        SET_CURRENT_SERVICE: (state, service) => {
+            state.currentService = service;
+        },
+        SET_SERVICE_BY_ID: (state, service) => {
+            state.serviceById = service;
     },
+},
     actions: {
         GET_SERVICES: async (context) => {
             servicesService.getAllServices().then((res) => {
@@ -26,6 +42,28 @@ export const servicesStore = {
                     data.push(new Service(element.id, element.title, element.group_service_id, element.duration, element.price));
                 });
                 context.commit('SET_SERVICES', data);
+            })
+                .catch((e) => {
+                    console.log(e);
+                });
+        },
+        GET_SERVICES_BY_GROUP: async (context, id) => {
+            servicesService.getServicesByGroupId(id).then((res) => {
+                const data = [];
+                res.data.forEach((element) => {
+                    data.push(new Service(element.id, element.title, element.group_service_id, element.duration, element.price));
+                });
+                return context.commit('SET_SERVICES', data);
+            })
+                .catch((e) => {
+                    console.log(e);
+                });
+        },
+        GET_SERVICE_BY_ID: async (context, id) => {
+            servicesService.getServiceById(id).then((res) => {
+                const data = new Service(res.data.id, res.data.title, res.data.group_service_id, res.data.duration, res.data.price)
+                               
+                context.commit('SET_SERVICE_BY_ID', data);
             })
                 .catch((e) => {
                     console.log(e);

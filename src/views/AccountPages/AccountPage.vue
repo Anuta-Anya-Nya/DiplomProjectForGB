@@ -13,7 +13,7 @@
         <router-link to="/userShedule" class="account__link button-simple"
           >Мои записи</router-link
         >
-        <router-link to="/appointment" class="account__link button-simple"
+        <router-link to="/shedule" class="account__link button-simple"
           >Записаться</router-link
         >
       </div>

@@ -10,6 +10,7 @@ import PromotionsPage from '../views/PromotionsPage.vue'
 import AppointmentPage from '../views/AppointmentPages/AppointmentPage.vue';
 import AppointmentMaster from '../views/AppointmentPages/AppointmentMaster.vue';
 import AppointmentService from '../views/AppointmentPages/AppointmentService.vue';
+import AppointmentServiceGroup from '../views/AppointmentPages/AppointmentServiceGroup.vue';
 import AppointmentMasterServ from '../views/AppointmentPages/AppointmentMasterServ.vue';
 import MakeAppointment from '../views/AppointmentPages/MakeAppointment.vue';
 import SuccessfulAppointment from '../views/AppointmentPages/SuccessfulAppointment.vue';
@@ -48,7 +49,7 @@ const routes = [
     component: PromotionsPage
   },
   {
-    path: '/appointment',
+    path: '/shedule',
     component: AppointmentPage,
     meta: {
       requiresAuth: true
@@ -86,6 +87,13 @@ const routes = [
   {
     path: '/shedule/service/:idService',
     component: MakeAppointment,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/shedule/serviceGroup/:idGroup',
+    component: AppointmentServiceGroup,
     meta: {
       requiresAuth: true
     }

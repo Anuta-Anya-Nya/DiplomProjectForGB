@@ -1,53 +1,40 @@
 <template>
   <div class="container shedule">
     <h3>Выберите мастера:</h3>
-
-    <router-link
-      :to="`/shedule/master/${master.id}`"
-      v-for="master in GET_MASTERS"
+    <button
+      v-for="master in MASTERS"
       :key="master.id"
       class="button-simple button-link"
-      >{{ master.name }}</router-link
+      @click="selectMaster(master)"
     >
+      {{ master.name }}
+    </button>    
   </div>
 </template>
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
-import axios from "axios";
 
 export default {
   name: "AppointmentMaster",
 
   mounted() {
-    axios.get(`${this.getServerUrl}/masters`).then((res) => {
-      const data = [];
-      res.data.forEach((element) => {
-        data.push({
-          id: element.id,
-          name: element.master_name,
-          position: element.position,
-          photo: element.photo,
-          aboutText: element.aboutText,
-          serviceId: element.group_service_id,
-        });
-      });
-      this.SET_MASTERS(data);
-    });
+    this.$store.dispatch("GET_MASTERS");
   },
   computed: {
-    ...mapGetters(["GET_MASTERS", "getServerUrl"]),
-    currentUser() {
-      return this.$store.state.auth.user;
-    },
+    ...mapGetters(["MASTERS"]),
   },
-  methods: { ...mapMutations(["SET_MASTERS"]) },
+  methods: {
+    ...mapMutations(["SET_CURRENT_MASTER"]),
+
+    selectMaster(master){
+      this.SET_CURRENT_MASTER(master);
+      this.$router.push({ path: `/shedule/master/${master.id}` });
+    }
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 @import "../../styles/shedule";
-
-
-
 </style>

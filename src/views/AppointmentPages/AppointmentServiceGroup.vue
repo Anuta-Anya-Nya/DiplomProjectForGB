@@ -1,21 +1,18 @@
 <template>
   <div class="container shedule">
     <h3>Выберите услугу:</h3>
-    <details v-for="groupService in GROUP_SERVICES" :key="groupService.id">
-      <summary class="summary">{{ groupService.title }}</summary>
-      <div class="buttons-time-box details">
+    
+      
         <button
-          v-for="service in SERVICES.filter(
-            (el) => el.groupServiceId === groupService.id
-          )"
+          v-for="service in SERVICES"
           :key="service.id"
           @click="selectService(service)"
-          class="button-simple button-shedule button-link-services"
+          class="button-simple button-link"
         >
           {{ service.title }}
         </button>
-      </div>
-    </details>
+      
+    
   </div>
 </template>
 
@@ -23,18 +20,22 @@
 import { mapGetters, mapMutations } from "vuex";
 
 export default {
-  name: "AppointmenService",
+  name: "AppointmentServiceGroup",
 
   data() {
     return {};
   },
 
   mounted() {
-    this.$store.dispatch("GET_SERVICES");
+    this.$store.dispatch("GET_SERVICES_BY_GROUP", this.selectedGroupId);
   },
 
   computed: {
-    ...mapGetters(["SERVICES", "GROUP_SERVICES"]),
+    ...mapGetters(["SERVICES"]),
+
+    selectedGroupId(){
+      return +this.$route.params.idGroup;
+    }
   },
   methods: {
     ...mapMutations(["SET_CURRENT_SERVICE", "SET_CURRENT_MASTER"]),

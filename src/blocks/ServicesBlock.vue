@@ -4,7 +4,7 @@
       <router-link
         v-for="item in GROUP_SERVICES"
         :key="item.id"
-        :to="`${item.link}`"
+        :to="`shedule/serviceGroup/${item.id}`"
         class="services__item"
       >
         <img :src="require(`@/assets/img/${item.image}`)" alt="our_services" />

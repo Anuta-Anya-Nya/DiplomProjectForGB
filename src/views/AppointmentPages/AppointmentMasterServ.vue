@@ -1,86 +1,42 @@
 <template>
   <div class="container shedule">
-    
-      <h3>Выберите услугу:</h3>
-
-      <router-link
-        :to="`/shedule/master/${masterId}/${service.id}`"
-        v-for="service in servicesOfMaster"
-        :key="service.id"
-        class="button-simple button-link"
-        >{{ service.title }}</router-link
-      >
-    
-    
+    <h3>Выберите услугу:</h3>    
+    <button
+    v-for="service in SERVICES"
+      :key="service.id"
+      class="button-simple button-link"
+      @click="selectService(service)">
+      {{ service.title }}
+    </button>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
-import axios from "axios";
 
 export default {
   name: "AppointmentMasterServ",
-  
 
   data() {
-    return {
-      masterId: +this.$route.params.idMaster,
-    };
+    return {};
   },
 
   mounted() {
-    axios.get(`${this.getServerUrl}/services`).then((res) => {
-      const data = [];
-      res.data.forEach((element) => {
-        data.push({
-          id: element.id,
-          title: element.title,
-          groupServiceId: element.group_service_id,
-          duration: element.duration,
-          price: element.price,
-        });
-      });
-      this.SET_SERVICES(data);
-    });
+    this.$store.dispatch(
+      "GET_SERVICES_BY_GROUP",
+      this.CURRENT_MASTER.groupServiceId
+    );
   },
 
   computed: {
-    ...mapGetters([
-      "GET_SERVICES",
-      "getServerUrl",
-      "GET_GROUP_SERVICES",
-      "GET_MASTERS",
-    ]),
-    currentUser() {
-      return this.$store.state.auth.user;
-    },
-
-    servicesOfMaster() {
-      //   axios.get(`${this.getServerUrl}/services/byGroupService?group_service_id=${this.getServerUrl}`).then((res) => {
-      //   const data = [];
-      //   res.data.forEach((element) => {
-      //     data.push({
-      //       id: element.id,
-      //       title: element.title,
-      //       group_service_id: element.group_service_id,
-      //       duration: element.duration,
-      //       price: element.price,
-      //     });
-      //   });
-      //   this.SET_SERVICES(data);
-      // });
-      const selectMasterId = this.GET_MASTERS.find(
-        (item) => item.id === this.masterId
-      );
-      const servicesOfMaster = this.GET_SERVICES.filter(
-        (item) => item.groupServiceId === selectMasterId.serviceId
-      );
-      return servicesOfMaster;
-    },
+    ...mapGetters(["SERVICES", "CURRENT_MASTER"]),    
   },
   methods: {
-    ...mapMutations(["SET_SERVICES"]),
+    ...mapMutations(["SET_CURRENT_SERVICE"]),
+    selectService(service){
+      this.SET_CURRENT_SERVICE(service);
+      this.$router.push({ path: `/shedule/master/${this.CURRENT_MASTER.id}/${service.id}` });
+    }
   },
 };
 </script>

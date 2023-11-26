@@ -1,163 +1,196 @@
 <template>
   <div class="container shedule">
-    
-      <div>
-        <span class="shedule__title">Мастер: </span
-        ><span class="shedule__value">{{ getSelectMasterName }}</span>
-      </div>
-      <div>
-        <span class="shedule__title">Услуга: </span
-        ><span class="shedule__value">{{ getSelectService.title }}</span>
-      </div>
-      <div>
-        <span class="shedule__title">Длительность: </span
-        ><span class="shedule__value">{{ getSelectService.duration }} мин</span>
-      </div>
-      <div>
-        <span class="shedule__title">Цена: </span
-        ><span class="shedule__value">{{ getSelectService.price }} руб.</span>
-      </div>
+    <div>
+      <span class="shedule__title">Мастер: </span
+      ><span class="shedule__value">{{
+        CURRENT_MASTER ? CURRENT_MASTER.name : "Любой мастер"
+      }}</span>
+    </div>
+    <div>
+      <span class="shedule__title">Услуга: </span
+      ><span class="shedule__value">{{ CURRENT_SERVICE.title }}</span>
+    </div>
+    <div>
+      <span class="shedule__title">Длительность: </span
+      ><span class="shedule__value">{{ CURRENT_SERVICE.duration }} мин</span>
+    </div>
+    <div>
+      <span class="shedule__title">Цена: </span
+      ><span class="shedule__value">{{ CURRENT_SERVICE.price }} руб.</span>
+    </div>
 
-      <div v-if="showSelectMaster" class="shedule__select">
-        <div class="shedule__title">Выберите мастера:</div>
+    <div v-if="showSelectMaster" class="shedule__select">
+      <div class="shedule__title">Выберите мастера:</div>
+      <button
+        @click="setCurrentMaster(master.id)"
+        v-for="master in MASTERS"
+        :key="master.id"
+        class="button-simple button-shedule"
+        :class="CURRENT_MASTER?.id === master.id ? 'active' : ''"
+      >
+        {{ master.name }}
+      </button>
+    </div>
+
+    <div v-if="MASTERS.length === 0" class="shedule__box">
+      <p class="shedule__message">
+        Извините, запись на выбранную услугу в данный момент невозможна
+      </p>
+      <router-link to="/shedule/service" class="button-simple button-link"
+        >К выбору услуг</router-link
+      >
+    </div>
+
+    <div v-if="CURRENT_MASTER">
+      <label for="dateAppointment" class="shedule__title"
+        >Выберите дату:
+      </label>
+      <input type="date" id="dateAppointment" v-model.lazy="selectedDate" />       
+    </div>
+
+    <div v-if="selectedDate && validDate" class="shedule__select">
+      <div class="shedule__title">Выберите время для записи:</div>
+      <div v-if="CURRENT_MASTER" class="buttons-time-box">
         <button
-          @click="masterId = master.id"
-          v-for="master in getAvailableMasters"
-          :key="master.id"
-          class="button-simple button-shedule"
-          :class="masterId === master.id ? 'active' : ''"
+          v-for="time in getFreeTime"
+          :key="time.index"
+          @click="selectedTime = time"
+          class="button-simple button-shedule button-time"
+          :class="selectedTime === time ? 'active' : ''"
         >
-          {{ master.name }}
+          {{ time.getHours() }} : {{ time.getMinutes() < 10 ? 0 : ""
+          }}{{ time.getMinutes() }}
         </button>
       </div>
+    </div>
 
-      <div v-if="getAvailableMasters.length === 0" class="shedule__box">
-        <p class="shedule__message">Извините, запись на выбранную услугу в данный момент невозможна</p>
-        <router-link to="/main" class="button-simple button-link"
-          >На главную</router-link
-        >
-      </div>
+    <div>
+      <p v-if="getFreeTime?.length === 0" class="shedule__message">
+        Извините, к выбранному мастеру {{ selectedDate }} запись невозможна.
+        Попробуйте выбрать другой день
+      </p>
+      <p v-if="!validDate" class="shedule__message"> Извините, на выбранную дату запись невозможна </p>
+    </div>
 
-      <div v-if="masterId">
-        <label for="dateAppointment" class="shedule__title"
-          >Выберите дату:
-        </label>
-        <input type="date" id="dateAppointment" v-model.lazy="selectedDate" />
-      </div>
-
-      <div v-if="selectedDate" class="shedule__select">
-        <div class="shedule__title">Выберите время для записи:</div>
-        <div v-if="masterId" class="buttons-time-box">
-          <button
-            v-for="time in getFreeTime"
-            :key="time.index"
-            @click="selectedTime = time"
-            class="button-simple button-shedule button-time"
-            :class="selectedTime === time ? 'active' : ''"
-          >
-            {{ time.getHours() }} : {{ time.getMinutes() < 10 ? 0 : ""
-            }}{{ time.getMinutes() }}
-          </button>
-        </div>
-      </div>
-
-      <div>
-        <p v-if="getFreeTime?.length === 0" class="shedule__message">
-          Извините, к выбранному мастеру {{ selectedDate }} запись невозможна.
-          Попробуйте выбрать другой день
-        </p>
-      </div>
-
-      
-        <div v-if="selectedTime">
-        <span class="shedule__title">Выбранная дата: </span
-        ><span class="shedule__value">{{ selectedDate }} </span>
-        <span class="shedule__title">Выбранное время: </span
-        ><span class="shedule__value">{{ selectedTime.getHours() }} :
+    <div v-if="selectedTime">
+      <span class="shedule__title">Выбранная дата: </span
+      ><span class="shedule__value">{{ selectedDate }} </span>
+      <span class="shedule__title">Выбранное время: </span
+      ><span class="shedule__value"
+        >{{ selectedTime.getHours() }} :
         {{ selectedTime.getMinutes() < 10 ? 0 : ""
-        }}{{ selectedTime.getMinutes() }}</span>
-      </div>
-         
-         
-      
-      <router-link
-      v-if="selectedDate && selectedTime"
-        :to="`/shedule/master/${masterId}/${serviceId}/${selectedDate}_${selectedTime.getHours()}:${
-          selectedTime.getMinutes() < 10 ? 0 : ''
-        }${selectedTime.getMinutes()}`" 
-        class="button-simple button-link"       
+        }}{{ selectedTime.getMinutes() }}</span
       >
-        <span @click="addNewShedule()">Записаться</span>
-      </router-link>
+    </div>
 
-    
+    <button
+      v-if="selectedDate && selectedTime"
+      :to="`/shedule/master/${CURRENT_MASTER.id}/${
+        CURRENT_SERVICE.id
+      }/${selectedDate}_${selectedTime.getHours()}:${
+        selectedTime.getMinutes() < 10 ? 0 : ''
+      }${selectedTime.getMinutes()}`"
+      class="button-simple button-link"
+      @click="addNewShedule()"
+    >
+      Записаться
+    </button>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
-import axios from "axios";
-
 
 export default {
   name: "MakeAppointment",
-  
 
   data() {
     return {
-      masterId: +this.$route.params.idMaster,
-      serviceId: +this.$route.params.idService,
       selectedDate: null,
-      selectedTime: null,
-      userId: this.$store.state.auth.user.id,
+      selectedTime: null,      
       isFreeTime: true,
+      
     };
+  },
+  watch: {
+    selectedDate: function(){
+      if(this.validDate){
+        const param = {date: this.selectedDate, id: this.CURRENT_MASTER.id}
+    this.$store.dispatch(
+      "GET_SHEDULE_BY_DATE_AND_MASTER",
+      param
+    );
+      }
+    
+    }
   },
 
   computed: {
-    ...mapGetters([
-      "GET_MASTERS",
-      "getServerUrl",
-      "GET_SERVICES",
-      "GET_SHEDULE",
-      "GET_FREE_SHEDULE_OF_MASTER",
+    ...mapGetters([ 
+      "CURRENT_MASTER",
+      "CURRENT_SERVICE",
+      "GET_MASTERS_BY_GROUP",
+      "MASTERS",
+      "SHEDULE",
+      "SERVICE_BY_ID",
       "GET_SERVICE_FOR_ID",
-      "GET_MASTERS_FOR_GROUPServ",
     ]),
+
     currentUser() {
       return this.$store.state.auth.user;
     },
-
+    validDate(){
+      if(!this.selectedDate){
+        return true;
+      }
+      let select = new Date(`${this.selectedDate}`).getTime();
+      let now = new Date().getTime();
+      if(select > now){
+        return true;
+      } else {
+        return false;
+      }
+    },
     getFreeTime() {
       if (!this.selectedDate) {
         return null;
       }
-      // Получаем свободное время у мастера
-      const sheduleMasterOfSelectDay = this.GET_FREE_SHEDULE_OF_MASTER(
-        this.selectedDate,
-        this.masterId
-      );
+      // Получаем расписание у мастера на выбранную дату      
+      // const param = {date: this.selectedDate, id: this.CURRENT_MASTER.id}
+      // const sheduleMasterOfSelectDay = await this.$store.dispatch(
+      //   "GET_SHEDULE_BY_DATE_AND_MASTER",
+      //   param        
+      // );
+
+      //  const sheduleMasterOfSelectDay = this.GET_FREE_SHEDULE_OF_MASTER(
+      //   this.selectedDate,
+      //   this.masterId
+      // );
       const freeTimeList = [];
       const offTimeList = [];
 
       // Время начала и окончания работы мастеров
       let startTime = new Date(`${this.selectedDate} 10:00`);
       let finishTime = new Date(`${this.selectedDate} 20:00`);
-
-      const selectServiceDuration = this.getSelectService.duration / 30 - 1;
+      
+      const selectServiceDuration = this.CURRENT_SERVICE.duration / 30 - 1;
       // Формирование списка занятого времени у мастера, с учетом длительности услуг
-      sheduleMasterOfSelectDay.forEach((el) => {
-        let offTime = new Date(`${el.dateAppointment} ${el.timeAppointment}`);
-        const findOffTimeForService =
-          this.GET_SERVICE_FOR_ID(el.serviceId).duration / 30;
+      
+      this.SHEDULE.forEach((el) => {
+        let offTime = new Date(`${el.date} ${el.time}`);    
+        
+        
+        // длительность услуги, уже присутствующей в расписании
+        
+        const findOffTimeForService = this.GET_SERVICE_FOR_ID(el.serviceId).duration / 30;
+
         for (let i = 0; i < findOffTimeForService; i++) {
           offTimeList.push(offTime.getTime());
           offTime.setMinutes(offTime.getMinutes() + 30);
         }
+        
         // необходимо вычеркнуть длительность выбранной для записи услуги перед занятым временем мастера, чтобы не пересекалась новая и старая запись
-        let offTimeForSelectServiceDuration = new Date(
-          `${el.dateAppointment} ${el.timeAppointment}`
-        );
+        let offTimeForSelectServiceDuration = new Date(`${el.date} ${el.time}`);
         offTimeForSelectServiceDuration.setMinutes(
           offTimeForSelectServiceDuration.getMinutes() - 30
         );
@@ -168,7 +201,6 @@ export default {
           );
         }
       });
-
       // Формирование списка времени для возможной записи
       while (startTime.getTime() < finishTime.getTime()) {
         freeTimeList.push(new Date(startTime.getTime()));
@@ -184,31 +216,18 @@ export default {
 
       return freeTimeList.filter((el) => !offTimeList.includes(el.getTime()));
     },
-
-    getSelectMasterName() {
-      if (this.masterId) {
-        return this.GET_MASTERS.find((el) => el.id === this.masterId).name;
-      } else {
-        return "Любой мастер";
-      }
-    },
-    getSelectService() {
-      return this.GET_SERVICES.find((el) => el.id === this.serviceId);
-    },
-    getAvailableMasters() {
-      return this.GET_MASTERS_FOR_GROUPServ(
-        this.getSelectService.groupServiceId
-      );
-    },
+    // проверка, если переход был с выбора услуги, то надо показывать панель мастеров
     showSelectMaster() {
-      const templatePath = `/shedule/service/${this.serviceId}`;
+      const templatePath = `/shedule/service/${this.CURRENT_SERVICE.id}`;
       return this.$route.path === templatePath;
     },
+    
   },
   methods: {
-    ...mapMutations(["SET_MASTERS", "ADD_NEW_SHEDULE", "SET_SHEDULE"]),
+    ...mapMutations(["SET_MASTERS", "ADD_NEW_SHEDULE", "SET_SHEDULE"]),   
+    
+
     addNewShedule() {
-      console.log("add new shedule");
       const newShedule = {
         date: `${this.selectedTime.getFullYear()}-${
           this.selectedTime.getMonth() + 1
@@ -218,35 +237,34 @@ export default {
         time: `${this.selectedTime.getHours()}:${
           this.selectedTime.getMinutes() < 10 ? 0 : ""
         }${this.selectedTime.getMinutes()}:00`,
-        user_id: this.userId,
-        master_id: this.masterId,
-        service_id: this.serviceId,
-      };
-      console.log(newShedule);
-      axios
-        .post(`${this.getServerUrl}/shedule`, newShedule)
-        .then((e) => console.log(e.data));
-      // this.ADD_NEW_SHEDULE(newShedule);
+        user_id: this.currentUser.id,
+        master_id: this.CURRENT_MASTER.id,
+        service_id: this.CURRENT_SERVICE.id,
+      };      
+      this.$store.dispatch("CREATE_SHEDULE", newShedule);
+      this.$router.push({ path: `/shedule/master/${this.CURRENT_MASTER.id}/${
+        this.CURRENT_SERVICE.id
+      }/${this.selectedDate}_${this.selectedTime.getHours()}:${
+        this.selectedTime.getMinutes() < 10 ? 0 : ''
+      }${this.selectedTime.getMinutes()}` });
+    },
+
+    setCurrentMaster(idMaster) {
+      this.$store.dispatch("GET_MASTER_BY_ID", idMaster);
+      this.selectedDate = null;
     },
   },
 
   mounted() {
-    axios.get(`${this.getServerUrl}/shedule`).then((res) => {
-      const data = [];
-      res.data.forEach((element) => {
-        data.push({
-          id: element.id,
-          dateAppointment: element.date,
-          timeAppointment: element.time,
-          userId: element.user_id,
-          masterId: element.master_id,
-          serviceId: element.service_id,
-        });
-      });
-      this.SET_SHEDULE(data);
-    });
+    this.$store.dispatch(
+      "GET_MASTERS_BY_GROUP",
+      this.CURRENT_SERVICE.groupServiceId
+    );   
+     
   },
-};
+
+  
+}
 </script>
 
 <style lang="scss" scoped>
@@ -278,7 +296,7 @@ export default {
     border: 1px solid #cdaa7d;
   }
 }
-.shedule__message{
+.shedule__message {
   margin-bottom: 30px;
   color: $color-hover;
 }

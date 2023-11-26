@@ -52,7 +52,7 @@
 
 <script>
 export default {
-  name: "WorkspaceJsonFooterBlock",
+  name: "FooterBlock",
   props: ["isShow"],
   data() {
     return {};
