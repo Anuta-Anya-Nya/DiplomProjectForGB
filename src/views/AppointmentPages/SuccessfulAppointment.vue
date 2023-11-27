@@ -7,7 +7,7 @@
       нашем салоне
     </p>
     <p class="shedule__value shedule__title">
-      {{ selectedDate }} в {{ selectedTime }}
+      {{ printDate(selectedDate) }} в {{ selectedTime }}
     </p>
     <button @click="cleanCurrentValue()" class="subscribeBtn button-margin">
       Вернуться на главную
@@ -17,6 +17,8 @@
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
+import utils from "../../services/utils";
+
 export default {
   name: "SuccessfulAppointment",
   data() {
@@ -42,6 +44,10 @@ export default {
       "SET_CURRENT_MASTER",
       "SET_SHEDULE",
     ]),
+
+    printDate(date){
+      return utils.printDate(date);
+    },
 
     cleanCurrentValue() {
       this.SET_CURRENT_MASTER(null);
