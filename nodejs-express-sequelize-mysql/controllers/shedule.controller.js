@@ -33,22 +33,6 @@ exports.create = (req, res) => {
         });
 };
 
-// exports.findAll = (req, res) => {
-//     const date = req.query.date;
-//     var condition = date ? { date: { [Op.like]: `%${date}%` } } : null;
-
-//     Shedule.findAll({ where: condition })
-//         .then(data => {
-//             res.send(data);
-//         })
-//         .catch(err => {
-//             res.status(500).send({
-//                 message:
-//                     err.message || "Some error occurred while retrieving Service."
-//             });
-//         });
-// };
-
 exports.findAll = (req, res) => {
     const date = req.query.date;
     const master_id = req.query.master_id;
@@ -88,3 +72,44 @@ exports.findOne = (req, res) => {
             });
         });
 };
+
+exports.findUserShedule = (req, res) => {
+    const user_id = req.query.user_id;
+
+    Shedule.findAll({ where: { user_id: user_id }, })
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving Shedule."
+            });
+        });
+};
+
+exports.delete = (req, res) => {
+    const id = req.params.id;
+
+    Shedule.destroy({
+        where: { id: id }
+    })
+        .then(num => {
+            if (num == 1) {
+                res.send({
+                    message: "Shedule was deleted successfully!"
+                });
+            } else {
+                res.send({
+                    message: `Cannot delete Shedule with id=${id}. Maybe Shedule was not found!`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Could not delete Tutorial with id=" + id
+            });
+        });
+};
+
+

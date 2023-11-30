@@ -14,6 +14,15 @@ class SheduleService {
     createShedule(data) {
         return axios.post(API_URL, data);
     }
+
+    getSheduleByUser(userId){
+        return axios.get(API_URL + `/userShedule/list?user_id=${userId}`)
+
+    }
+
+    deleteSheduleById(sheduleId){
+        return axios.delete(API_URL + `/userShedule/list/${sheduleId}`)
+    }
 }
 
 export default new SheduleService();
