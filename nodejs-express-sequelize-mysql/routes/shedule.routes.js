@@ -12,5 +12,7 @@ module.exports = app => {
     //Retrieve a single shedule with id
     router.get("/:id", shedule.findOne);
 
+    router.get("/userShedule", shedule.findAll);
+
     app.use('/api/shedule', router);
 };

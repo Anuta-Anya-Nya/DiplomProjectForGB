@@ -6,10 +6,10 @@ module.exports = app => {
     // Create a new Master
     router.post("/", masters.create);
 
-    // Retrieve all Tutorials
+    // Retrieve all Master
     router.get("/", masters.findAll);
 
-    // Retrieve a single Tutorial with id
+    // Retrieve a single Master with id
     router.get("/:id", masters.findOne);
 
     app.use('/api/masters', router);
