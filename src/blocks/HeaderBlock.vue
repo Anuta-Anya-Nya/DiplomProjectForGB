@@ -6,16 +6,19 @@
       </a>
       <li class="menu-item">
         <router-link to="/main" class="menu-link menu-border"
+        
           >Главная</router-link
         >
       </li>
       <li class="menu-item">
         <router-link to="/masters" class="menu-link menu-border"
+        :class="currentPath==='/masters'? 'menu-active' : ''"
           >Мастера</router-link
         >
       </li>
       <li class="menu-item">
         <router-link to="/price" class="menu-link menu-border"
+        :class="currentPath==='/price'? 'menu-active' : ''"
           >Стоимость</router-link
         >
       </li>
@@ -26,37 +29,44 @@
       </li>
       <li class="menu-item">
         <router-link to="/promo" class="menu-link menu-border"
+        :class="currentPath==='/promo'? 'menu-active' : ''"
           >Акции</router-link
         >
       </li>
       <li class="menu-item">
         <router-link to="/shedule" class="menu-link menu-border"
+        :class="currentPath==='/shedule'? 'menu-active' : ''"
           >Записаться</router-link
         >
       </li>
 
       <li v-if="showAdminBoard" class="menu-item">
         <router-link to="/admin" class="menu-link menu-border"
+        :class="currentPath==='/admin'? 'menu-active' : ''"
           >Администратор</router-link
         >
       </li>
       <li v-if="showModeratorBoard" class="menu-item">
         <router-link to="/master" class="menu-link menu-border"
+        :class="currentPath==='/master'? 'menu-active' : ''"
           >Записи ко мне</router-link
         >
       </li>
       <li v-if="!showAdminBoard && !showModeratorBoard" class="menu-item">
         <router-link to="/contacts" class="menu-link menu-border"
+        :class="currentPath==='/contacts'? 'menu-active' : ''"
           >Контакты</router-link
         >
       </li>
       <li v-if="currentUser" class="menu-item">
-        <router-link to="/profile" class="menu-link">
+        <router-link to="/profile" class="menu-link" 
+        :class="currentPath==='/profile'? 'menu-active' : ''" >          
           <i class="fa-solid fa-user head-icon"></i>
         </router-link>
       </li>
       <li v-if="!currentUser" class="menu-item">
-        <router-link to="/login" class="menu-link">
+        <router-link to="/login" class="menu-link"
+        :class="currentPath==='/login'? 'menu-active' : ''" >
           <i class="fa-solid fa-user-plus head-icon"></i>
         </router-link>
       </li>
@@ -93,6 +103,10 @@ export default {
       }
       return false;
     },
+    currentPath() {     
+      const currentMenu =  this.$route.path.split("/");
+      return `/${currentMenu[1]}`;
+    },
   },
 };
 </script>
@@ -123,6 +137,9 @@ export default {
   line-height: 23px;
   border: 1px solid transparent;
   transition: all 0.3s;
+}
+.menu-active {
+  color: $color-hover;
 }
 
 .head-icon {
