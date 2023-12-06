@@ -20,6 +20,7 @@ import LoginPage from '../views/AccountPages/LoginPage.vue';
 import RegisterPage from '../views/AccountPages/RegisterPage.vue';
 import AdminBoard from '../views/AdminBoard/AdminBoard.vue';
 import SheduleUser from '../views/AccountPages/SheduleUser.vue';
+import MasterBoard from '../views/MasterBoard/MasterBoard.vue';
 
 Vue.use(VueRouter)
 
@@ -129,6 +130,13 @@ const routes = [
     }
   },
   {
+    path: '/master',
+    component: MasterBoard,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
     path: '/userShedule',
     component: SheduleUser
   },
@@ -147,7 +155,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    
+
     if (store.state.auth.user) {
       next()
       return

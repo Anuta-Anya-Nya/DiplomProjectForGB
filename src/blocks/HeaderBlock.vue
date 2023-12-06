@@ -40,7 +40,12 @@
           >Администратор</router-link
         >
       </li>
-      <li v-if="!showAdminBoard" class="menu-item">
+      <li v-if="showModeratorBoard" class="menu-item">
+        <router-link to="/master" class="menu-link menu-border"
+          >Записи ко мне</router-link
+        >
+      </li>
+      <li v-if="!showAdminBoard && !showModeratorBoard" class="menu-item">
         <router-link to="/contacts" class="menu-link menu-border"
           >Контакты</router-link
         >
@@ -54,7 +59,7 @@
         <router-link to="/login" class="menu-link">
           <i class="fa-solid fa-user-plus head-icon"></i>
         </router-link>
-      </li>      
+      </li>
     </nav>
     <h1 v-show="isShow" class="header__title">
       Салон красоты "Штаб бессовестно красивых"
@@ -79,6 +84,12 @@ export default {
     showAdminBoard() {
       if (this.currentUser && this.currentUser.roles) {
         return this.currentUser.roles.includes("ROLE_ADMIN");
+      }
+      return false;
+    },
+    showModeratorBoard() {
+      if (this.currentUser && this.currentUser.roles) {
+        return this.currentUser.roles.includes("ROLE_MODERATOR");
       }
       return false;
     },
