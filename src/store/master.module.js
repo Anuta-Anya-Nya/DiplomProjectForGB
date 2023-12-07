@@ -12,7 +12,10 @@ export const masterStore = {
         },
         CURRENT_MASTER(state) {
             return state.currentMaster;
-        }
+        },
+        MASTER_BY_ID: state => id => {
+            return state.masters.find(master => master.id === id);
+        }        
     },
     mutations: {
         SET_MASTERS(state, mastersList) {
