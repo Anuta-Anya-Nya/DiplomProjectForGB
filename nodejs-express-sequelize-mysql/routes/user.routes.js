@@ -26,9 +26,9 @@ module.exports = function(app) {
   );
 
   app.get(
-    "/api/test/mod",
-    [authJwt.verifyToken, authJwt.isModerator],
-    controller.moderatorBoard
+    "/api/test/master",
+    [authJwt.verifyToken, authJwt.isMaster],
+    controller.masterBoard
   );
 
   app.get(

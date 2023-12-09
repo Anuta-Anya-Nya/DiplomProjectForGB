@@ -72,3 +72,21 @@ exports.findOne = (req, res) => {
             });
         });
 };
+// Find a single Master with an id
+exports.findByNameAndPhone = (req, res) => {
+    const name = req.query.name;
+    const phone = req.query.phone;
+
+    var condition = name && phone ? { [Op.and]: [{ master_name: `${name}` }, { phone: phone }] } : null;
+
+    Master.findAll({ where: condition })
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving masters."
+            });
+        });
+};

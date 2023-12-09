@@ -12,5 +12,7 @@ module.exports = app => {
     // Retrieve a single Master with id
     router.get("/:id", masters.findOne);
 
+    router.get("/masterlk/master", masters.findByNameAndPhone);
+
     app.use('/api/masters', router);
 };

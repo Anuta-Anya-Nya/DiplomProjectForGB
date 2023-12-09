@@ -63,26 +63,4 @@ app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
 });
 
-//   Now let’s run the app with command: node server.js.
-// Open your browser with url http://localhost:8080/, you will see:
 
-// db.sequelize.sync();
-// db.sequelize.sync({ force: true }).then(() => {
-//     console.log("Drop and re-sync db.");
-// });
-// function initial() {
-//     Role.create({
-//       id: 1,
-//       name: "user"
-//     });
-   
-//     Role.create({
-//       id: 2,
-//       name: "moderator"
-//     });
-   
-//     Role.create({
-//       id: 3,
-//       name: "admin"
-//     });
-//   }

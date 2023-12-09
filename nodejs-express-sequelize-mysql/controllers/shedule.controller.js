@@ -38,8 +38,7 @@ exports.findAll = (req, res) => {
     const master_id = req.query.master_id;
 
     var condition = date && master_id ? { [Op.and]: [{ date: `${date}` }, { master_id: master_id }] } : null;
-    // var condition1 = date ? { date: { [Op.like]: `%${date}%` } } : null;
-    // var condition2 = master_id ? { master_id: { [Op.like]: `%${master_id}%` } } : null;
+    
 
     Shedule.findAll({ where: condition })
         .then(data => {

@@ -46,13 +46,13 @@
           >Администратор</router-link
         >
       </li>
-      <li v-if="showModeratorBoard" class="menu-item">
+      <li v-if="showMasterBoard" class="menu-item">
         <router-link to="/master" class="menu-link menu-border"
         :class="currentPath==='/master'? 'menu-active' : ''"
           >Записи ко мне</router-link
         >
       </li>
-      <li v-if="!showAdminBoard && !showModeratorBoard" class="menu-item">
+      <li v-if="!showAdminBoard && !showMasterBoard" class="menu-item">
         <router-link to="/contacts" class="menu-link menu-border"
         :class="currentPath==='/contacts'? 'menu-active' : ''"
           >Контакты</router-link
@@ -97,9 +97,9 @@ export default {
       }
       return false;
     },
-    showModeratorBoard() {
+    showMasterBoard() {
       if (this.currentUser && this.currentUser.roles) {
-        return this.currentUser.roles.includes("ROLE_MODERATOR");
+        return this.currentUser.roles.includes("ROLE_MASTER");
       }
       return false;
     },

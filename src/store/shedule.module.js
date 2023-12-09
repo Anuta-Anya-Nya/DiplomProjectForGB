@@ -76,5 +76,18 @@ export const sheduleStore = {
                     console.log(e);
                 });
         },
+        // GET_SHEDULE_BY_DATE_AND_MASTER_FOR_LK: async (context, param) => {  
+        //     await this.$store.dispatch("GET_SHEDULE_BY_DATE_AND_MASTER", param);         
+        //     shedulesService.getShedulesByDateAndMaster(param).then((res) => {
+        //         const data = [];
+        //         res.data.forEach((element) => {
+        //             data.push(new Shedule(element.id, element.date, element.time, element.user_id, element.master_id, element.service_id));
+        //         });
+        //         context.commit('SET_SHEDULE', data);
+        //     })
+        //         .catch((e) => {
+        //             console.log(e);
+        //         });
+        // },
     },
 }
