@@ -67,7 +67,7 @@ export const masterStore = {
         GET_MASTER_BY_NAME_AND_PHONE: async (context, params) => {
                 return new Promise((resolve)=> {
                     masterService.getMasterByNameAndPhone(params).then((res) => {
-                const master = new Master(res.data[0].id, res.data[0].master_name, res.data[0].birthdate, res.data[0].phone, res.data[0].position, res.data[0].photo, res.data[0].about_text, res.data[0].group_service_id)
+                const master = new Master(res.data.id, res.data.master_name, res.data.birthdate, res.data.phone, res.data.position, res.data.photo, res.data.about_text, res.data.group_service_id)
                 context.commit('SET_MASTER_ACCOUNT', master); 
                 resolve(master);
                 })
