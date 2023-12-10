@@ -13,8 +13,23 @@
         <router-link to="/userShedule" class="account__link button-simple"
           >Мои записи</router-link
         >
-        <router-link to="/shedule" class="account__link button-simple"
+        <router-link
+          v-if="!showAdminBoard && !showMasterBoard"
+          to="/shedule"
+          class="account__link button-simple"
           >Записаться</router-link
+        >
+        <router-link
+          v-if="showMasterBoard"
+          to="/master"
+          class="account__link button-simple"
+          >Записи ко мне</router-link
+        >
+        <router-link
+          v-if="showAdminBoard"
+          to="/admin"
+          class="account__link button-simple"
+          >Админ</router-link
         >
       </div>
       <a @click="logOut" class="account__link button-simple" href="#">
@@ -34,6 +49,18 @@ export default {
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
+    },
+    showMasterBoard() {
+      if (this.currentUser && this.currentUser.roles) {
+        return this.currentUser.roles.includes("ROLE_MASTER");
+      }
+      return false;
+    },
+    showAdminBoard() {
+      if (this.currentUser && this.currentUser.roles) {
+        return this.currentUser.roles.includes("ROLE_ADMIN");
+      }
+      return false;
     },
   },
   mounted() {
