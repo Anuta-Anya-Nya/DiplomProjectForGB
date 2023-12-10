@@ -27,7 +27,7 @@ export const sheduleStore = {
             shedulesService.getAllShedule().then((res) => {
                 const data = [];
                 res.data.forEach((element) => {
-                    data.push(new Shedule(element.id, element.date, element.time, element.user_id, element.master_id, element.service_id));
+                    data.push(new Shedule(element.id, element.date, element.time, element.userId, element.masterId, element.serviceId));
                 });
                 context.commit('SET_SHEDULE', data);
             })
@@ -39,7 +39,7 @@ export const sheduleStore = {
             shedulesService.getShedulesByDateAndMaster(param).then((res) => {
                 const data = [];
                 res.data.forEach((element) => {
-                    data.push(new Shedule(element.id, element.date, element.time, element.user_id, element.master_id, element.service_id));
+                    data.push(new Shedule(element.id, element.date, element.time, element.userId, element.masterId, element.serviceId));
                 });
                 context.commit('SET_SHEDULE', data);
             })
@@ -59,7 +59,7 @@ export const sheduleStore = {
             shedulesService.getSheduleByUser(userId).then((res) => {
                 const data = [];
                 res.data.forEach((element) => {
-                    data.push(new Shedule(element.id, element.date, element.time, element.user_id, element.master_id, element.service_id));
+                    data.push(new Shedule(element.id, element.date, element.time, element.userId, element.masterId, element.serviceId));
                 });
                 context.commit('SET_SHEDULE', data);
             })

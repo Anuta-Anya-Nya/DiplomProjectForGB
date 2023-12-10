@@ -8,7 +8,7 @@ class SheduleService {
     }
     
     getShedulesByDateAndMaster(param) {
-        return axios.get(API_URL + `?date=${param.date}&master_id=${param.id}`);
+        return axios.get(API_URL + `?date=${param.date}&masterId=${param.id}`);
     }
 
     createShedule(data) {
@@ -16,7 +16,7 @@ class SheduleService {
     }
 
     getSheduleByUser(userId){
-        return axios.get(API_URL + `/userShedule/list?user_id=${userId}`)
+        return axios.get(API_URL + `/userShedule/list?userId=${userId}`)
 
     }
 

@@ -8,7 +8,7 @@
     </div>
     <div>
       <p v-for="item in SHEDULE" :key="item.id">
-        {{ item.time }} {{ item.userId }} на {{ item.serviceId }}
+        {{ item.time }} {{ item.user.name }} на {{ item.serviceId }}
       </p>
     </div>
     <div v-if="!MASTER_ACCOUNT">
@@ -36,7 +36,7 @@ export default {
     this.$store.dispatch("GET_MASTER_BY_NAME_AND_PHONE", param).then((res) => {
       console.log(res);
       this.$store.dispatch("GET_SHEDULE_BY_DATE_AND_MASTER", {
-        date: utils.getDate(new Date()),        
+        date: utils.getDate(new Date()),
         id: res.id,
       });
     });

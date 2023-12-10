@@ -11,7 +11,6 @@
 const db = require("../models");
 const config = require("../config/auth.config");
 const User = db.user;
-const Master = db.masters;
 const Role = db.role;
 
 const Op = db.Sequelize.Op;
@@ -85,10 +84,8 @@ exports.signin = (req, res) => {
                     expiresIn: 86400, // 24 hours
                 });
 
-            var authorities = [];    
+            var authorities = [];         
             
-            
-
             user.getRoles().then(roles => {
                 for (let i = 0; i < roles.length; i++) {
                     authorities.push("ROLE_" + roles[i].name.toUpperCase());                    

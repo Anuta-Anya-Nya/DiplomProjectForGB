@@ -181,9 +181,7 @@ export default {
 
         // необходимо вычеркнуть длительность выбранной для записи услуги перед занятым временем мастера, чтобы не пересекалась новая и старая запись
         let busyTimeOfSelectServ = new Date(`${el.date} ${el.time}`);
-        busyTimeOfSelectServ.setMinutes(
-          busyTimeOfSelectServ.getMinutes() - 30
-        );
+        busyTimeOfSelectServ.setMinutes(busyTimeOfSelectServ.getMinutes() - 30);
         for (let i = 0; i < selectServiceDuration; i++) {
           busyTimeList.push(busyTimeOfSelectServ.getTime());
           busyTimeOfSelectServ.setMinutes(
@@ -234,9 +232,9 @@ export default {
       const newShedule = {
         date: this.getDate(this.selectedTime),
         time: this.printTime(this.selectedTime),
-        user_id: this.currentUser.id,
-        master_id: this.CURRENT_MASTER.id,
-        service_id: this.CURRENT_SERVICE.id,
+        userId: this.currentUser.id,
+        masterId: this.CURRENT_MASTER.id,
+        serviceId: this.CURRENT_SERVICE.id,
       };
 
       this.$store.dispatch("CREATE_SHEDULE", newShedule);

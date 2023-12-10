@@ -94,7 +94,7 @@ exports.findByNameAndPhone = (req, res) => {
     const name = req.query.name;
     const phone = req.query.phone;
 
-    var condition = name && phone ? { [Op.and]: [{ master_name: `${name}` }, { phone: phone }] } : null;
+    var condition = { [Op.and]: [{ master_name: `${name}` }, { phone: phone }] };
 
     Master.findOne({ where: condition })
         .then(data => {

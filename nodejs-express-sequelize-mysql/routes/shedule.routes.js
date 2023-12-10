@@ -14,6 +14,10 @@ module.exports = app => {
 
     router.get("/userShedule/list", shedule.findUserShedule);
 
+    router.get("/masterShedule/list", shedule.findAllSheduleForMaster);
+
+    router.get("/adminShedule/list", shedule.findAllSheduleForAdmin);
+
     router.delete("/userShedule/list/:id", shedule.delete);
 
     app.use('/api/shedule', router);

@@ -1,5 +1,8 @@
 const db = require("../models");
 const Shedule = db.shedules;
+const User = db.user;
+const Master = db.masters;
+const Service = db.services;
 const Op = db.Sequelize.Op;
 
 
@@ -15,12 +18,10 @@ exports.create = (req, res) => {
     const shedule = {
         date: req.body.date,
         time: req.body.time,
-        user_id: req.body.user_id,
-        master_id: req.body.master_id,
-        service_id: req.body.service_id
+        userId: req.body.userId,
+        masterId: req.body.masterId,
+        serviceId: req.body.serviceId
     };
-
-
     Shedule.create(shedule)
         .then(data => {
             res.send(data);
@@ -33,14 +34,14 @@ exports.create = (req, res) => {
         });
 };
 
+
 exports.findAll = (req, res) => {
     const date = req.query.date;
-    const master_id = req.query.master_id;
-
-    var condition = date && master_id ? { [Op.and]: [{ date: `${date}` }, { master_id: master_id }] } : null;
-    
-
-    Shedule.findAll({ where: condition })
+    const masterId = req.query.masterId;
+    var condition = date && masterId ? { [Op.and]: [{ date: `${date}` }, { master_id: masterId }] } : null;
+    Shedule.findAll({
+        where: condition
+    })
         .then(data => {
             res.send(data);
         })
@@ -54,7 +55,6 @@ exports.findAll = (req, res) => {
 
 exports.findOne = (req, res) => {
     const id = req.params.id;
-
     Shedule.findByPk(id)
         .then(data => {
             if (data) {
@@ -73,9 +73,62 @@ exports.findOne = (req, res) => {
 };
 
 exports.findUserShedule = (req, res) => {
-    const user_id = req.query.user_id;
+    const userId = req.query.userId;
 
-    Shedule.findAll({ where: { user_id: user_id }, })
+    Shedule.findAll({ where: { userId: userId }, })
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving Shedule."
+            });
+        });
+};
+
+exports.findAllSheduleForAdmin = (req, res) => {
+    const date = req.query.date;    
+    
+    Shedule.findAll({
+        where: { date: date }, include: [{
+            model: User,
+            attributes: ['name', 'phone']
+        }, 
+        {
+            model: Master,
+            attributes: ['master_name', 'position']
+        }, 
+        {
+            model: Service,
+            attributes: ['title', 'duration', 'price']
+        }]
+    })
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving Shedule."
+            });
+        });
+};
+
+exports.findAllSheduleForMaster = (req, res) => {
+    const date = req.query.date;
+    const masterId = req.query.masterId;
+    var condition = date && masterId ? { [Op.and]: [{ date: `${date}` }, { masterId: masterId }] } : null;
+    Shedule.findAll({
+        where: condition, include: [{
+            model: User,
+            attributes: ['name']
+        },         
+        {
+            model: Service,
+            attributes: ['title']
+        }]
+    })
         .then(data => {
             res.send(data);
         })
@@ -110,5 +163,22 @@ exports.delete = (req, res) => {
             });
         });
 };
+
+
+
+// exports.findAll = (req, res) => {
+
+//     Shedule.findAll({ include: User })
+//         .then(data => {
+//             console.log('data', JSON.stringify(data, null, 2))
+//             res.send(data);
+//         })
+//         .catch(err => {
+//             res.status(500).send({
+//                 message:
+//                     err.message || "Some error occurred while retrieving Shedule."
+//             });
+//         });
+// };
 
 

@@ -6,13 +6,13 @@ module.exports = (sequelize, Sequelize) => {
     time: {
       type: Sequelize.STRING
     },
-    user_id: {
+    userId: {
       type: Sequelize.INTEGER
     },
-    master_id: {
+    masterId: {
       type: Sequelize.INTEGER
     },
-    service_id: {
+    serviceId: {
       type: Sequelize.INTEGER
     }
   });

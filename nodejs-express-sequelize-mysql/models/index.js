@@ -38,4 +38,13 @@ db.user.belongsToMany(db.role, {
 db.ROLES = ["user", "admin", "moderator"];
 
 
-module.exports = db;
+db.user.hasMany(db.shedules);
+db.shedules.belongsTo(db.user);
+
+db.masters.hasMany(db.shedules);
+db.shedules.belongsTo(db.masters);
+
+db.services.hasMany(db.shedules);
+db.shedules.belongsTo(db.services);
+
+module.exports = db; 
