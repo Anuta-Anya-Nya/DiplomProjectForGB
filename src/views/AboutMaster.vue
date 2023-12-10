@@ -35,13 +35,10 @@ export default {
 
   computed: {
     ...mapGetters(["CURRENT_MASTER"]),
-
-    masterID() {
-      return +this.$route.params.masterID;
-    },
   },
   created() {
-    this.$store.dispatch("GET_MASTER_BY_ID", this.masterID);
+    const masterId = +this.$route.params.masterID;
+    this.$store.dispatch("GET_MASTER_BY_ID", masterId);
   },
 };
 </script>

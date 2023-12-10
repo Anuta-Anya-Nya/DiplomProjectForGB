@@ -19,7 +19,7 @@ export const masterStore = {
         },
         MASTER_BY_ID: state => id => {
             return state.masters.find(master => master.id === id);
-        },        
+        },
     },
     mutations: {
         SET_MASTERS(state, mastersList) {
@@ -57,24 +57,24 @@ export const masterStore = {
         },
         GET_MASTER_BY_ID: async (context, idMaster) => {
             masterService.GetMasterById(idMaster).then((res) => {
-                const data = new Master(res.id, res.master_name, res.birthdate, res.phone, res.position, res.photo, res.about_text, res.group_service_id)
+                const data = new Master(res.data.id, res.data.master_name, res.data.birthdate, res.data.phone, res.data.position, res.data.photo, res.data.about_text, res.data.group_service_id)
                 context.commit('SET_CURRENT_MASTER', data);
             })
         },
         GET_MASTER_BY_NAME_AND_PHONE: async (context, params) => {
-                return new Promise((resolve)=> {
-                    masterService.getMasterByNameAndPhone(params).then((res) => {
-                const master = new Master(res.data.id, res.data.master_name, res.data.birthdate, res.data.phone, res.data.position, res.data.photo, res.data.about_text, res.data.group_service_id)
-                context.commit('SET_MASTER_ACCOUNT', master); 
-                resolve(master);
+            return new Promise((resolve) => {
+                masterService.getMasterByNameAndPhone(params).then((res) => {
+                    const master = new Master(res.data.id, res.data.master_name, res.data.birthdate, res.data.phone, res.data.position, res.data.photo, res.data.about_text, res.data.group_service_id)
+                    context.commit('SET_MASTER_ACCOUNT', master);
+                    resolve(master);
                 })
-                
-        })
-        },                  
-            
-            
-            
+
+            })
         },
 
-    
+
+
+    },
+
+
 }
