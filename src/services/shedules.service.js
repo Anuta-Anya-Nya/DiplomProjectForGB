@@ -17,7 +17,14 @@ class SheduleService {
 
     getSheduleByUser(userId){
         return axios.get(API_URL + `/userShedule/list?userId=${userId}`)
+    }
 
+    getSheduleForMaster(params){
+        return axios.get(API_URL + `/masterShedule/list?date=${params.date}&masterId=${params.masterId}`)
+    }
+
+    getSheduleForAdmin(date){
+        return axios.get(API_URL + `/adminShedule/list?date=${date}`)
     }
 
     deleteSheduleById(sheduleId){

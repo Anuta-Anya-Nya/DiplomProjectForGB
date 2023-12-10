@@ -1,12 +1,12 @@
 <template>
   <div class="container">
     <h2 class="pages__title">Мои записи</h2>
-    <div class="shedule">
+    <div class="shedule-lk">
       <ul>
         <li
           v-for="shedule in separationShedule.future"
           :key="shedule.id"
-          class="shedule__list"
+          class="shedule-lk__list"
         >
           <div>            
             {{ printDate(shedule.date)}}
@@ -17,22 +17,22 @@
             на
             {{ getServiceTitle(shedule.serviceId) }}
           </div>
-          <div @click="deleteShedule(shedule.id)" class="shedule__delete">
+          <div @click="deleteShedule(shedule.id)" class="shedule-lk__delete">
             <i class="fa fa-trash" aria-hidden="true"></i>
           </div>
         </li>
       </ul>
       <div v-if="separationShedule.future.length === 0">
-        <router-link to="/shedule" class="shedule__link button-simple"
+        <router-link to="/shedule" class="shedule-lk__link button-simple"
           >Записаться</router-link
         >
       </div>
-      <h3 class="shedule__title">Последние записи:</h3>
+      <h3 class="shedule-lk__title">Последние записи:</h3>
       <ul>
         <li
           v-for="shedule in separationShedule.past"
           :key="shedule.id"
-          class="shedule__list shedule__list-past"
+          class="shedule-lk__list shedule__list-past"
         >
           {{ printDate(shedule.date)  }}
           в
@@ -131,6 +131,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../styles/shedule";
 .pages__title {
   font-weight: 700;
   font-size: 48px;
@@ -139,48 +140,7 @@ export default {
   margin-top: 40px;
   margin-bottom: 20px;
 }
-.shedule {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 20px;
-  &__list {
-    font-size: 22px;
-    display: flex;
-    gap: 15px;
-    justify-content: space-between;
-    &-past {
-      padding-right: 66px;
-    }    
-  }
-  &__title {
-    font-size: 22px;
-    text-align: center;
-    margin-top: 30px;
-    margin-bottom: 10px;
-  }
-  &__delete {
-    margin-left: 40px;
-    cursor: pointer;
-    &:hover {
-      color: white;
-    }
-  }
-  &__link {
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s;
-    width: 300px;
 
-    &:hover {
-      background-color: $color-hover;
-      // color: $color-text;
-      border: 1px solid $color-text;
-    }
-  }
-}
 .button-simple {
     height: 60px;
     background-color: #cdaa7d;

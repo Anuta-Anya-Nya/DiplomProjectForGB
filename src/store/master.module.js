@@ -19,10 +19,7 @@ export const masterStore = {
         },
         MASTER_BY_ID: state => id => {
             return state.masters.find(master => master.id === id);
-        },
-        MASTER_BY_NAME_AND_PHONE_AND_BIRTH: state => params => {
-            return state.masters.find(master => master.name === params.name && master.phone === params.phone && master.birthdate === params.birthdate);
-        }
+        },        
     },
     mutations: {
         SET_MASTERS(state, mastersList) {

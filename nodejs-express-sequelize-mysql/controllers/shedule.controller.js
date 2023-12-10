@@ -38,7 +38,7 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
     const date = req.query.date;
     const masterId = req.query.masterId;
-    var condition = date && masterId ? { [Op.and]: [{ date: `${date}` }, { master_id: masterId }] } : null;
+    var condition = date && masterId ? { [Op.and]: [{ date: `${date}` }, { masterId: masterId }] } : null;
     Shedule.findAll({
         where: condition
     })
@@ -88,17 +88,17 @@ exports.findUserShedule = (req, res) => {
 };
 
 exports.findAllSheduleForAdmin = (req, res) => {
-    const date = req.query.date;    
-    
+    const date = req.query.date;
+
     Shedule.findAll({
         where: { date: date }, include: [{
             model: User,
             attributes: ['name', 'phone']
-        }, 
+        },
         {
             model: Master,
             attributes: ['master_name', 'position']
-        }, 
+        },
         {
             model: Service,
             attributes: ['title', 'duration', 'price']
@@ -123,7 +123,7 @@ exports.findAllSheduleForMaster = (req, res) => {
         where: condition, include: [{
             model: User,
             attributes: ['name']
-        },         
+        },
         {
             model: Service,
             attributes: ['title']

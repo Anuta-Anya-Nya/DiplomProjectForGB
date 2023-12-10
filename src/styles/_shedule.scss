@@ -69,6 +69,48 @@
     text-decoration: none;
     display: flex;
     align-items: center;
-    justify-content: center;
-    
+    justify-content: center;    
+  }
+  .shedule-lk {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 20px;
+    &__list {
+      font-size: 22px;
+      display: flex;
+      gap: 15px;
+      justify-content: space-between;
+      &-past {
+        padding-right: 66px;
+      }    
+    }
+    &__title {
+      font-size: 22px;
+      text-align: center;
+      margin-top: 30px;
+      margin-bottom: 10px;
+    }
+    &__delete {
+      margin-left: 40px;
+      cursor: pointer;
+      &:hover {
+        color: white;
+      }
+    }
+    &__link {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      width: 300px;
+  
+      &:hover {
+        background-color: $color-hover;
+        // color: $color-text;
+        border: 1px solid $color-text;
+      }
+    }
   }

@@ -47,6 +47,20 @@ export const sheduleStore = {
                     console.log(e);
                 });
         },
+
+        GET_SHEDULE_BY_DATE_AND_MASTER_FOR_MASTER: async (context, params) => {            
+            shedulesService.getSheduleForMaster(params).then((res) => {
+                const data = [];
+                res.data.forEach((element) => {
+                    data.push(new Shedule(element.id, element.date, element.time, element.userId, element.masterId, element.serviceId, null, element.service.title, element.user.name));                    
+                });
+                context.commit('SET_SHEDULE', data);
+            })
+                .catch((e) => {
+                    console.log(e);
+                });
+        },
+
         CREATE_SHEDULE: async (context, data) => {            
             shedulesService.createShedule(data).then((res) => {
                 console.log(res.data);

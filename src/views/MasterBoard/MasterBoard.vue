@@ -1,20 +1,23 @@
 <template>
   <div class="container">
-    <div v-if="MASTER_ACCOUNT">
-      <label for="dateAppointment" class="shedule__title"
+    <div class="shedule">
+      <div v-if="MASTER_ACCOUNT" class="shedule__title">
+      <label for="dateAppointment" 
         >Выберите дату:
       </label>
       <input type="date" id="dateMasterShedule" v-model.lazy="selectedDate" />
     </div>
-    <div>
+    <div v-if="SHEDULE?.length !== 0" class="">
       <p v-for="item in SHEDULE" :key="item.id">
-        {{ item.time }} {{ item.user.name }} на {{ item.serviceId }}
+        {{ item.time }} {{ item.user.name }} на {{ item.service.title }}
       </p>
     </div>
     <div v-if="!MASTER_ACCOUNT">
       Мастера с вашим именем и фамилией не найдено
     </div>
     <div v-if="SHEDULE?.length === 0">Записи на выбранную дату отсутствуют</div>
+    </div>
+    
   </div>
 </template>
 
@@ -34,21 +37,23 @@ export default {
     const currentUser = this.$store.state.auth.user;
     const param = { name: currentUser.name, phone: currentUser.phone };
     this.$store.dispatch("GET_MASTER_BY_NAME_AND_PHONE", param).then((res) => {
-      console.log(res);
-      this.$store.dispatch("GET_SHEDULE_BY_DATE_AND_MASTER", {
+      this.$store.dispatch("GET_SHEDULE_BY_DATE_AND_MASTER_FOR_MASTER", {
         date: utils.getDate(new Date()),
-        id: res.id,
+        masterId: res.id,
       });
     });
   },
 
   watch: {
-    // при изменении даты, у сервера запрашивается расписание у выбранного мастера на выбранную дату
     selectedDate: function () {
-      const param = { date: this.selectedDate, id: this.MASTER_ACCOUNT.id };
-      this.$store.dispatch("GET_SHEDULE_BY_DATE_AND_MASTER", param);
+      const param = {
+        date: this.selectedDate,
+        masterId: this.MASTER_ACCOUNT.id,
+      };
+      this.$store.dispatch("GET_SHEDULE_BY_DATE_AND_MASTER_FOR_MASTER", param);
     },
   },
+
   computed: {
     ...mapGetters(["MASTER_ACCOUNT", "SHEDULE"]),
     currentUser() {
@@ -60,6 +65,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../styles/shedule";
 .form-box {
   width: 50%;
   margin: 0 auto;
@@ -68,5 +74,13 @@ export default {
   gap: 15px;
   margin-top: 30px;
   align-items: center;
+}
+.pages__title {
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 120%;
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 20px;
 }
 </style>
