@@ -72,10 +72,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["SHEDULE"]),
-    currentUser() {
-      return this.$store.state.auth.user;
-    },
+    ...mapGetters(["SHEDULE"]),    
   },
 
   methods: {

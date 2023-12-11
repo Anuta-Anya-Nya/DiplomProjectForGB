@@ -5,6 +5,7 @@ import { auth } from './auth.module';
 import { masterStore } from './master.module';
 import { servicesStore } from './services.module';
 import { sheduleStore } from './shedule.module';
+import { userStore } from './user.module';
 
 Vue.use(Vuex)
 
@@ -65,6 +66,7 @@ export default new Vuex.Store({
     auth,
     masterStore,
     servicesStore,
-    sheduleStore
+    sheduleStore,
+    userStore
   }
 })
