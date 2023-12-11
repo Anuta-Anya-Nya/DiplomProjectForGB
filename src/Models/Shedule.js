@@ -1,19 +1,16 @@
-import Master from '../models/Master';
-import Service from '../models/Service';
-import User from '../models/User';
 
 class Shedule {
 
-    constructor(id, date, time, userId, masterId, serviceId, masterName, serviceTitle, userName) {
+    constructor(id, date, time, userId, masterId, serviceId, master, service, user) {
         this.id = id;
         this.date = date;
         this.time = time;
         this.userId = userId;
         this.masterId = masterId;
         this.serviceId = serviceId;
-        this.master = new Master(masterId, masterName)
-        this.service = new Service(serviceId, serviceTitle)
-        this.user = new User(null, null, null, userName)
+        this.master = master;
+        this.service = service;
+        this.user = user;
     }
 }
 

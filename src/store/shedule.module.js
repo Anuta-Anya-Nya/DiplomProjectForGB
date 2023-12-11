@@ -1,15 +1,19 @@
 import Shedule from "../models/Shedule";
+import Master from '../models/Master';
+import Service from '../models/Service';
+import User from '../models/User';
+
 import shedulesService from "../services/shedules.service"
 
 export const sheduleStore = {
     state: {
-        shedule: [],        
+        shedule: [],
     },
     getters: {
         SHEDULE(state) {
             return state.shedule;
         },
-                
+
     },
     mutations: {
         SET_SHEDULE(state, sheduleList) {
@@ -17,7 +21,7 @@ export const sheduleStore = {
         },
         ADD_SHEDULE: (state, shedule) => {
             state.shedule.push(shedule);
-        },        
+        },
         DELETE_SHEDULE: (state, id) => {
             state.shedule.splice(state.shedule.findIndex(el => el.id === id), 1);
         }
@@ -35,7 +39,7 @@ export const sheduleStore = {
                     console.log(e);
                 });
         },
-        GET_SHEDULE_BY_DATE_AND_MASTER: async (context, param) => {            
+        GET_SHEDULE_BY_DATE_AND_MASTER: async (context, param) => {
             shedulesService.getShedulesByDateAndMaster(param).then((res) => {
                 const data = [];
                 res.data.forEach((element) => {
@@ -48,11 +52,13 @@ export const sheduleStore = {
                 });
         },
 
-        GET_SHEDULE_BY_DATE_AND_MASTER_FOR_MASTER: async (context, params) => {            
+        GET_SHEDULE_BY_DATE_AND_MASTER_FOR_MASTER: async (context, params) => {
             shedulesService.getSheduleForMaster(params).then((res) => {
                 const data = [];
                 res.data.forEach((element) => {
-                    data.push(new Shedule(element.id, element.date, element.time, element.userId, element.masterId, element.serviceId, null, element.service.title, element.user.name));                    
+                    const user = new User(element.userId, null, null,element.user.name);
+                    const service = new Service(element.serviceId, element.service.title)
+                    data.push(new Shedule(element.id, element.date, element.time, element.userId, element.masterId, element.serviceId, null, service, user));
                 });
                 context.commit('SET_SHEDULE', data);
             })
@@ -61,7 +67,7 @@ export const sheduleStore = {
                 });
         },
 
-        CREATE_SHEDULE: async (context, data) => {            
+        CREATE_SHEDULE: async (context, data) => {
             shedulesService.createShedule(data).then((res) => {
                 console.log(res.data);
             })
@@ -69,11 +75,13 @@ export const sheduleStore = {
                     console.log(e);
                 });
         },
-        GET_SHEDULE_BY_USER: async (context, userId) => {            
+        GET_SHEDULE_BY_USER: async (context, userId) => {
             shedulesService.getSheduleByUser(userId).then((res) => {
                 const data = [];
                 res.data.forEach((element) => {
-                    data.push(new Shedule(element.id, element.date, element.time, element.userId, element.masterId, element.serviceId));
+                    const master = new Master(element.masterId, element.master.master_name);
+                    const service = new Service(element.serviceId, element.service.title, null, element.service.duration, element.service.price,)
+                    data.push(new Shedule(element.id, element.date, element.time, element.userId, element.masterId, element.serviceId, master, service));
                 });
                 context.commit('SET_SHEDULE', data);
             })
@@ -81,27 +89,15 @@ export const sheduleStore = {
                     console.log(e);
                 });
         },
-        DELETE_SHEDULE: async (context, id) => {            
+        DELETE_SHEDULE: async (context, id) => {
             shedulesService.deleteSheduleById(id).then((res) => {
                 console.log(res.data);
-                context.commit('DELETE_SHEDULE', id);                
+                context.commit('DELETE_SHEDULE', id);
             })
                 .catch((e) => {
                     console.log(e);
                 });
         },
-        // GET_SHEDULE_BY_DATE_AND_MASTER_FOR_LK: async (context, param) => {  
-        //     await this.$store.dispatch("GET_SHEDULE_BY_DATE_AND_MASTER", param);         
-        //     shedulesService.getShedulesByDateAndMaster(param).then((res) => {
-        //         const data = [];
-        //         res.data.forEach((element) => {
-        //             data.push(new Shedule(element.id, element.date, element.time, element.user_id, element.master_id, element.service_id));
-        //         });
-        //         context.commit('SET_SHEDULE', data);
-        //     })
-        //         .catch((e) => {
-        //             console.log(e);
-        //         });
-        // },
+        
     },
 }

@@ -75,7 +75,17 @@ exports.findOne = (req, res) => {
 exports.findUserShedule = (req, res) => {
     const userId = req.query.userId;
 
-    Shedule.findAll({ where: { userId: userId }, })
+    Shedule.findAll({
+        where: { userId: userId }, include: [
+            {
+                model: Master,
+                attributes: ['master_name']
+            },
+            {
+                model: Service,
+                attributes: ['title', 'duration', 'price']
+            }]
+    })
         .then(data => {
             res.send(data);
         })

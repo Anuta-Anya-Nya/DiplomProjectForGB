@@ -8,14 +8,15 @@
           :key="shedule.id"
           class="shedule-lk__list"
         >
-          <div>            
-            {{ printDate(shedule.date)}}
+          <div>
+            {{ printDate(shedule.date) }}
             в
-            {{ shedule.time.slice(0,5) }}
+            {{ shedule.time }}
             к мастеру:
-            {{ getMasterName(shedule.masterId) }}
+            {{ shedule.master.name }}
             на
-            {{ getServiceTitle(shedule.serviceId) }}
+            {{ shedule.service.title }} - стоимость:
+            {{ shedule.service.price }} руб.
           </div>
           <div @click="deleteShedule(shedule.id)" class="shedule-lk__delete">
             <i class="fa fa-trash" aria-hidden="true"></i>
@@ -32,15 +33,15 @@
         <li
           v-for="shedule in separationShedule.past"
           :key="shedule.id"
-          class="shedule-lk__list shedule__list-past"
+          class="shedule-lk__list shedule-lk__list-past"
         >
-          {{ printDate(shedule.date)  }}
+          {{ printDate(shedule.date) }}
           в
-          {{ shedule.time.slice(0,5)   }}
+          {{ shedule.time }}
           к мастеру:
-          {{ getMasterName(shedule.masterId) }}
+          {{ shedule.master.name }}
           на
-          {{ getServiceTitle(shedule.serviceId) }}
+          {{ shedule.service.title }}
         </li>
       </ul>
     </div>
@@ -58,7 +59,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters(["MASTERS", "SHEDULE", "MASTER_BY_ID", "GET_SERVICE_FOR_ID"]),
+    ...mapGetters(["SHEDULE"]),
     currentUser() {
       return this.$store.state.auth.user;
     },
@@ -68,6 +69,7 @@ export default {
     separationShedule() {
       const separation = { past: [], future: [] };
       const countPastShedules = 5;
+
       this.SHEDULE.forEach((shedule) => {
         const dateShedule = new Date(
           `${shedule.date} ${shedule.time}`
@@ -96,36 +98,24 @@ export default {
 
       return separation;
     },
-    
   },
 
   mounted() {
     this.$store.dispatch("GET_SHEDULE_BY_USER", this.currentUser.id);
-    this.$store.dispatch("GET_MASTERS");
-    this.$store.dispatch("GET_SERVICES");
   },
 
   methods: {
     deleteShedule(id) {
       const answer = confirm("Удалить запись?");
-      if(answer){
+      if (answer) {
         this.$store.dispatch("DELETE_SHEDULE", id);
         alert("Запись удалена");
-      }      
-    },    
+      }
+    },
 
     printDate(dateStr) {
       return utils.printDate(dateStr);
     },
-    
-    getMasterName(idMaster){
-      return this.MASTER_BY_ID(idMaster).name;
-    },
-
-    getServiceTitle(idService){
-      return this.GET_SERVICE_FOR_ID(idService).title;
-    }
-
   },
 };
 </script>
@@ -142,23 +132,22 @@ export default {
 }
 
 .button-simple {
-    height: 60px;
-    background-color: #cdaa7d;
-    border-radius: 10px;
-    color: #0a1111;
-    border: 1px solid transparent;
-    cursor: pointer;
-    font-family: "Cormorant Garamond";
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    box-sizing: border-box;
-    transition: all 0.3s;
-    &:hover {
+  height: 60px;
+  background-color: #cdaa7d;
+  border-radius: 10px;
+  color: #0a1111;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-family: "Cormorant Garamond";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  box-sizing: border-box;
+  transition: all 0.3s;
+  &:hover {
     background-color: #ffffff;
     border: 1px solid #cdaa7d;
   }
-  }
-  
+}
 </style>

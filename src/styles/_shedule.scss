@@ -1,116 +1,134 @@
 .shedule {
-    padding: 30px;
-    font-size: 22px;
-    font-family: "Cormorant Garamond";    
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-  
+  padding: 30px;
+  font-size: 22px;
+  font-family: "Cormorant Garamond";
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
 
-    &__select{
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 15px;
-      flex-wrap: wrap;
-      .active{
-        background-color: $color-border;
+
+  &__select {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+
+    .active {
+      background-color: $color-border;
       border: 1px solid $color-border;
-      }
     }
-  
-  &__title{
+  }
+
+  &__title {
     font-weight: 700;
   }
-  &__value{
+
+  &__value {
     color: $color-hover;
   }
-  }
-  
-  .button-simple {
-    height: 60px;
-    background-color: $color-text;
-    border-radius: 10px;
-    color: #0a1111;
-    border: 1px solid transparent;
-    cursor: pointer;
-    font-family: "Cormorant Garamond";
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    box-sizing: border-box;
-    transition: all 0.3s;
-  }
-  .button-simple:hover {
-    background-color: #ffffff;
-    border: 1px solid #cdaa7d;
-  }
-  .button-link {
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 30%;
-  }
-  .buttons-time-box {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-  }
-  .button-shedule {
-    height: 40px;
+}
+
+.button-simple {
+  height: 60px;
+  background-color: $color-text;
+  border-radius: 10px;
+  color: #0a1111;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-family: "Cormorant Garamond";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  box-sizing: border-box;
+  transition: all 0.3s;
+}
+
+.button-simple:hover {
+  background-color: #ffffff;
+  border: 1px solid #cdaa7d;
+}
+
+.button-link {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30%;
+}
+
+.buttons-time-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.button-shedule {
+  height: 40px;
+  font-size: 22px;
+  padding: 0 15px 0 15px;
+}
+
+.button-link-services {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shedule-lk {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 20px;
+
+  &__list {
     font-size: 22px;
-    padding: 0 15px 0 15px;
+    display: flex;
+    gap: 15px;
+    justify-content: space-between;
+    border-bottom: 1px solid #cdaa7d;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+
+    &-past {
+      padding-right: 66px;
+      border-bottom: none;
+    }
   }
-  .button-link-services {
+
+  &__title {
+    font-size: 22px;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 10px;
+  }
+
+  &__delete {
+    margin-left: 40px;
+    cursor: pointer;
+
+    &:hover {
+      color: white;
+    }
+  }
+
+  &__link {
     text-decoration: none;
     display: flex;
     align-items: center;
-    justify-content: center;    
-  }
-  .shedule-lk {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 20px;
-    padding: 20px;
-    &__list {
-      font-size: 22px;
-      display: flex;
-      gap: 15px;
-      justify-content: space-between;
-      &-past {
-        padding-right: 66px;
-      }    
-    }
-    &__title {
-      font-size: 22px;
-      text-align: center;
-      margin-top: 30px;
-      margin-bottom: 10px;
-    }
-    &__delete {
-      margin-left: 40px;
-      cursor: pointer;
-      &:hover {
-        color: white;
-      }
-    }
-    &__link {
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s;
-      width: 300px;
-  
-      &:hover {
-        background-color: $color-hover;
-        // color: $color-text;
-        border: 1px solid $color-text;
-      }
+    justify-content: center;
+    transition: all 0.3s;
+    width: 300px;
+
+    &:hover {
+      background-color: $color-hover;
+      // color: $color-text;
+      border: 1px solid $color-text;
     }
   }
+}
