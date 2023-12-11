@@ -21,6 +21,10 @@ import RegisterPage from '../views/AccountPages/RegisterPage.vue';
 import AdminBoard from '../views/AdminBoard/AdminBoard.vue';
 import SheduleUser from '../views/AccountPages/SheduleUser.vue';
 import MasterBoard from '../views/MasterBoard/MasterBoard.vue';
+import AdminUsers from '../views/AdminBoard/AdminUsers.vue';
+import AdminMasters from '../views/AdminBoard/AdminMasters.vue';
+import AdminServices from '../views/AdminBoard/AdminServices.vue';
+import AdminShedules from '../views/AdminBoard/AdminShedules.vue';
 
 Vue.use(VueRouter)
 
@@ -138,7 +142,38 @@ const routes = [
   },
   {
     path: '/userShedule',
-    component: SheduleUser
+    component: SheduleUser,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/admin/usersList',
+    component: AdminUsers,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/admin/mastersList',
+    component: AdminMasters,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/admin/servicesList',
+    component: AdminServices,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/admin/shedulesList',
+    component: AdminShedules,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '*',

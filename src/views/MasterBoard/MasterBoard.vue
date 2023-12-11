@@ -2,22 +2,21 @@
   <div class="container">
     <div class="shedule">
       <div v-if="MASTER_ACCOUNT" class="shedule__title">
-      <label for="dateAppointment" 
-        >Выберите дату:
-      </label>
-      <input type="date" id="dateMasterShedule" v-model.lazy="selectedDate" />
+        <label for="dateMasterShedule">Выберите дату: </label>
+        <input type="date" id="dateMasterShedule" v-model.lazy="selectedDate" />
+      </div>
+      <div v-if="SHEDULE?.length !== 0">
+        <p v-for="item in SHEDULE" :key="item.id">
+          {{ item.time }} {{ item.user.name }} на {{ item.service.title }}
+        </p>
+      </div>
+      <div v-if="!MASTER_ACCOUNT">
+        Мастера с вашим именем и фамилией не найдено
+      </div>
+      <div v-if="SHEDULE?.length === 0">
+        Записи на выбранную дату отсутствуют
+      </div>
     </div>
-    <div v-if="SHEDULE?.length !== 0" class="">
-      <p v-for="item in SHEDULE" :key="item.id">
-        {{ item.time }} {{ item.user.name }} на {{ item.service.title }}
-      </p>
-    </div>
-    <div v-if="!MASTER_ACCOUNT">
-      Мастера с вашим именем и фамилией не найдено
-    </div>
-    <div v-if="SHEDULE?.length === 0">Записи на выбранную дату отсутствуют</div>
-    </div>
-    
   </div>
 </template>
 
@@ -55,7 +54,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["MASTER_ACCOUNT", "SHEDULE"]),
+    ...mapGetters(["SHEDULE"]),
     currentUser() {
       return this.$store.state.auth.user;
     },
@@ -66,15 +65,6 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../styles/shedule";
-.form-box {
-  width: 50%;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin-top: 30px;
-  align-items: center;
-}
 .pages__title {
   font-weight: 700;
   font-size: 48px;
