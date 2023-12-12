@@ -1,8 +1,14 @@
+i
 <template>
   <div class="container">
     <div class="shedule">
       <div class="shedule__title">Наши клиенты</div>
-
+      <div>
+        <label for="userPhone" class="shedule__title"
+          >Поиск по номеру телефона:
+        </label>
+        <input type="text" id="userPhone" v-model.lazy="inputPhone" />
+      </div>
       <table class="shedule-table">
         <thead>
           <tr class="shedule-table__row">
@@ -20,7 +26,7 @@
             <td>{{ user.phone }}</td>
             <td>{{ user.birthdate }}</td>
             <td>
-              <i
+              <i @click="makeAppointmentUser(user.id)"
                 class="fa fa-pencil-square-o shedule-lk__delete"
                 aria-hidden="true"
               ></i>
@@ -36,36 +42,73 @@
       <div v-if="USERS?.length === 0">Клиенты отсутсвуют</div>
       <div class="arrows">
         <i
-          class="fa fa-chevron-circle-left arrows__item"
+          v-if="start <= 0"
+          class="fa fa-circle arrows__item"
           aria-hidden="true"
         ></i>
-        <i class="fa fa-chevron-circle-right arrows__item" aria-hidden="true"></i>
+        <i
+          @click="previousList()"
+          class="fa fa-chevron-circle-left arrows__item"
+          aria-hidden="true"
+          v-if="start > 0"
+        ></i>
+
+        <i
+          @click="nextList()"
+          class="fa fa-chevron-circle-right arrows__item"
+          aria-hidden="true"
+          v-if="remainder > 0"
+        ></i>
+        <i
+          class="fa fa-circle arrows__item"
+          aria-hidden="true"
+          v-if="remainder <= 0"
+        ></i>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 export default {
   name: "AdminUsers",
 
   data() {
     return {
       start: 0,
-      count: 5
+      count: 3,
+      inputPhone: null,
     };
   },
 
   mounted() {
-    const params = { start: 0, count: 4 };
+    const params = { start: 0, count: 3 };
     this.$store.dispatch("GET_USERS", params);
+    this.$store.dispatch("GET_USER_COUNT");
+  },
+  watch: {
+    inputPhone: function () {
+      this.start = 0;
+      const params = {
+        start: this.start,
+        count: this.count,
+        phone: this.inputPhone,
+      };
+      console.log(params);
+      this.$store.dispatch("GET_USERS", params);
+      this.$store.dispatch("GET_USER_COUNT", this.inputPhone);
+    },
   },
   computed: {
-    ...mapGetters(["USERS"]),
+    ...mapGetters(["USERS", "USERS_COUNT"]),
+    remainder() {
+      return this.USERS_COUNT - (this.start / this.count + 1) * this.count;
+    },
   },
 
   methods: {
+    ...mapMutations(["SET_USER_FOR_SHEDULE"]),
     deleteUser(id) {
       console.log("del");
       const answer = confirm("Удалить аккаунт клиента?");
@@ -74,8 +117,37 @@ export default {
         alert("Запись удалена");
       }
     },
-    nextList(){
-      
+    nextList() {
+      let params;
+      if (this.inputPhone) {
+        params = {
+          start: this.start + this.count,
+          count: this.count,
+          phone: this.inputPhone,
+        };
+      } else {
+        params = { start: this.start + this.count, count: this.count };
+      }
+      this.$store.dispatch("GET_USERS", params);
+      this.start += this.count;
+    },
+    previousList() {
+      let params;
+      if (this.inputPhone) {
+        params = {
+          start: this.start - this.count,
+          count: this.count,
+          phone: this.inputPhone,
+        };
+      } else {
+        params = { start: this.start - this.count, count: this.count };
+      }
+      this.$store.dispatch("GET_USERS", params);
+      this.start -= this.count;
+    },
+    makeAppointmentUser(id){
+      this.SET_USER_FOR_SHEDULE(id);
+      this.$router.push({ path: `/shedule` });
     }
   },
 };

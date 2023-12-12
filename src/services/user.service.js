@@ -19,14 +19,29 @@ class UserService {
   getAdminBoard() {
     return axios.get(API_URL + 'test/admin', { headers: authHeader() });
   }
-  
+
   getAllUsersForAdmin(params) {
-    return axios.get(API_URL + `users?start=${params.start}&count=${params.count}`, { headers: authHeader() });
+    if ('phone' in params) {
+      return axios.get(API_URL + `users?start=${params.start}&count=${params.count}&phone=${params.phone}`, { headers: authHeader() });
+    } else {
+      return axios.get(API_URL + `users?start=${params.start}&count=${params.count}`, { headers: authHeader() });
+    }
+
+  }
+
+  getUsersCount(phone) {
+    if(phone){
+      return axios.get(API_URL + `usersCount?phone=${phone}`, { headers: authHeader() });
+    }else{
+      return axios.get(API_URL + `usersCount`, { headers: authHeader() });
+    }    
   }
 
   deleteUser(id) {
     return axios.delete(API_URL + `users/${id}`, { headers: authHeader() });
   }
+
+
 
 }
 

@@ -24,11 +24,11 @@ exports.findAll = (req, res) => {
     const phone = req.query.phone;
     var condition = phone ? { phone: { [Op.like]: `%${phone}%` } } : null;
 
-    User.findAll(
-        { where: condition },
-        {
-            offset: start, limit: count
-        })
+    User.findAll({
+        where: condition,
+
+        offset: start, limit: count
+    })
         .then(data => {
             res.send(data);
         })
@@ -60,6 +60,23 @@ exports.delete = (req, res) => {
         .catch(err => {
             res.status(500).send({
                 message: "Could not delete User with id=" + id
+            });
+        });
+};
+
+exports.usersCount = (req, res) => {
+    const phone = req.query.phone;
+    var condition = phone ? { phone: { [Op.like]: `%${phone}%` } } : null;
+
+    User.count({
+        where: condition
+    }).then(data => {
+        res.send(String(data));
+    })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error"
             });
         });
 };

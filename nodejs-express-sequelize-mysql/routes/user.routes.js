@@ -42,6 +42,13 @@ module.exports = function (app) {
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.findAll
   );
+
+  app.get(
+    "/api/usersCount",
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.usersCount
+  );
+
   app.delete(
     "/api/users/:id",
     [authJwt.verifyToken, authJwt.isAdmin],

@@ -8,11 +8,19 @@ import userService from "../services/user.service"
 export const userStore = {
     state: {
         users: [],
+        userCount: null,
+        userForShedule: null,
     },
     getters: {
         USERS(state) {
             return state.users;
         },
+        USERS_COUNT(state) {
+            return state.userCount;
+        },
+        USER_FOR_SHEDULE(state){
+            return state.userForShedule;
+        }
 
     },
     mutations: {
@@ -24,7 +32,13 @@ export const userStore = {
         },
         DELETE_USER: (state, id) => {
             state.users.splice(state.users.findIndex(el => el.id === id), 1);
-        }
+        },
+        SET_USERS_COUNT(state, count) {
+            state.userCount = count;
+        },
+        SET_USER_FOR_SHEDULE(state, id) {
+            state.userForShedule = id;
+        },
     },
     actions: {
         GET_USERS: async (context, params) => {
@@ -33,7 +47,16 @@ export const userStore = {
                 res.data.forEach((user) => {
                     data.push(new User(user.id, null, user.email, null, user.name, user.phone, user.birthdate));
                 });
+                console.log(data);
                 context.commit('SET_USERS', data);
+            })
+                .catch((e) => {
+                    console.log(e);
+                });
+        },
+        GET_USER_COUNT: async (context, phone) => {
+            userService.getUsersCount(phone).then((res) => {
+                context.commit('SET_USERS_COUNT', res.data);
             })
                 .catch((e) => {
                     console.log(e);

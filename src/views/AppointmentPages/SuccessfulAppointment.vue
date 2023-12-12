@@ -43,6 +43,7 @@ export default {
       "SET_CURRENT_SERVICE",
       "SET_CURRENT_MASTER",
       "SET_SHEDULE",
+      "SET_USER_FOR_SHEDULE"
     ]),
 
     printDate(date){
@@ -53,6 +54,7 @@ export default {
       this.SET_CURRENT_MASTER(null);
       this.SET_CURRENT_SERVICE(null);
       this.SET_SHEDULE(null);
+      this.SET_USER_FOR_SHEDULE(null);
       this.$router.push({ path: `/main` });
     },
   },

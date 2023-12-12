@@ -134,6 +134,7 @@ export default {
       "MASTERS",
       "SHEDULE",
       "GET_SERVICE_FOR_ID",
+      "USER_FOR_SHEDULE",
     ]),
 
     currentUser() {
@@ -232,7 +233,7 @@ export default {
       const newShedule = {
         date: this.getDate(this.selectedTime),
         time: this.printTime(this.selectedTime),
-        userId: this.currentUser.id,
+        userId: this.USER_FOR_SHEDULE || this.currentUser.id,
         masterId: this.CURRENT_MASTER.id,
         serviceId: this.CURRENT_SERVICE.id,
       };
