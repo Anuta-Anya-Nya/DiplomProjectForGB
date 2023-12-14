@@ -71,7 +71,7 @@ export const sheduleStore = {
             shedulesService.getSheduleForAdmin(date).then((res) => {
                 const data = [];
                 res.data.forEach((element) => {
-                    const user = new User(element.userId, null, null,element.user.name, element.user.phone);
+                    const user = new User(element.userId, null, null,null, element.user.name, element.user.phone);
                     const master = new Master(element.masterId, element.master.master_name, null, null, element.master.position);
                     const service = new Service(element.serviceId, element.service.title, null, element.service.duration, element.service.price,);
                     data.push(new Shedule(element.id, element.date, element.time, element.userId, element.masterId, element.serviceId, master, service, user));
