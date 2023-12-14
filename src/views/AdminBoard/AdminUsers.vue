@@ -5,9 +5,10 @@ i
       <div class="shedule__title">Наши клиенты</div>
       <div>
         <label for="userPhone" class="shedule__title"
-          >Поиск по номеру телефона:
+          >Поиск по номеру телефона: 
         </label>
         <input type="text" id="userPhone" v-model.lazy="inputPhone" />
+        <i  class="fa fa-search button-search" aria-hidden="true"></i>
       </div>
       <table class="shedule-table">
         <thead>
@@ -187,5 +188,12 @@ export default {
       color: $color-hover;
     }
   }
+}
+.button-search{
+  cursor: pointer;
+  margin-left: 15px;
+  &:hover {
+      color: $color-hover;
+    }
 }
 </style>

@@ -176,7 +176,7 @@
           </tr>
         </tbody>
       </table>
-      <div v-if="MASTERS?.length === 0">Мастера отсутсвуют</div>
+      <div v-if="MASTERS?.length === 0">Мастера отсутствуют</div>
       <button
         v-if="!isShowInput"
         @click="isShowInput = true"
