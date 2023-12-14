@@ -81,3 +81,52 @@ exports.findOne = (req, res) => {
             });
         });
 };
+
+exports.update = (req, res) => {
+    const id = req.params.id;
+
+    Service.update(req.body, {
+        where: { id: id }
+    })
+        .then(num => {
+            if (num == 1) {
+                res.send({
+                    message: "Service was updated successfully."
+                });
+            } else {
+                res.send({
+                    message: `Cannot update Service with id=${id}. Maybe Service was not found or req.body is empty!`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Error updating Master with id=" + id
+            });
+        });
+};
+
+exports.delete = (req, res) => {
+    const id = req.params.id;
+
+    Service.destroy({
+        where: { id: id }
+    })
+        .then(num => {
+            if (num == 1) {
+                res.send({
+                    message: "Service was deleted successfully!"
+                });
+            } else {
+                res.send({
+                    message: `Cannot delete Service with id=${id}. Maybe Service was not found!`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Could not delete Service with id=" + id
+            });
+        });
+};
+

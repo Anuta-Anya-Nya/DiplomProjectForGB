@@ -14,6 +14,15 @@ class ServicesService {
     getServiceById(id){
         return axios.get(API_URL + `/servicesById/${id}`);
     }
+    createService(data){
+        return axios.post(API_URL, data);
+    }
+    updateService(data){
+        return axios.put(API_URL + `/${data.id}`, data.service );
+    }
+    deleteServiceById(id) {
+        return axios.delete(API_URL + `/${id}`);
+    }
 
 }
 

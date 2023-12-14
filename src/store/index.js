@@ -18,10 +18,6 @@ export default new Vuex.Store({
       { author: 'Эвелина Хромченко', text: 'Макияж - это одежда для лица. Не грешите, выходя на улицу голыми' },
       { author: 'Кэльвин Кляйн', text: 'Самое главное в макияже - выглядеть совершенно естественно; но для этого нужно очень много косметики' },
     ],
-    actions: [
-      { id: 1, text: "Первое посещение - скидка 20%", image: "actions1.jpg" },
-      { id: 2, text: "Каждая пятая стрижка бесплатно", image: "actions2.jpg" },
-    ],
     groupServices: [
       { id: 1, title: 'Парикмахерские услуги', image: 'serv1.jpg' },
       { id: 2, title: 'Маникюр', image: 'serv2.jpg' },
@@ -29,12 +25,7 @@ export default new Vuex.Store({
       { id: 4, title: 'Косметология', image: 'serv4.jpg' },
       { id: 5, title: 'Эстетист по телу', image: 'serv5.jpg' },
       { id: 6, title: 'Визаж', image: 'serv6.jpg' },
-    ],
-    positions: [
-      {id: 1, title: 'Парикмахер', groupId: 1},
-      {id: 1, title: 'Парикмахер', groupId: 1},
-    ],
-    
+    ],    
     worksImage: [
       { id: 1, img: 'work-1.jpg', tagID: 1 },
       { id: 2, img: 'work-2.jpg', tagID: 3 },
@@ -55,6 +46,7 @@ export default new Vuex.Store({
     GROUP_SERVICES(state) {
       return state.groupServices;
     },
+    GET_GROUP_SERVICE_FOR_ID: state => (id) => state.groupServices.find(el => el.id === id),
     GET_WORKSIMAGE(state) {
       return state.worksImage;
     },

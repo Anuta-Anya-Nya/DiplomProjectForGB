@@ -17,14 +17,16 @@ export const servicesStore = {
         SERVICE_BY_ID(state) {
             return state.serviceById;
         },
-        GET_SERVICE_FOR_ID: state => (id) => state.services.find(el => el.id === id),
+        SERVICE_FOR_ID: state => id =>{
+           return state.services.find(el => el.id === id) 
+        },
         
     },
     mutations: {
         SET_SERVICES(state, servicesList) {
             state.services = servicesList;
         },
-        ADD_SERVICES: (state, service) => {
+        ADD_SERVICE: (state, service) => {
             state.services.push(service);
         },
         SET_CURRENT_SERVICE: (state, service) => {
@@ -32,7 +34,10 @@ export const servicesStore = {
         },
         SET_SERVICE_BY_ID: (state, service) => {
             state.serviceById = service;
-    },
+        },
+        DEL_SERVICE: (state, id) => {
+            state.services.splice(state.services.findIndex(el => el.id === id), 1);
+        },
 },
     actions: {
         GET_SERVICES: async (context) => {
@@ -64,6 +69,33 @@ export const servicesStore = {
                 const data = new Service(res.data.id, res.data.title, res.data.group_service_id, res.data.duration, res.data.price)
                                
                 context.commit('SET_SERVICE_BY_ID', data);
+            })
+                .catch((e) => {
+                    console.log(e);
+                });
+        },
+        CREATE_SERVICE: async (context, data) => {
+            servicesService.createService(data).then((res) => {                
+                context.commit('ADD_SERVICE', new Service(res.data.id, res.data.title, res.data.group_service_id, res.data.duration, res.data.price));
+            })
+                .catch((e) => {
+                    console.log(e);
+                });
+        },
+        UPDATE_SERVICE: async (context, data) => {
+            return new Promise((resolve) => {
+                servicesService.updateService(data).then((res) => {
+                    console.log(res);
+                    resolve(res)
+                })
+            }).catch((e) => {
+                console.log(e);
+            });
+        },
+        DELETE_SERVICE: async (context, id) => {
+            servicesService.deleteServiceById(id).then((res) => {
+                console.log(res.data);
+                context.commit('DEL_SERVICE', id);
             })
                 .catch((e) => {
                     console.log(e);
