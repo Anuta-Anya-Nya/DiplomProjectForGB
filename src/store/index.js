@@ -30,6 +30,10 @@ export default new Vuex.Store({
       { id: 5, title: 'Эстетист по телу', image: 'serv5.jpg' },
       { id: 6, title: 'Визаж', image: 'serv6.jpg' },
     ],
+    positions: [
+      {id: 1, title: 'Парикмахер', groupId: 1},
+      {id: 1, title: 'Парикмахер', groupId: 1},
+    ],
     
     worksImage: [
       { id: 1, img: 'work-1.jpg', tagID: 1 },

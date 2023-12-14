@@ -12,7 +12,11 @@ module.exports = app => {
     // Retrieve a single Master with id
     router.get("/:id", masters.findOne);
 
+    router.delete("/:id", masters.delete);
+
     router.get("/masterlk/master", masters.findByNameAndPhone);
+
+    router.put("/:id", masters.update);
 
     app.use('/api/masters', router);
 };

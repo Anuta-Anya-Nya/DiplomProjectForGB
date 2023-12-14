@@ -34,6 +34,9 @@ export const masterStore = {
         SET_MASTER_ACCOUNT: (state, master) => {
             state.masterAccount = master;
         },
+        DEL_MASTER: (state, id) => {
+            state.masters.splice(state.masters.findIndex(el => el.id === id), 1);
+        },
 
     },
     actions: {
@@ -71,10 +74,35 @@ export const masterStore = {
 
             })
         },
+        DELETE_MASTER: async (context, id) => {
+            masterService.deleteMasterById(id).then((res) => {
+                console.log(res.data);
+                context.commit('DEL_MASTER', id);
+            })
+                .catch((e) => {
+                    console.log(e);
+                });
+        },
 
+        CREATE_MASTER: async (context, data) => {
+            masterService.createMaster(data).then((res) => {
+                console.log(res.data);
+                context.commit('ADD_MASTER', new Master(res.data.id, res.data.master_name, res.data.birthdate, res.data.phone, res.data.position, res.data.photo, res.data.about_text, res.data.group_service_id));
+            })
+                .catch((e) => {
+                    console.log(e);
+                });
+        },
 
-
+        UPDATE_MASTER: async (context, data) => {
+            return new Promise((resolve) => {
+                masterService.updateMaster(data).then((res) => {
+                    console.log(res);
+                    resolve(res)
+                })
+            }).catch((e) => {
+                console.log(e);
+            });
+        },
     },
-
-
 }

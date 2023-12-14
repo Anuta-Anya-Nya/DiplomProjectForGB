@@ -72,24 +72,7 @@ exports.findOne = (req, res) => {
             });
         });
 };
-// Find a single Master with an id
-// exports.findByNameAndPhone = (req, res) => {
-//     const name = req.query.name;
-//     const phone = req.query.phone;
 
-//     var condition = name && phone ? { [Op.and]: [{ master_name: `${name}` }, { phone: phone }] } : null;
-
-//     Master.findAll({ where: condition })
-//         .then(data => {
-//             res.send(data);
-//         })
-//         .catch(err => {
-//             res.status(500).send({
-//                 message:
-//                     err.message || "Some error occurred while retrieving masters."
-//             });
-//         });
-// };
 exports.findByNameAndPhone = (req, res) => {
     const name = req.query.name;
     const phone = req.query.phone;
@@ -104,6 +87,53 @@ exports.findByNameAndPhone = (req, res) => {
             res.status(500).send({
                 message:
                     err.message || "Some error occurred while retrieving masters."
+            });
+        });
+};
+
+exports.delete = (req, res) => {
+    const id = req.params.id;
+
+    Master.destroy({
+        where: { id: id }
+    })
+        .then(num => {
+            if (num == 1) {
+                res.send({
+                    message: "Master was deleted successfully!"
+                });
+            } else {
+                res.send({
+                    message: `Cannot delete Master with id=${id}. Maybe Master was not found!`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Could not delete Master with id=" + id
+            });
+        });
+};
+exports.update = (req, res) => {
+    const id = req.params.id;
+
+    Master.update(req.body, {
+        where: { id: id }
+    })
+        .then(num => {
+            if (num == 1) {
+                res.send({
+                    message: "Master was updated successfully."
+                });
+            } else {
+                res.send({
+                    message: `Cannot update Master with id=${id}. Maybe MAster was not found or req.body is empty!`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Error updating Master with id=" + id
             });
         });
 };

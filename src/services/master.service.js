@@ -14,9 +14,17 @@ class MasterService {
     getMasterByNameAndPhone(params) {
         return axios.get(API_URL + `/masterlk/master?name=${params.name}&phone=${params.phone}`);
     }
+    deleteMasterById(idMaster) {
+        return axios.delete(API_URL + `/${idMaster}`);
+    }
+    createMaster(data){
+        return axios.post(API_URL, data);
+    }
+    updateMaster(data){
+        return axios.put(API_URL + `/${data.id}`, data.master );
+    }
 
 }
-
 export default new MasterService();
 
 
