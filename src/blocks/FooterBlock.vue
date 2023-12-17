@@ -49,7 +49,7 @@
       </div>
     </div>
     <div class="border-top">
-      <div class="container footer-copy">Copyright © 2017 - 2023</div>
+      <div class="container footer-copy">Copyright © 2017 - 2024</div>
     </div>
   </footer>
 </template>
@@ -72,17 +72,57 @@ export default {
 .border-top {
   border-top: 1px solid $color-border;
 }
-.footer-box {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  padding: 20px 10px;
-  box-sizing: border-box;
-}
+.footer {
+  &-box {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 20px 10px;
+    box-sizing: border-box;
+  }
 
-.footer-logo {
-  display: block;
-  text-decoration: none;
+  &-logo {
+    display: block;
+    text-decoration: none;
+  }
+  &__title {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: normal;
+    margin-bottom: 30px;
+  }
+
+  &__list {
+    list-style: none;
+  }
+
+  &__list > li {
+    font-size: 18px;
+    line-height: normal;
+    margin-bottom: 18px;
+  }
+
+  &-soc {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  &-icon {
+    font-size: 36px;
+    line-height: 36px;
+    color: $color-text;
+    &:hover {
+      color: $color-hover;
+    }
+  }
+  &-copy {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: normal;
+    text-align: center;
+    padding: 20px;
+  }
 }
 
 .foot-logo {
@@ -90,50 +130,8 @@ export default {
   font-size: 65px;
   line-height: 65px;
   transition: all 0.3s;
-}
-
-.foot-logo:hover {
-  color: $color-hover;
-}
-
-.footer__title {
-  font-weight: 700;
-  font-size: 24px;
-  line-height: normal;
-  margin-bottom: 30px;
-}
-
-.footer__list {
-  list-style: none;
-}
-
-.footer__list > li {
-  font-size: 18px;
-  line-height: normal;
-  margin-bottom: 18px;
-}
-
-.footer-soc {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-}
-
-.footer-icon {
-  font-size: 36px;
-  line-height: 36px;
-  color: $color-text;
-}
-
-.footer-icon:hover {
-  color: $color-hover;
-}
-
-.footer-copy {
-  font-weight: 700;
-  font-size: 18px;
-  line-height: normal;
-  text-align: center;
-  padding: 20px;
+  &:hover {
+    color: $color-hover;
+  }
 }
 </style>
