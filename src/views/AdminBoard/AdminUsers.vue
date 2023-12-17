@@ -78,13 +78,13 @@ export default {
   data() {
     return {
       start: 0,
-      count: 3,
+      count: 5,
       inputPhone: null,
     };
   },
 
   mounted() {
-    const params = { start: 0, count: 3 };
+    const params = { start: 0, count: this.count };
     this.$store.dispatch("GET_USERS", params);
     this.$store.dispatch("GET_USER_COUNT");
   },
@@ -157,27 +157,6 @@ export default {
 <style lang="scss" scoped>
 @import "../../styles/shedule";
 
-.shedule-table {
-  border-collapse: collapse;
-  width: 100%;
-  thead {
-    color: $color-hover;
-  }
-
-  &__row {
-    border: 1px solid $color-text;
-  }
-  th {
-    border: 1px solid $color-text;
-    padding: 5px 0 5px 0;
-  }
-  td {
-    border: 1px solid $color-text;
-    text-align: center;
-    vertical-align: middle;
-    padding: 5px 0 5px 0;
-  }
-}
 .arrows {
   width: 70px;
   display: flex;

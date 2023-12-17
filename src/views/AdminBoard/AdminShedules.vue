@@ -90,25 +90,5 @@ export default {
 <style lang="scss" scoped>
 @import "../../styles/shedule";
 
-.shedule-table {
-  border-collapse: collapse;
-  width: 100%;
-    thead{
-        color: $color-hover;
-    }
 
-  &__row {
-    border: 1px solid $color-text;
-  }
-  th {
-    border: 1px solid $color-text;
-    padding: 5px 0 5px 0;
-  }
-  td {
-    border: 1px solid $color-text;
-    text-align: center; 
-    vertical-align: middle;
-    padding: 5px 0 5px 0;
-  }
-}
 </style>

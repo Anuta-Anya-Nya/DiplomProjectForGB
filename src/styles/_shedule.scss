@@ -131,4 +131,27 @@
       border: 1px solid $color-text;
     }
   }
+  
+}
+.shedule-table {
+  border-collapse: collapse;
+  width: 100%;
+  background-color: $color-table;
+  thead {
+    color: $color-hover;
+  }
+
+  &__row {
+    border: 1px solid $color-text;
+  }
+  th {
+    border: 1px solid $color-text;
+    padding: 5px 0 5px 0;
+  }
+  td {
+    border: 1px solid $color-text;
+    text-align: center;
+    vertical-align: middle;
+    padding: 5px 0 5px 0;
+  }
 }

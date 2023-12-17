@@ -72,7 +72,7 @@
       </div>
     </form>
 
-    <div v-if="message">{{ message }}</div>
+    <div v-if="message" class="reg-message">{{ message }}</div>
   </div>
 </template>
 
@@ -180,6 +180,12 @@ export default {
     // color: $color-text;
     border: 1px solid $color-text;
   }
+}
+.reg-message{
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+  margin-top: 40px;
 }
 
 </style>
