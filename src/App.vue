@@ -25,25 +25,26 @@ export default {
   computed: {
     showBanner() {
       const currentPage = this.$route.matched[0].components.default.name;
-      switch (currentPage) {
-        case "MainPage":
-          return true;
-
-        default:
-          return false;
-      }
+      if (currentPage === "MainPage") return true;
+      return false;      
     },
     showFooter() {
       const currentPage = this.$route.matched[0].components.default.name;
       switch (currentPage) {
-        case "NotFoundPage":
-          return false;
-        case "AppointmentPage":
-          return false;
-        case "AppointmentMaster":
-          return false;
-        default:
+        case "MainPage":
           return true;
+        case "AboutMaster":
+          return true;
+        case "ContactsPage":
+          return true;
+        case "MastersPage":
+          return true;
+        case "PricePage":
+          return true;
+        case "PromotionsPage":
+          return true;
+        default:
+          return false;
       }
     },
   },
