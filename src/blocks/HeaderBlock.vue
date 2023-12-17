@@ -1,6 +1,7 @@
 <template>
   <header class="header" :class="isShowBanner ? 'background-image' : ''">
-    <nav class="header-menu container">
+    <div class="border-bottom">
+      <nav class="header-menu container">
       <a href="#" class="menu-link"
         ><i class="fa-brands fa-instagram soc-icon head-icon"></i>
       </a>
@@ -71,6 +72,8 @@
         </router-link>
       </li>
     </nav>
+    </div>
+    
     <h1 v-show="isShowBanner" class="header__title">
       Салон красоты "Штаб бессовестно красивых"
     </h1>
@@ -112,6 +115,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.border-bottom{
+  border-bottom: 1px solid $color-border;
+}
 .background-image {
   min-height: 100vh;
   background: url(@/assets/img/header-bg.jpg) no-repeat center center;
@@ -122,7 +128,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid $color-border;
+  
   padding: 30px;
   box-sizing: border-box;
 }

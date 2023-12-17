@@ -1,52 +1,56 @@
 <template>
   <footer class="footer">
-    <div v-show="isShowFooter" class="container footer-box">
-      <router-link to="/main" class="footer-logo"
-        ><i class="fa-solid fa-signature foot-logo"></i
-      ></router-link>
+    <div class="border-top">
+      <div v-show="isShowFooter" class="container footer-box">
+        <router-link to="/main" class="footer-logo"
+          ><i class="fa-solid fa-signature foot-logo"></i
+        ></router-link>
 
-      <div class="contacts">
-        <h3 class="footer__title">Контакты</h3>
-        <ul class="footer__list">
-          <li>+7 (812) 123-45-67</li>
-          <li>+7 (911) 123-45-67</li>
-          <li>Новоостровский проспект, дом 36</li>
-        </ul>
-      </div>
-      <div class="regime">
-        <h3 class="footer__title">Режим работы</h3>
-        <ul class="footer__list">
-          <li>C 10:00 до 21:00 (Пн-Пт)</li>
-          <li>С 11:00 до 20:00 (Сб-Вс)</li>
-        </ul>
-      </div>
-      <div class="soc">
-        <h3 class="footer__title">Мы в социальных сетях</h3>
-        <ul class="footer__list footer-soc">
-          <li>
-            <a href="#" class="footer__link"
-              ><i class="fa-brands fa-instagram soc-icon footer-icon"></i
-            ></a>
-          </li>
-          <li>
-            <a href="#" class="footer__link"
-              ><i class="fa-brands fa-vk footer-icon"></i
-            ></a>
-          </li>
-          <li>
-            <a href="#" class="footer__link"
-              ><i class="fa-brands fa-twitter soc-icon footer-icon"></i
-            ></a>
-          </li>
-          <li>
-            <a href="#" class="footer__link"
-              ><i class="fa-brands fa-telegram footer-icon"></i
-            ></a>
-          </li>
-        </ul>
+        <div class="contacts">
+          <h3 class="footer__title">Контакты</h3>
+          <ul class="footer__list">
+            <li>+7 (812) 123-45-67</li>
+            <li>+7 (911) 123-45-67</li>
+            <li>Новоостровский проспект, дом 36</li>
+          </ul>
+        </div>
+        <div class="regime">
+          <h3 class="footer__title">Режим работы</h3>
+          <ul class="footer__list">
+            <li>C 10:00 до 21:00 (Пн-Пт)</li>
+            <li>С 11:00 до 20:00 (Сб-Вс)</li>
+          </ul>
+        </div>
+        <div class="soc">
+          <h3 class="footer__title">Мы в социальных сетях</h3>
+          <ul class="footer__list footer-soc">
+            <li>
+              <a href="#" class="footer__link"
+                ><i class="fa-brands fa-instagram soc-icon footer-icon"></i
+              ></a>
+            </li>
+            <li>
+              <a href="#" class="footer__link"
+                ><i class="fa-brands fa-vk footer-icon"></i
+              ></a>
+            </li>
+            <li>
+              <a href="#" class="footer__link"
+                ><i class="fa-brands fa-twitter soc-icon footer-icon"></i
+              ></a>
+            </li>
+            <li>
+              <a href="#" class="footer__link"
+                ><i class="fa-brands fa-telegram footer-icon"></i
+              ></a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
-    <div class="container footer-copy">Copyright © 2017 - 2023</div>
+    <div class="border-top">
+      <div class="container footer-copy">Copyright © 2017 - 2023</div>
+    </div>
   </footer>
 </template>
 
@@ -65,8 +69,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.footer-box {
+.border-top {
   border-top: 1px solid $color-border;
+}
+.footer-box {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -124,7 +130,6 @@ export default {
 }
 
 .footer-copy {
-  border-top: 1px solid $color-border;
   font-weight: 700;
   font-size: 18px;
   line-height: normal;
