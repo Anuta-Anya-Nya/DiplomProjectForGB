@@ -34,7 +34,6 @@ exports.create = (req, res) => {
         });
 };
 
-
 exports.findAll = (req, res) => {
     const date = req.query.date;
     const masterId = req.query.masterId;
@@ -74,7 +73,6 @@ exports.findOne = (req, res) => {
 
 exports.findUserShedule = (req, res) => {
     const userId = req.query.userId;
-
     Shedule.findAll({
         where: { userId: userId }, include: [
             {
@@ -176,19 +174,5 @@ exports.delete = (req, res) => {
 
 
 
-// exports.findAll = (req, res) => {
-
-//     Shedule.findAll({ include: User })
-//         .then(data => {
-//             console.log('data', JSON.stringify(data, null, 2))
-//             res.send(data);
-//         })
-//         .catch(err => {
-//             res.status(500).send({
-//                 message:
-//                     err.message || "Some error occurred while retrieving Shedule."
-//             });
-//         });
-// };
 
 

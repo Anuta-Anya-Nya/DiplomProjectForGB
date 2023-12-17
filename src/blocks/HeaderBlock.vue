@@ -1,5 +1,5 @@
 <template>
-  <header class="header" :class="isShow ? 'background-image' : ''">
+  <header class="header" :class="isShowBanner ? 'background-image' : ''">
     <nav class="header-menu container">
       <a href="#" class="menu-link"
         ><i class="fa-brands fa-instagram soc-icon head-icon"></i>
@@ -71,7 +71,7 @@
         </router-link>
       </li>
     </nav>
-    <h1 v-show="isShow" class="header__title">
+    <h1 v-show="isShowBanner" class="header__title">
       Салон красоты "Штаб бессовестно красивых"
     </h1>
   </header>
@@ -80,7 +80,7 @@
 <script>
 export default {
   name: "HeaderBlock",
-  props: ["isShow"],
+  props: ["isShowBanner"],
   data() {
     return {};
   },

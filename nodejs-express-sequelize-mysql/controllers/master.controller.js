@@ -2,17 +2,16 @@ const db = require("../models");
 const Master = db.masters;
 const Op = db.Sequelize.Op;
 
-// Create Master
+
 exports.create = (req, res) => {
-    // Validate request
+    
     if (!req.body.master_name) {
         res.status(400).send({
             message: "Content can not be empty!"
         });
         return;
     }
-
-    // Create master
+    
     const master = {
         master_name: req.body.master_name,
         birthdate: req.body.birthdate,
@@ -23,7 +22,7 @@ exports.create = (req, res) => {
         group_service_id: req.body.group_service_id
     };
 
-    // Save master in the database
+    
     Master.create(master)
         .then(data => {
             res.send(data);

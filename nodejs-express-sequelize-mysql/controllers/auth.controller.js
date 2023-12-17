@@ -1,13 +1,3 @@
-// Controller for Authentication
-// There are 2 main functions for Authentication:
-// - signup: create new User in database (role is user if not specifying role)
-// - signin:
-
-// find username of the request in database, if it exists
-// compare password with password in database using bcrypt, if it is correct
-// generate a token using jsonwebtoken
-// return user information & access Token
-
 const db = require("../models");
 const config = require("../config/auth.config");
 const User = db.user;
@@ -19,7 +9,6 @@ var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
 exports.signup = (req, res) => {
-    // Save User to Database
     User.create({
         username: req.body.username,
         email: req.body.email,

@@ -1,12 +1,10 @@
 // инициализация sequelize
 const dbConfig = require("../config/db.config.js");
-
 const Sequelize = require("sequelize");
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
   dialect: dbConfig.dialect,
   operatorsAliases: 0,
-
   pool: {
     max: dbConfig.pool.max,
     min: dbConfig.pool.min,
@@ -24,7 +22,6 @@ db.masters = require("./master.model.js")(sequelize, Sequelize);
 db.services = require("./service.model.js")(sequelize, Sequelize);
 db.group_services = require("./group.model.js")(sequelize, Sequelize);
 db.shedules = require("./shedule.model.js")(sequelize, Sequelize);
-
 db.user = require("../models/user.model.js")(sequelize, Sequelize);
 db.role = require("../models/role.model.js")(sequelize, Sequelize);
 

@@ -1,6 +1,6 @@
 <template>
   <footer class="footer">
-    <div v-show="isShow" class="container footer-box">
+    <div v-show="isShowFooter" class="container footer-box">
       <router-link to="/main" class="footer-logo"
         ><i class="fa-solid fa-signature foot-logo"></i
       ></router-link>
@@ -53,7 +53,7 @@
 <script>
 export default {
   name: "FooterBlock",
-  props: ["isShow"],
+  props: ["isShowFooter"],
   data() {
     return {};
   },

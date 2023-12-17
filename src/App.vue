@@ -4,11 +4,11 @@
       :class="!showFooter ? 'background-image background-flex' : ''"
       class="wrapper"
     >
-      <HeaderBlock :isShow="showBanner" />
+      <HeaderBlock :isShowBanner="showBanner" />
       <main>
         <router-view />
       </main>
-      <FooterBlock :isShow="showFooter" />
+      <FooterBlock :isShowFooter="showFooter" />
     </div>
   </div>
 </template>
@@ -37,6 +37,10 @@ export default {
       const currentPage = this.$route.matched[0].components.default.name;
       switch (currentPage) {
         case "NotFoundPage":
+          return false;
+        case "AppointmentPage":
+          return false;
+        case "AppointmentMaster":
           return false;
         default:
           return true;
