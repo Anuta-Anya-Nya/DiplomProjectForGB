@@ -37,6 +37,10 @@ export default new Vuex.Store({
       { id: 8, img: 'work-8.jpg', tagID: 3 },
       { id: 9, img: 'work-9.jpg', tagID: 3 }
     ],
+    actions: [
+      { id: 1, text: "Первое посещение - скидка 20%", image: "actions1.jpg" },
+      { id: 2, text: "Каждая пятая стрижка бесплатно", image: "actions2.jpg" },
+    ],
   },
   getters: {
     GET_RANDOM_QUOT(state) {
