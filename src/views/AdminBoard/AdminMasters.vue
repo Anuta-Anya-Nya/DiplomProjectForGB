@@ -28,7 +28,9 @@
               </div>
             </td>
             <td>
-              <div v-if="!needEdit || editId != item.id">{{ item.position }}</div>
+              <div v-if="!needEdit || editId != item.id">
+                {{ item.position }}
+              </div>
               <div v-if="needEdit && editId === item.id">
                 <input
                   type="text"
@@ -64,7 +66,9 @@
               </div>
             </td>
             <td>
-              <div v-if="!needEdit || editId != item.id">{{ item.birthdate }}</div>
+              <div v-if="!needEdit || editId != item.id">
+                {{ item.birthdate }}
+              </div>
               <div v-if="needEdit && editId === item.id">
                 <input
                   type="date"
@@ -84,7 +88,9 @@
               </div>
             </td>
             <td>
-              <div v-if="!needEdit || editId != item.id">{{ item.aboutText }}</div>
+              <div v-if="!needEdit || editId != item.id">
+                {{ item.aboutText }}
+              </div>
               <div v-if="needEdit && editId === item.id">
                 <textarea
                   v-model.lazy="master.about_text"
@@ -178,7 +184,7 @@
       </table>
       <div v-if="MASTERS?.length === 0">Мастера отсутствуют</div>
       <button
-        v-if="!isShowInput"
+        v-if="!isShowInput && !needEdit"
         @click="isShowInput = true"
         class="subscribeBtn button-margin"
       >

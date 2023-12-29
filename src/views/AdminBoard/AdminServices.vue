@@ -128,7 +128,7 @@
       </table>
       <div v-if="SERVICES?.length === 0">Услуги отсутствуют</div>
       <button
-        v-if="!isShowInput"
+        v-if="!isShowInput && !needEdit"
         @click="isShowInput = true"
         class="subscribeBtn button-margin"
       >
