@@ -28,12 +28,12 @@ i
             <td>{{ user.birthdate }}</td>
             <td>
               <i @click="makeAppointmentUser(user.id)"
-                class="fa fa-pencil-square-o shedule-lk__delete"
+                class="fa fa-pencil-square-o shedule-lk__actions"
                 aria-hidden="true"
               ></i>
               <i
                 @click="deleteUser(user.id)"
-                class="fa fa-trash shedule-lk__delete"
+                class="fa fa-trash shedule-lk__actions shedule-lk__actions-del"
                 aria-hidden="true"
               ></i>
             </td>

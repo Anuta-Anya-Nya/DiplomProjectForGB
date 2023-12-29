@@ -116,6 +116,16 @@
       color: white;
     }
   }
+  &__actions {
+    cursor: pointer;
+
+    &:hover {
+      color: white;
+    }
+    &-del{
+      margin-left: 10px;
+    }
+  }
 
   &__link {
     text-decoration: none;

@@ -10,6 +10,7 @@
             <th>Длительность</th>
             <th>Цена</th>
             <th>Группа</th>
+            <th>Действия</th>
           </tr>
         </thead>
         <tbody>
@@ -64,12 +65,12 @@
               <div v-if="!needEdit || editId != item.id">
                 <i
                   @click="editService(item.id)"
-                  class="fa fa-pencil-square-o shedule-lk__delete"
+                  class="fa fa-pencil-square-o shedule-lk__actions"
                   aria-hidden="true"
                 ></i>
                 <i
                   @click="deleteService(item.id)"
-                  class="fa fa-trash shedule-lk__delete"
+                  class="fa fa-trash shedule-lk__actions shedule-lk__actions-del"
                   aria-hidden="true"
                 ></i>
               </div>
