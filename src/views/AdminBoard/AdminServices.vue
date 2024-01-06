@@ -26,9 +26,7 @@
               </div>
             </td>
             <td>
-              <div>
-                {{ item.duration }} мин
-              </div>
+              <div>{{ item.duration }} мин</div>
             </td>
             <td>
               <div v-if="!needEdit || editId != item.id">{{ item.price }}</div>
@@ -171,7 +169,12 @@ export default {
     this.$store.dispatch("GET_SERVICES");
   },
   computed: {
-    ...mapGetters(["SERVICES", "GROUP_SERVICES", "GET_GROUP_SERVICE_FOR_ID", "SERVICE_FOR_ID"]),
+    ...mapGetters([
+      "SERVICES",
+      "GROUP_SERVICES",
+      "GET_GROUP_SERVICE_FOR_ID",
+      "SERVICE_FOR_ID",
+    ]),
   },
 
   methods: {
@@ -182,7 +185,7 @@ export default {
         alert("Запись удалена");
       }
     },
-    editService(id) {        
+    editService(id) {
       this.editId = id;
       this.needEdit = true;
       const serviceForEdit = this.SERVICE_FOR_ID(id);

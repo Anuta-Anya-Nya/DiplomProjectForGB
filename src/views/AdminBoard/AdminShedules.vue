@@ -26,7 +26,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="shedule-table__row" v-for="shedule in SHEDULE" :key="shedule.id">
+          <tr
+            class="shedule-table__row"
+            v-for="shedule in SHEDULE"
+            :key="shedule.id"
+          >
             <td>{{ shedule.time }}</td>
             <td>{{ shedule.master.name }}</td>
             <td>{{ shedule.master.position }}</td>
@@ -35,13 +39,15 @@
             <td>{{ shedule.service.price }} руб.</td>
             <td>{{ shedule.user.name }}</td>
             <td>{{ shedule.user.phone }}</td>
-            <td @click="deleteShedule(shedule.id)" class="shedule-lk__delete"><i class="fa fa-trash" aria-hidden="true"></i></td>
+            <td @click="deleteShedule(shedule.id)" class="shedule-lk__delete">
+              <i class="fa fa-trash" aria-hidden="true"></i>
+            </td>
           </tr>
         </tbody>
       </table>
       <div v-if="SHEDULE?.length === 0">
         Записи на выбранную дату отсутствуют
-      </div>      
+      </div>
     </div>
   </div>
 </template>
@@ -54,14 +60,15 @@ export default {
 
   data() {
     return {
-      selectedDate: utils.getDate(new Date()),
+      selectedDate: null,
     };
   },
 
   mounted() {
+    this.selectedDate = utils.getDate(new Date());
     this.$store.dispatch(
       "GET_SHEDULE_BY_DATE_FOR_ADMIN",
-      utils.getDate(new Date())
+      this.selectedDate
     );
   },
 
@@ -72,7 +79,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["SHEDULE"]),    
+    ...mapGetters(["SHEDULE"]),
   },
 
   methods: {
@@ -89,6 +96,4 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../styles/shedule";
-
-
 </style>

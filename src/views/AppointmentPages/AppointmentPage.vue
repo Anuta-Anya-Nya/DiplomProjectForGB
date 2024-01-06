@@ -1,24 +1,18 @@
 <template>
   <div class="container shedule">
-    
-      <h3>Записаться:</h3>
-      <router-link to="/shedule/master" class="button-simple button-link"
-        >Выбрать мастера</router-link
-      >
-      <router-link to="/shedule/service" class="button-simple button-link"
-        >Выбрать услугу</router-link
-      >    
+    <h3>Записаться:</h3>
+    <router-link to="/shedule/master" class="button-simple button-link"
+      >Выбрать мастера</router-link
+    >
+    <router-link to="/shedule/service" class="button-simple button-link"
+      >Выбрать услугу</router-link
+    >
   </div>
 </template>
 
 <script>
-
 export default {
-  name: "AppointmentPage",  
-  
-  mounted() {},
-
-  computed: {},
+  name: "AppointmentPage",
 };
 </script>
 
