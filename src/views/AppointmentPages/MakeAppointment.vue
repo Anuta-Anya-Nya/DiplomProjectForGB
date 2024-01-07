@@ -133,8 +133,8 @@ export default {
       "CURRENT_SERVICE",
       "MASTERS",
       "SHEDULE",
-      "GET_SERVICE_FOR_ID",
       "USER_FOR_SHEDULE",
+      "SERVICE_FOR_ID"
     ]),
 
     currentUser() {
@@ -174,7 +174,7 @@ export default {
 
         // длительность услуги, уже присутствующей в расписании (шагами в 30 минут)
         const findBusyTimeForService =
-          this.GET_SERVICE_FOR_ID(el.serviceId).duration / 30;
+          this.SERVICE_FOR_ID(el.serviceId).duration / 30;
         for (let i = 0; i < findBusyTimeForService; i++) {
           busyTimeList.push(busyTime.getTime());
           busyTime.setMinutes(busyTime.getMinutes() + 30);

@@ -8,7 +8,7 @@
       @click="selectMaster(master)"
     >
       {{ master.name }}
-    </button>    
+    </button>
   </div>
 </template>
 
@@ -27,10 +27,10 @@ export default {
   methods: {
     ...mapMutations(["SET_CURRENT_MASTER"]),
 
-    selectMaster(master){
+    selectMaster(master) {
       this.SET_CURRENT_MASTER(master);
       this.$router.push({ path: `/shedule/master/${master.id}` });
-    }
+    },
   },
 };
 </script>

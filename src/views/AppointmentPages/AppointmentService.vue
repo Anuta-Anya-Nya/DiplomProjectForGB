@@ -25,14 +25,9 @@ import { mapGetters, mapMutations } from "vuex";
 export default {
   name: "AppointmenService",
 
-  data() {
-    return {};
-  },
-
   mounted() {
     this.$store.dispatch("GET_SERVICES");
   },
-
   computed: {
     ...mapGetters(["SERVICES", "GROUP_SERVICES"]),
   },
