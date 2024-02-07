@@ -81,10 +81,7 @@
     </div>
 
     <button
-      v-if="selectedDate && selectedTime"
-      :to="`/shedule/master/${CURRENT_MASTER.id}/${
-        CURRENT_SERVICE.id
-      }/${selectedDate}_${printTime(selectedTime)}`"
+      v-if="selectedDate && selectedTime"      
       class="button-simple button-link"
       @click="addNewShedule()"
     >
@@ -238,13 +235,15 @@ export default {
         serviceId: this.CURRENT_SERVICE.id,
       };
 
-      this.$store.dispatch("CREATE_SHEDULE", newShedule);
-
-      this.$router.push({
-        path: `/shedule/master/${this.CURRENT_MASTER.id}/${
-          this.CURRENT_SERVICE.id
-        }/${this.selectedDate}_${this.printTime(this.selectedTime)}`,
-      });
+      this.$store.dispatch("CREATE_SHEDULE", newShedule).then((res)=>{
+        console.log(res)
+        this.$router.push({
+        path: `/shedule/recordSuccess/${res.date}_${res.time}`,
+      })
+      }        
+      ).catch((e) => {
+        console.log(e);        
+      })      
     },
 
     setCurrentMaster(idMaster) {

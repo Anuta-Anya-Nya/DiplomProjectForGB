@@ -163,14 +163,18 @@ export const sheduleStore = {
     },
 
     CREATE_SHEDULE: async (context, data) => {
-      shedulesService
+      return new Promise((resolve) => {
+        shedulesService
         .createShedule(data)
         .then((res) => {
           console.log(res.data);
+          resolve(res.data)
         })
-        .catch((e) => {
-          console.log(e);
-        });
+        // .catch((e) => {          
+        //   console.log(e);
+        // });
+      })
+      
     },
     GET_SHEDULE_BY_USER: async (context, userId) => {
       shedulesService

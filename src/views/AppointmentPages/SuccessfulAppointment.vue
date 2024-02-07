@@ -21,10 +21,6 @@ import utils from "../../services/utils";
 
 export default {
   name: "SuccessfulAppointment",
-  data() {
-    return {};
-  },
-
   computed: {
     ...mapGetters([
       "CURRENT_MASTER",

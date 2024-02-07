@@ -104,7 +104,7 @@ const routes = [
     }
   },
   {
-    path: '/shedule/master/:idMaster/:idService/:recDate',
+    path: '/shedule/recordSuccess/:recDate',
     component: SuccessfulAppointment,
     meta: {
       requiresAuth: true
